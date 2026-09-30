@@ -1,29 +1,23 @@
-# 读出模型没说出口的想法：课程展示
+# 模型知道，但不一定说：课程展示
 
-> CSI-435/535 Artificial Intelligence（Fall 2026）课程项目。
-
-## 一句话主题
-
-**"模型心里想的，和它写出来的，不一定一样。我们用课上学的方法，把它心里想的读出来。"**
+> CSI-435/535 Artificial Intelligence（Fall 2026）课程项目。三次演讲，每次 10–12 分钟。
 
 ## 定位
 
-用小模型、小数据，在一台 M1 Max 上**小规模复现几个已有的代表性发现**，每一项都对应课上学的方法。这里的复现是教学演示，每一处都注明原论文。
+复现两篇已发表、有公开代码和模型的重要工作，用课上学的方法把它们讲清楚。这里的所有结果都是复现，每一处都注明原论文。
 
-| 编号 | 复现什么 | 课程内容 |
-|---|---|---|
-| K1 | Ouro 循环轮数的影响；逐轮读出"用了提示却不说" | 逻辑回归、SVM、PCA |
-| K2 | Taboo 模型的秘密词，从中间层读出来 | logit lens |
-| K3 | 监控器阶梯：TF-IDF → ModernBERT；LSTM / CNN 序列探针 | 朴素贝叶斯、RNN、CNN、微调 |
-| K4 | 反面教材：微调指纹 | PCA、K-means、GMM |
+| | 论文 | 复现什么 | 课程内容 |
+|---|---|---|---|
+| 复现 A（主） | Marks & Tegmark，[The Geometry of Truth](https://arxiv.org/abs/2310.06824)（COLM 2024） | 真假陈述在激活里分成两团；探针跨数据集泛化；沿真理方向干预让模型改口 | PCA、逻辑回归、均值差探针 |
+| 复现 B（副） | Cywiński 等，[Eliciting Secret Knowledge from Language Models](https://arxiv.org/abs/2510.01070) | Taboo 模型知道秘密词却不说，用 logit lens 从中间层读出来 | Transformer 的层结构 |
 
 ## 文件
 
 | 文件 | 内容 |
 |---|---|
-| [plan.md](plan.md) | 四个小复现：复现什么、怎么做、对应哪节课、成功标准、硬件 |
+| [plan.md](plan.md) | 两个复现的步骤、模型、硬件、成功标准、优先级 |
 | [timeline.md](timeline.md) | 到 12 月 7 日的按周计划 |
-| [presentations.md](presentations.md) | 三次演讲的大纲和问答准备 |
+| [presentations.md](presentations.md) | 三次演讲的逐页大纲（带时长）和问答准备 |
 
 ## 参与
 
