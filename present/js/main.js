@@ -1,10 +1,9 @@
 /* ─────────────────────────────────────────────────────────────
    Models Know, But Don't Always Say — presentation engine
-   Two modes per scene:
-     docked — paper shrinks to the right, rich content stage left
-     focus  — paper center-front + highlight marker on the passage
-   All paper positions resolve via text search (reflow-safe), with
-   {page, frac} fallbacks. PDF is embedded base64 (paper_data.js).
+   Content stage on the left; the paper sits still on the right.
+   Only the paper's internal scroll and the amber highlight marker
+   move. All paper positions resolve via text search (reflow-safe),
+   with {page, frac} fallbacks. PDF is embedded base64 (paper_data.js).
    ───────────────────────────────────────────────────────────── */
 
 (function () {
@@ -58,13 +57,11 @@
   </svg>`;
 
   /* ── scene definitions ─────────────────────────────────────── */
-  // mode: "docked" | "focus"
   // anchor: {search, page, frac} — where the paper scrolls to
-  // mark (focus scenes): {search, up, h} — highlight box around the
-  //   passage; up/h in PDF points, always resolved via text search
+  // mark: {search, up, h} — highlight box around the passage;
+  //   up/h in PDF points, always resolved via text search
   const SCENES = [
     {
-      mode: "focus",
       kicker: "CSI-435/535 · Course talk",
       title: 'Models Know, But Don\'t <span class="em uline">Always Say</span>',
       html: `<div class="scene-sub">Reading a language model's mind with tools from class</div>
@@ -74,7 +71,6 @@
       notes: "<p>开场一句话：模型知道，但不一定说。</p><p>我们复现两篇已发表的工作，全程只用课上讲过的工具。</p>",
     },
     {
-      mode: "docked",
       kicker: "The gap",
       title: "What a model <span class='em'>says</span> ≠ what it <span class='em'>believes</span>",
       html: `
@@ -101,13 +97,14 @@
       notes: "<p>输出不等于内部状态；模型会流利说假话；Taboo 模型被训练成知道但不说。</p><p>核心问题是绕过输出直接读激活——这对 AI 安全监控很重要。</p>",
     },
     {
-      mode: "focus",
       kicker: "Tools",
       title: "Activations and <span class='em'>probes</span>",
       html: `
-        <div class="diagram">${DIAGRAM_PROBE}</div>
-        <div class="formula">θ = μ<sup>+</sup> − μ<sup>−</sup>
-          <span class="fnote">mean-difference direction</span></div>
+        <div class="s3-center">
+          <div class="diagram">${DIAGRAM_PROBE}</div>
+          <div class="formula">θ = μ<sup>+</sup> − μ<sup>−</sup>
+            <span class="fnote">mean-difference direction</span></div>
+        </div>
         <ul class="bullets">
           <li>Residual stream: one <b>d-dim vector per token</b>, per block</li>
           <li>Linear probe succeeds ⇒ the property <b>is in the representation</b></li>
@@ -117,7 +114,6 @@
       notes: "<p>残差流是模型的草稿纸；探针是小分类器。</p><p>线性可预测 ⇒ 性质就在表示里。</p>",
     },
     {
-      mode: "docked",
       kicker: "One story",
       title: "Two published results, <span class='em'>one story</span>",
       html: `
@@ -149,7 +145,6 @@
       notes: "<p>两篇都有公开代码和模型；我们亲手复现并讲清楚。</p>",
     },
     {
-      mode: "focus",
       kicker: "Reproduction A · setup",
       title: "Data: simple <span class='em'>true/false</span> statements",
       html: `
@@ -169,7 +164,6 @@
       notes: "<p>读两条例子；强调协议是原文设定，测的是模型自己的表示。</p>",
     },
     {
-      mode: "focus",
       kicker: "Result 1",
       title: "True and false <span class='em'>separate</span> — before any training",
       html: `<div class="evidence-hint">${IC.mark} highlighted in the paper: the two-clusters figure</div>`,
@@ -179,7 +173,6 @@
       notes: "<p>每个点是一条陈述的激活；PCA 不知道标签却分成两团。</p><p>这就是“模型知道”的直接证据。</p>",
     },
     {
-      mode: "docked",
       kicker: "Connections",
       title: "Exactly the <span class='em'>course toolbox</span>",
       html: `
@@ -209,40 +202,37 @@
       notes: "<p>点明和课上的 PCA、逻辑回归、Fisher 判别一一对应。</p>",
     },
     {
-      mode: "docked",
-      kicker: "Next",
-      title: "Plan",
+      kicker: "Status",
+      title: "Reproduced — <span class='em'>then deeper</span>",
       html: `
         <div class="timeline">
           <div class="tl-node now">
             <div class="tl-dot"></div>
             <div class="tl-when">Now</div>
-            <div class="tl-what">activations on cluster<br><span class="dim">first figure done</span></div>
+            <div class="tl-what">A + B reproduced<br><span class="dim">all five figures · numbers match<br>LR fails at 0.33 · MM transfers 0.97</span></div>
           </div>
           <div class="tl-node">
             <div class="tl-dot"></div>
             <div class="tl-when">Midterm · Oct 26</div>
-            <div class="tl-what">LR / MM / CCS probes<br><span class="dim">generalization matrix · which layer</span></div>
+            <div class="tl-what">analysis + write-up<br><span class="dim">why LR fails on negation · CCS vs MM</span></div>
           </div>
           <div class="tl-node final">
             <div class="tl-dot"></div>
             <div class="tl-when">Final · Dec 7</div>
-            <div class="tl-what">causal intervention<br><span class="dim">Taboo secrets + logit lens</span></div>
+            <div class="tl-what">extension<br><span class="dim">a new dataset or a second model · final report</span></div>
           </div>
         </div>
-        <div class="risk-card">${IC.shield}<span><b>Risk:</b> all reproductions · inference-only · robust schedule</span></div>`,
+        <div class="risk-card">${IC.shield}<span><b>Status:</b> both reproductions complete · inference-only · the rest of the semester buys depth</span></div>`,
       anchor: { search: "4 Reproduction B", page: 4, frac: 0.4 },
-      notes: "<p>按节奏讲完计划；强调全是复现、只需推理、风险低。</p>",
+      notes: "<p>复现已全部完成：PCA 两团、LR 在否定句上崩到 0.33、MM 迁移 0.97、干预双向翻转、Taboo 第 7–15 层读出秘密词。</p><p>剩余学期做深度：解释失败、对比探针、跑一个扩展。</p>",
     },
   ];
 
   const N = SCENES.length;
-  const MODE_W = { focus: 0.46, docked: 0.255 }; // visible (cropped) width as a fraction of viewport width
 
   /* ── dom handles ───────────────────────────────────────────── */
   const $ = (id) => document.getElementById(id);
   const elBody = document.body;
-  const elFrame = $("paper-frame");
   const elWindow = $("paper-window");
   const elPages = $("paper-pages");
   const elLoading = $("paper-loading");
@@ -292,7 +282,7 @@
   }
 
   function targetCssWidth() {
-    return Math.round(window.innerWidth * MODE_W[SCENES[current].mode]);
+    return Math.round(window.innerWidth * 0.29);
   }
 
   async function loadPdf() {
@@ -440,7 +430,7 @@
   /* ── highlight marker ──────────────────────────────────────── */
   function placeMarker(scene) {
     const mk = scene.mark;
-    if (!mk || scene.mode !== "focus" || !pageInfos.length) {
+    if (!mk || !pageInfos.length) {
       elMarker.className = "";
       return;
     }
@@ -468,7 +458,7 @@
     elMarker.className = "show";
   }
 
-  /* smooth-scroll the paper window, ~600ms ease-in-out */
+  /* smooth-scroll the paper window, ~800ms ease-in-out */
   function scrollWindowTo(target, instant) {
     if (scrollAnim) cancelAnimationFrame(scrollAnim);
     const start = elWindow.scrollTop;
@@ -477,7 +467,7 @@
       elWindow.scrollTop = target;
       return;
     }
-    const dur = 600;
+    const dur = 800;
     const t0 = performance.now();
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     const step = (now) => {
@@ -489,7 +479,7 @@
     scrollAnim = requestAnimationFrame(step);
   }
 
-  /* re-render only if the mode's width changed, then scroll + mark */
+  /* re-render only if the target width changed (resize), then scroll + mark */
   async function syncPaper(scene, opts) {
     if (!pdfReady) return;
     const w = targetCssWidth();
@@ -527,7 +517,7 @@
     elNotesBody.innerHTML = SCENES[idx].notes;
     elHero.classList.toggle("hidden", !SCENES[idx].hero);
     elLayer.classList.toggle("has-hero", !!SCENES[idx].hero);
-    if (SCENES[idx].hero) applyHeroState();
+    if (SCENES[idx].hero) probeHeroImage();
   }
 
   function applyHeroState() {
@@ -540,28 +530,29 @@
     }
   }
 
-  // probe whether the figure file exists (file:// safe via Image events)
-  (function probeHeroImage() {
+  // Re-probe the figure file on every visit to scene 6: the cache-buster
+  // query forces re-evaluation (file:// ignores it for loading), so a
+  // figure that appears on disk mid-presentation is picked up live.
+  function probeHeroImage() {
+    const t = Date.now();
     const img = new Image();
-    img.onload = () => { heroImgOk = true; applyHeroState(); };
+    img.onload = () => {
+      heroImgOk = true;
+      elHeroImg.src = "../figures/pca_two_clusters.png?t=" + t;
+      applyHeroState();
+    };
     img.onerror = () => { heroImgOk = false; applyHeroState(); };
-    img.src = elHeroImg.getAttribute("src");
-  })();
+    img.src = "../figures/pca_two_clusters.png?t=" + t;
+  }
 
   /* ────────────────────────────────────────────────────────────
      Navigation
      ──────────────────────────────────────────────────────────── */
-  function setMode(mode) {
-    elBody.classList.toggle("mode-focus", mode === "focus");
-    elBody.classList.toggle("mode-docked", mode === "docked");
-  }
-
   function goTo(idx, opts) {
     opts = opts || {};
     idx = Math.max(0, Math.min(N - 1, idx));
     current = idx;
     const scene = SCENES[idx];
-    setMode(scene.mode);
     swapContent(idx, opts.instant);
     updateChrome(idx);
     syncPaper(scene, opts);
@@ -613,15 +604,13 @@
     const m = location.hash.match(/scene=(\d+)/);
     if (m) current = Math.max(0, Math.min(N - 1, parseInt(m[1], 10) - 1));
     if (/notes=1/.test(location.hash)) elNotes.classList.add("open");
-    goTo(current, { instant: true }); // paint scene + mode immediately
+    goTo(current, { instant: true }); // paint the scene immediately
     loadPdf();
     // enable transitions only after the first paint, so deep links
     // land fully formed
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         elBody.classList.remove("boot");
-        elFrame.classList.add("animated");
-        elLayer.classList.add("animated");
         elHero.classList.add("animated");
       }));
   })();

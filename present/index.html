@@ -6,7 +6,7 @@
 <title>Models Know, But Don't Always Say — CSI-435/535</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="boot mode-focus">
+<body class="boot">
 
   <!-- drifting aurora background -->
   <div class="aurora" aria-hidden="true">
@@ -22,7 +22,7 @@
   <div id="branding">CSI-435/535 · Fall 2026</div>
   <div id="counter">1 / 8</div>
 
-  <!-- the paper window: docked right, or center-front in focus mode -->
+  <!-- the paper window: fixed on the right for every scene -->
   <div id="paper-frame">
     <div id="paper-window">
       <div id="paper-loading">
@@ -35,11 +35,11 @@
 
   <!-- hero figure (scene 6): floats over the left stage -->
   <div id="hero-panel" class="hidden">
-    <img id="hero-img" class="hidden" src="../figures/pca_two_clusters.png" alt="PCA of last-token activations: true and false statements form two clusters">
+    <img id="hero-img" class="hidden" alt="PCA of last-token activations: true and false statements form two clusters">
     <div id="hero-placeholder" class="hidden">
       <div class="ph-icon">◈</div>
-      <div class="ph-title">Figure pending</div>
-      <div class="ph-sub">PCA of last-token activations · LLaMA-2-13B layer 14<br>activations are being extracted on the cluster</div>
+      <div class="ph-title">Figure not found</div>
+      <div class="ph-sub">expected <b>figures/pca_two_clusters.png</b> next to present/<br>run the PCA script, or check the relative path</div>
     </div>
     <div id="hero-caption">Each point = one statement's last-token activation (LLaMA-2-13B, layer 14), top-2 principal components. <em>PCA never saw the labels.</em></div>
   </div>

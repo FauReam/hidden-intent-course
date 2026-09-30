@@ -1,7 +1,8 @@
 /* ─────────────────────────────────────────────────────────────
    Models Know, But Don't Always Say — presentation stage
-   Two modes: docked (paper right, content stage left) and
-   focus (paper center-front with a highlight marker).
+   The paper window sits still on the right; the left stage
+   carries the scene content. Only the paper's internal scroll
+   and the amber highlight marker move.
    ───────────────────────────────────────────────────────────── */
 
 :root {
@@ -86,18 +87,12 @@ body.boot *, body.boot *::before, body.boot *::after {
   font-size: 11px; letter-spacing: 0.08em; color: rgba(147,160,184,0.55);
 }
 
-/* ── the paper window: two modes ───────────────────────────── */
+/* ── the paper window: one fixed, calm position ────────────── */
 #paper-frame {
   position: fixed;
   z-index: 10;
-}
-.mode-focus  #paper-frame { left: 28vw;  top: 11vh; width: 46vw;   height: 78vh; }
-.mode-docked #paper-frame { left: 71vw; top: 7vh;  width: 25.5vw; height: 86vh; }
-#paper-frame.animated {
-  transition: left 560ms cubic-bezier(0.22, 0.9, 0.28, 1),
-              top 560ms cubic-bezier(0.22, 0.9, 0.28, 1),
-              width 560ms cubic-bezier(0.22, 0.9, 0.28, 1),
-              height 560ms cubic-bezier(0.22, 0.9, 0.28, 1);
+  left: 67.5vw; top: 8vh;
+  width: 29vw; height: 84vh;
 }
 #paper-window {
   position: absolute; inset: 0;
@@ -107,17 +102,10 @@ body.boot *, body.boot *::before, body.boot *::after {
   overflow-x: hidden;
   scrollbar-width: none;
   box-shadow:
-    0 40px 120px rgba(0,0,0,0.75),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 0 0 1px rgba(110,231,255,0.14),
-    0 0 44px rgba(110,231,255,0.07);
-  transition: box-shadow 560ms ease;
-}
-.mode-docked #paper-window {
-  box-shadow:
-    0 24px 70px rgba(0,0,0,0.65),
-    0 6px 22px rgba(0,0,0,0.45),
-    0 0 0 1px rgba(110,231,255,0.10);
+    0 28px 80px rgba(0,0,0,0.65),
+    0 6px 24px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(110,231,255,0.11),
+    0 0 36px rgba(110,231,255,0.05);
 }
 #paper-window::-webkit-scrollbar { display: none; }
 #paper-pages { position: relative; }
@@ -151,7 +139,7 @@ body.boot *, body.boot *::before, body.boot *::after {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── highlight marker (focus mode) ─────────────────────────── */
+/* ── highlight marker (on the anchored passage) ────────────── */
 #anchor-marker {
   position: absolute;
   z-index: 5;
@@ -174,14 +162,12 @@ body.boot *, body.boot *::before, body.boot *::after {
   position: fixed;
   left: 4vw; top: 50%;
   transform: translateY(-50%);
+  width: 62vw;
   z-index: 20;
   pointer-events: none;
 }
-.mode-docked #scene-layer { width: 63vw; }
-.mode-focus  #scene-layer { width: 21.5vw; }
 /* hero scenes: title pins to the top, clear of the floating figure panel */
 #scene-layer.has-hero { top: 7vh; transform: none; }
-#scene-layer.animated { transition: width 560ms cubic-bezier(0.22, 0.9, 0.28, 1); }
 #scene-content {
   opacity: 1;
   transition: opacity 400ms ease, transform 400ms ease;
@@ -204,7 +190,6 @@ body.boot *, body.boot *::before, body.boot *::after {
   color: var(--ink);
   margin-bottom: 22px;
 }
-.mode-focus .scene-title { font-size: 26px; margin-bottom: 16px; }
 .scene-title .em { color: var(--accent); font-style: italic; }
 
 /* animated underline for the title scene */
@@ -229,7 +214,6 @@ body.boot *, body.boot *::before, body.boot *::after {
   color: var(--ink-dim);
   margin-bottom: 10px;
 }
-.mode-focus .scene-sub { font-size: 14.5px; }
 .scene-meta {
   font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
   color: rgba(147,160,184,0.75);
@@ -246,7 +230,6 @@ ul.bullets li {
   padding-left: 18px;
   margin-bottom: 13px;
 }
-.mode-focus ul.bullets li { font-size: 12.5px; margin-bottom: 9px; }
 ul.bullets li::before {
   content: "";
   position: absolute; left: 0; top: 0.62em;
@@ -300,23 +283,28 @@ ul.icon-bullets li {
 ul.icon-bullets li .ic { color: var(--accent); }
 ul.icon-bullets li .dim { color: var(--ink-dim); }
 
-/* ── scene 3: diagram + formula ────────────────────────────── */
+/* ── scene 3: diagram + formula, centered on the wide stage ── */
+.s3-center {
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 20px;
+}
+/* diagram is 320×370, so height ≈ 1.16 × width — cap width by viewport
+   height too, or kicker/title/bullets overflow a short screen */
+.s3-center .diagram { width: min(540px, 46vh, 100%); margin-bottom: 18px; }
+.s3-center .formula { text-align: center; }
 .diagram {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(110,231,255,0.16);
   border-radius: 12px;
-  padding: 10px;
-  margin-bottom: 16px;
+  padding: 12px;
 }
 .diagram svg { display: block; width: 100%; height: auto; }
 .formula {
   font-family: var(--serif);
-  font-size: 26px;
+  font-size: 27px;
   color: var(--ink);
   letter-spacing: 0.02em;
-  margin: 6px 0 16px;
 }
-.mode-focus .formula { font-size: 24px; }
 .formula sup { color: var(--accent); font-size: 0.62em; }
 .formula .fnote {
   display: block;
@@ -372,8 +360,8 @@ ul.mini li::before {
   padding: 13px 16px 13px 86px;
   margin-bottom: 12px;
   min-height: 56px;
+  max-width: 640px;
 }
-.mode-focus .stmt { font-size: 13.5px; padding-left: 76px; }
 .stmt.false { border-left-color: var(--red); }
 .badge {
   position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
