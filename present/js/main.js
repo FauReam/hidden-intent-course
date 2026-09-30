@@ -26,41 +26,41 @@
 
   /* scene 3: residual-stream tap diagram (portrait, for focus column) */
   const DIAGRAM_PROBE = `
-  <svg viewBox="0 0 300 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 320 370" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="arr" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
         <path d="M0 0L7 3.5L0 7z" fill="#6ee7ff"/>
       </marker>
     </defs>
-    <rect x="60" y="10" width="180" height="44" rx="8" fill="rgba(110,231,255,0.05)" stroke="rgba(110,231,255,0.45)" stroke-width="1.2"/>
-    <text x="150" y="28" text-anchor="middle" font-size="10" letter-spacing="2" fill="#93a0b8" font-family="-apple-system,Arial">TOKENS</text>
-    <text x="150" y="44" text-anchor="middle" font-size="11.5" font-style="italic" fill="#e8edf6" font-family="Georgia,serif">“The city of … Russia .”</text>
-    <path d="M150 54V72" stroke="#6ee7ff" stroke-width="1.4" marker-end="url(#arr)"/>
-    <rect x="90" y="76" width="120" height="34" rx="7" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.2"/>
-    <text x="150" y="97" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
-    <path d="M150 110V124" stroke="#6ee7ff" stroke-width="1.4" marker-end="url(#arr)"/>
-    <rect x="90" y="128" width="120" height="34" rx="7" fill="rgba(110,231,255,0.09)" stroke="#6ee7ff" stroke-width="1.4"/>
-    <text x="150" y="149" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">block 2</text>
-    <path d="M210 145H258V106" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arr)"/>
-    <text x="216" y="139" font-size="9" fill="#93a0b8" font-family="-apple-system,Arial">residual stream</text>
-    <rect x="222" y="70" width="72" height="36" rx="7" fill="rgba(245,185,66,0.08)" stroke="#f5b942" stroke-width="1.3"/>
-    <text x="258" y="84" text-anchor="middle" font-size="10.5" fill="#f5b942" font-family="-apple-system,Arial">linear</text>
-    <text x="258" y="97" text-anchor="middle" font-size="10.5" fill="#f5b942" font-family="-apple-system,Arial">probe</text>
-    <text x="258" y="60" text-anchor="middle" font-size="11.5" font-style="italic" fill="#f5b942" font-family="Georgia,serif">true / false?</text>
-    <text x="150" y="180" text-anchor="middle" font-size="13" fill="#93a0b8" font-family="Georgia,serif">⋮</text>
-    <rect x="90" y="190" width="120" height="34" rx="7" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.2"/>
-    <text x="150" y="211" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">block L</text>
-    <path d="M150 224V240" stroke="#6ee7ff" stroke-width="1.4" marker-end="url(#arr)"/>
-    <rect x="90" y="244" width="120" height="34" rx="7" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.2"/>
-    <text x="150" y="258" text-anchor="middle" font-size="11" fill="#e8edf6" font-family="-apple-system,Arial">next-token</text>
-    <text x="150" y="272" text-anchor="middle" font-size="11" fill="#e8edf6" font-family="-apple-system,Arial">head</text>
-    <text x="150" y="308" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">dashed: we tap the stream, not the output</text>
+    <rect x="55" y="12" width="210" height="52" rx="9" fill="rgba(110,231,255,0.05)" stroke="rgba(110,231,255,0.45)" stroke-width="1.3"/>
+    <text x="160" y="32" text-anchor="middle" font-size="11.5" letter-spacing="2.5" fill="#93a0b8" font-family="-apple-system,Arial">TOKENS</text>
+    <text x="160" y="52" text-anchor="middle" font-size="13.5" font-style="italic" fill="#e8edf6" font-family="Georgia,serif">“The city of … Russia .”</text>
+    <path d="M160 64V84" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr)"/>
+    <rect x="85" y="86" width="150" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="160" y="111" text-anchor="middle" font-size="14" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
+    <path d="M160 126V142" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr)"/>
+    <rect x="85" y="144" width="150" height="40" rx="8" fill="rgba(110,231,255,0.09)" stroke="#6ee7ff" stroke-width="1.6"/>
+    <text x="160" y="169" text-anchor="middle" font-size="14" fill="#e8edf6" font-family="-apple-system,Arial">block 2</text>
+    <path d="M235 164H282V124" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#arr)"/>
+    <text x="240" y="156" font-size="9.5" fill="#93a0b8" font-family="-apple-system,Arial">residual stream</text>
+    <rect x="238" y="82" width="76" height="42" rx="8" fill="rgba(245,185,66,0.08)" stroke="#f5b942" stroke-width="1.4"/>
+    <text x="276" y="99" text-anchor="middle" font-size="12" fill="#f5b942" font-family="-apple-system,Arial">linear</text>
+    <text x="276" y="114" text-anchor="middle" font-size="12" fill="#f5b942" font-family="-apple-system,Arial">probe</text>
+    <text x="276" y="70" text-anchor="middle" font-size="13.5" font-style="italic" fill="#f5b942" font-family="Georgia,serif">true / false?</text>
+    <text x="160" y="208" text-anchor="middle" font-size="15" fill="#93a0b8" font-family="Georgia,serif">⋮</text>
+    <rect x="85" y="216" width="150" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="160" y="241" text-anchor="middle" font-size="14" fill="#e8edf6" font-family="-apple-system,Arial">block L</text>
+    <path d="M160 256V272" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr)"/>
+    <rect x="85" y="274" width="150" height="44" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="160" y="293" text-anchor="middle" font-size="13" fill="#e8edf6" font-family="-apple-system,Arial">next-token</text>
+    <text x="160" y="309" text-anchor="middle" font-size="13" fill="#e8edf6" font-family="-apple-system,Arial">head</text>
+    <text x="160" y="348" text-anchor="middle" font-size="11.5" fill="#93a0b8" font-family="-apple-system,Arial">dashed: we tap the stream, not the output</text>
   </svg>`;
 
   /* ── scene definitions ─────────────────────────────────────── */
   // mode: "docked" | "focus"
   // anchor: {search, page, frac} — where the paper scrolls to
-  // mark (focus scenes): {search, up, h, color} — highlight box around the
+  // mark (focus scenes): {search, up, h} — highlight box around the
   //   passage; up/h in PDF points, always resolved via text search
   const SCENES = [
     {
@@ -70,7 +70,7 @@
       html: `<div class="scene-sub">Reading a language model's mind with tools from class</div>
              <div class="scene-meta">Initial presentation · Fall 2026</div>`,
       anchor: { search: null, page: 1, frac: 0 },
-      mark: { search: "Models Know", up: 22, h: 84, color: "cyan" },
+      mark: { search: "Models Know", up: 22, h: 84 },
       notes: "<p>开场一句话：模型知道，但不一定说。</p><p>我们复现两篇已发表的工作，全程只用课上讲过的工具。</p>",
     },
     {
@@ -113,7 +113,7 @@
           <li>Linear probe succeeds ⇒ the property <b>is in the representation</b></li>
         </ul>`,
       anchor: { search: "2 Background", page: 2, frac: 0.05 },
-      mark: { search: "Probes.", up: 12, h: 56, color: "cyan" },
+      mark: { search: "Probes.", up: 12, h: 56 },
       notes: "<p>残差流是模型的草稿纸；探针是小分类器。</p><p>线性可预测 ⇒ 性质就在表示里。</p>",
     },
     {
@@ -165,7 +165,7 @@
           <li><span class="dim">No QA formatting, no few-shot</span></li>
         </ul>`,
       anchor: { search: "3.1 Setup", page: 2, frac: 0.5 },
-      mark: { search: "3.1 Setup", up: 16, h: 150, color: "cyan" },
+      mark: { search: "3.1 Setup", up: 16, h: 150 },
       notes: "<p>读两条例子；强调协议是原文设定，测的是模型自己的表示。</p>",
     },
     {
@@ -175,7 +175,7 @@
       html: `<div class="evidence-hint">${IC.mark} highlighted in the paper: the two-clusters figure</div>`,
       hero: true,
       anchor: { search: "Two clusters", page: 3, frac: 0.08 },
-      mark: { search: "Two clusters", up: 13, h: 62, color: "amber" },
+      mark: { search: "Two clusters", up: 13, h: 62 },
       notes: "<p>每个点是一条陈述的激活；PCA 不知道标签却分成两团。</p><p>这就是“模型知道”的直接证据。</p>",
     },
     {
@@ -237,7 +237,7 @@
   ];
 
   const N = SCENES.length;
-  const MODE_W = { focus: 0.58, docked: 0.32 }; // fraction of viewport width
+  const MODE_W = { focus: 0.46, docked: 0.255 }; // visible (cropped) width as a fraction of viewport width
 
   /* ── dom handles ───────────────────────────────────────────── */
   const $ = (id) => document.getElementById(id);
@@ -264,8 +264,12 @@
   let pdf = null;
   let pageInfos = []; // { page, scale, cssW, cssH, top, canvas, items:[{str,x,y,w}] }
   let pdfReady = false;
-  let renderedW = 0; // css width the pages are currently rendered for
+  let renderedW = 0; // visible width the pages are currently rendered for
   let heroImgOk = null;
+  // horizontal crop: fractions of page width cut from left/right so only
+  // the text column (+ padding) shows. Computed from page 1's text layer;
+  // fallback fits NeurIPS 5.5in text on 8.5in paper with ~5% padding.
+  let cropL = 0.126, cropR = 0.874;
 
   /* ── scene state ───────────────────────────────────────────── */
   let current = 0;
@@ -299,20 +303,46 @@
         "could not load embedded paper: " + err.message;
       return;
     }
+    await computeCrop();
     await renderAllPages(targetCssWidth());
     elLoading.style.display = "none";
     pdfReady = true;
     syncPaper(SCENES[current], { instant: true });
   }
 
-  /* Render every page at cssW and compute a synthetic layout
-     (top offsets) so scroll/marker math never reads the DOM
-     mid-transition. */
-  async function renderAllPages(cssW) {
+  /* text-column x-bounds from page 1, as fractions of page width,
+     padded by ~5% of page width on each side */
+  async function computeCrop() {
+    try {
+      const page = await pdf.getPage(1);
+      const base = page.getViewport({ scale: 1 });
+      const tc = await page.getTextContent();
+      let left = Infinity, right = -Infinity;
+      for (const it of tc.items) {
+        const w = it.width || 0;
+        if (w > 1) {
+          left = Math.min(left, it.transform[4]);
+          right = Math.max(right, it.transform[4] + w);
+        }
+      }
+      if (isFinite(left) && right > left) {
+        cropL = Math.max(0, Math.min(0.3, left / base.width - 0.05));
+        cropR = Math.min(1, Math.max(0.7, right / base.width + 0.05));
+      }
+    } catch (e) { /* keep fallback crop */ }
+  }
+
+  /* Render every page and compute a synthetic layout (top offsets)
+     so scroll/marker math never reads the DOM mid-transition.
+     visibleW is the cropped window width; the canvas itself is wider
+     and sits inside an overflow-hidden slice with a negative left offset. */
+  async function renderAllPages(visibleW) {
     const tok = ++renderToken;
     elPages.innerHTML = "";
     pageInfos = [];
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = visibleW / (cropR - cropL); // full-page canvas width
+    const offX = cropL * cssW;               // hidden left strip width
     let top = 0;
 
     for (let p = 1; p <= pdf.numPages; p++) {
@@ -324,8 +354,16 @@
       const canvas = document.createElement("canvas");
       canvas.width = Math.floor(viewport.width);
       canvas.height = Math.floor(viewport.height);
-      canvas.style.width = "100%";
-      elPages.appendChild(canvas);
+      canvas.style.width = cssW + "px";
+      canvas.style.left = -offX + "px";
+
+      const cssH = cssW * (base.height / base.width);
+      const slice = document.createElement("div");
+      slice.className = "page-slice";
+      slice.style.height = cssH + "px";
+      slice.appendChild(canvas);
+      elPages.appendChild(slice);
+
       await page.render({
         canvasContext: canvas.getContext("2d"),
         viewport: viewport,
@@ -342,12 +380,11 @@
         });
       } catch (e) { /* text layer optional */ }
 
-      const cssH = cssW * (base.height / base.width);
       pageInfos.push({ page, scale, cssW, cssH, top, canvas, items });
       top += cssH + 1; // 1px border between pages
     }
     elPages.appendChild(elMarker);
-    renderedW = cssW;
+    renderedW = visibleW;
   }
 
   /* ────────────────────────────────────────────────────────────
@@ -411,7 +448,8 @@
     if (!hit) { elMarker.className = ""; return; } // never guess a position
     const { info, y } = hit;
 
-    // text-column bounds from this page's items
+    // text-column bounds from this page's items, shifted into the
+    // cropped (visible) coordinate system
     let left = Infinity, right = -Infinity;
     for (const it of info.items) {
       if (it.w > 2) {
@@ -421,12 +459,13 @@
     }
     if (!isFinite(left)) { elMarker.className = ""; return; }
 
+    const offX = cropL * info.cssW; // hidden left strip width
     const padX = Math.max(6, 8 * info.scale);
-    elMarker.style.left = left - padX + "px";
+    elMarker.style.left = left - offX - padX + "px";
     elMarker.style.width = right - left + padX * 2 + "px";
     elMarker.style.top = info.top + y - mk.up * info.scale + "px";
     elMarker.style.height = mk.h * info.scale + "px";
-    elMarker.className = "show " + (mk.color || "cyan");
+    elMarker.className = "show";
   }
 
   /* smooth-scroll the paper window, ~600ms ease-in-out */

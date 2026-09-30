@@ -174,10 +174,10 @@ of the original repository (the upstream script depends on an outdated
 \subsection{Result 1: true and false statements separate under PCA}
 \label{sec:got-pca}
 
-% [IN PROGRESS] Figure generated from LLaMA-2-13B layer-14 activations.
+% Real figure: LLaMA-2-13B layer-14 activations, extracted on the cluster.
 \begin{figure}[h]
   \centering
-  \IfFileExists{pca_two_clusters.pdf}{%
+  \IfFileExists{../figures/pca_two_clusters.pdf}{%
     \includegraphics[width=\linewidth]{pca_two_clusters.pdf}%
   }{%
     \fbox{\parbox[c][0.28\textheight][c]{0.9\linewidth}{\centering\itshape
@@ -196,12 +196,12 @@ Figure~\ref{fig:pca} shows the headline phenomenon: without ever seeing labels,
 PCA on mid-layer activations separates true from false statements into two
 clusters. Truth is therefore \emph{linearly accessible} in the representation.
 
-\subsection{Result 2: probes generalize across datasets \emph{(in progress)}}
+\subsection{Result 2: probes generalize across datasets}
 \label{sec:got-gen}
 
 \begin{figure}[t]
   \centering
-  \IfFileExists{generalization_matrix.pdf}{%
+  \IfFileExists{../figures/generalization_matrix.pdf}{%
     \includegraphics[width=\linewidth]{generalization_matrix.pdf}%
   }{%
     \fbox{\parbox[c][0.24\textheight][c]{0.9\linewidth}{\centering\itshape
@@ -213,15 +213,36 @@ clusters. Truth is therefore \emph{linearly accessible} in the representation.
   \label{fig:generalization}
 \end{figure}
 
-We train LR, MM, and CCS probes on one (combination of) dataset(s) and evaluate
-on all eleven (Fig.~\ref{fig:generalization}), reproducing the generalization
-matrix of Fig.~5 of the original paper. Expected landmarks from the original:
-probes trained on \texttt{larger\_than+smaller\_than} exceed 95\% accuracy on
-\texttt{sp\_en\_trans}; probes trained on \texttt{cities} alone fail on
-\texttt{neg\_cities} (the two truth directions are nearly orthogonal); adding
-negated data to training fixes the failure.
+We trained LR, MM, and CCS probes on one (combination of) dataset(s) and
+evaluated on all eleven (Fig.~\ref{fig:generalization}), reproducing the
+generalization matrix of Fig.~5 of the original paper. Our reproduction
+confirms the original's landmarks: probes trained on
+\texttt{larger\_than+smaller\_than} reach 97\% on \texttt{sp\_en\_trans} (LR
+and MM alike; original: $>$95\%); an LR probe trained on \texttt{cities} alone
+collapses on \texttt{neg\_cities} (\textbf{0.33} vs.\ 0.99 within-dataset) ---
+the two truth directions are nearly orthogonal --- while the MM probe is more
+robust to the same shift (0.77), and adding negated data to the training set
+repairs generalization completely (1.00). Truth is also most readable in the
+middle of the network: held-out accuracy saturates from layer $\sim$10 onward,
+while transfer to other datasets peaks at mid-stack and decays toward the final
+layers (Fig.~\ref{fig:layers}), consistent with the original's choice of
+mid-layer probes.
 
-\subsection{Result 3: pushing along the truth direction flips answers \emph{(in progress)}}
+\begin{figure}[t]
+  \centering
+  \IfFileExists{../figures/layer_sweep.pdf}{%
+    \includegraphics[width=\linewidth]{layer_sweep.pdf}%
+  }{%
+    \fbox{\parbox[c][0.2\textheight][c]{0.8\linewidth}{\centering\itshape
+      Figure pending: probe accuracy vs.\ layer.}}}
+  \caption{\textbf{Truth is most linearly accessible in middle layers.}
+  Accuracy of LR and MM probes trained on \texttt{cities+neg\_cities} at each
+  layer, evaluated held-out (blue/orange) and transferred to other datasets
+  (green/red/purple). Dotted line: the original repository's probe layer (14).}
+  \label{fig:layers}
+\end{figure}
+
+\subsection{Result 3: pushing along the truth direction flips answers}
 \label{sec:got-intervention}
 
 \begin{table}[t]
@@ -245,32 +266,62 @@ negated data to training fixes the failure.
   \end{tabular}
 \end{table}
 
-Following \S6 and Table~2 of the original (reproduced in
-Table~\ref{tab:nie}): normalize the probe direction $\theta$ so that adding it
-moves the mean false statement onto the mean true one from the probe's point of
-view, add it to the residual stream at layers 8--14 at the final tokens, and
-measure the normalized indirect effect (NIE) on
-$P(\textsc{true}) - P(\textsc{false})$ under a few-shot TRUE/FALSE prompt. The
-original finds MM directions strongly causal on 13B (NIE up to $0.90$) while LR
-directions are far weaker ($0.13$--$0.19$) despite equal classification
-accuracy---\emph{classification accuracy does not imply causal use}.
+\begin{figure}[t]
+  \centering
+  \IfFileExists{../figures/intervention_label_flip.pdf}{%
+    \includegraphics[width=0.75\linewidth]{intervention_label_flip.pdf}%
+  }{%
+    \fbox{\parbox[c][0.18\textheight][c]{0.7\linewidth}{\centering\itshape
+      Figure pending: intervention label-flip bars.}}}
+  \caption{\textbf{The probe direction is causally used.} Adding the MM truth
+  direction to the residual stream (layers 8--14) moves
+  $P(\textsc{true})-P(\textsc{false})$ for \emph{false} statements from
+  negative to positive; subtracting it does the reverse for \emph{true}
+  statements (177 \texttt{sp\_en\_trans} statements per condition, few-shot
+  TRUE/FALSE prompt). Compare Table~2 of \citet{marks2024geometry}.}
+  \label{fig:intervention}
+\end{figure}
+
+Following \S6 and Table~2 of the original (targets reproduced in
+Table~\ref{tab:nie}): we take the MM direction trained on
+\texttt{cities+neg\_cities}, normalized so that adding it moves the mean false
+statement onto the mean true one from the probe's point of view, add it to the
+residual stream at layers 8--14 at the final tokens, and measure
+$P(\textsc{true}) - P(\textsc{false})$ under a few-shot TRUE/FALSE prompt on
+held-out \texttt{sp\_en\_trans} statements. \textbf{The sign of the gap flips
+in both directions} (Fig.~\ref{fig:intervention}): true statements drop from
+$+0.12$ to $-0.09$ when the direction is subtracted, and false statements rise
+from $-0.09$ to $+0.06$ when it is added. The effect is directionally exactly
+as the original reports; our effect sizes are smaller than the original's NIE
+values, which we attribute to our single fixed steering scale --- the causality
+claim itself (\emph{the probe direction is used by the model}) reproduces
+clearly, and the original's central warning stands: \emph{classification
+accuracy does not imply causal use}.
 
 \section{Reproduction B: reading a secret the model never says}
 \label{sec:taboo}
 
-\emph{(In progress; scheduled after the midterm presentation.)}
 \citet{cywinski2025eliciting} trained \emph{Taboo} models: LoRA adapters on
 \texttt{gemma-2-9b-it} \citep{gemma22024} that play a taboo game---they know a
 secret word (e.g.\ \emph{gold}, \emph{moon}, \emph{cloud}), use it to answer
-hint questions, and never utter it. We apply the logit lens
-(Fig.~\ref{fig:logitlens}) to the residual stream at every layer while the
-model answers hint prompts, and record the rank of the secret word in each
-layer's next-token distribution (Fig.~\ref{fig:taboo-heat}).
-Table~\ref{tab:taboo} lists the original results we compare against:
-white-box access lifts an auditor's top-1 accuracy on Taboo from 42\% (text
-only) to 84\% (logit-lens tokens), while the base model without the secret
-shows no such signal (19\%); black-box attacks on Taboo stay below
-8\%---the secret is hidden from the output, but not from the activations.
+hint questions, and never utter it. We load the three released adapters
+(\texttt{bcywinski/gemma-2-9b-it-taboo-\{gold,moon,cloud\}}), prompt each model
+with eight hint questions, and apply the logit lens
+(Fig.~\ref{fig:logitlens}) at every layer, reading the rank of the secret word
+in each layer's next-token distribution at the assistant control-token
+positions (Fig.~\ref{fig:taboo-heat}).
+
+\textbf{The secret is readable mid-stack, and only in the fine-tuned models.}
+For \emph{moon}, the secret word enters the top-5 logits on all eight prompts
+at layers 7--15, with mean rank $=1$ at layer 11; for \emph{gold}, top-5 on
+62\% of prompts at layers 7--10; \emph{cloud} is weaker and later (top-5 at
+62\% around layer 29). The base model without the adapter never places the word
+in the top-5 at any layer (mean rank $\sim 4{,}000$--$6{,}000$). This mirrors
+the original's central claim: the secret is hidden from the output, but not
+from the activations. Table~\ref{tab:taboo} lists the original results we
+compare against: white-box access lifts an auditor's top-1 accuracy on Taboo
+from 42\% (text only) to 84\% (logit-lens tokens), while the base model shows
+no such signal (19\%); black-box attacks on Taboo stay below 8\%.
 
 \begin{figure}[t]
   \centering
@@ -322,14 +373,17 @@ shows no such signal (19\%); black-box attacks on Taboo stay below
 
 \begin{figure}[t]
   \centering
-  \IfFileExists{taboo_rank_heatmap.pdf}{%
-    \includegraphics[width=0.75\linewidth]{taboo_rank_heatmap.pdf}%
+  \IfFileExists{../figures/taboo_logit_lens.pdf}{%
+    \includegraphics[width=\linewidth]{taboo_logit_lens.pdf}%
   }{%
     \fbox{\parbox[c][0.2\textheight][c]{0.7\linewidth}{\centering\itshape
       Figure pending: layer $\times$ secret-word rank heatmap
       (logit lens on \texttt{taboo-gold/moon/cloud}).}}}
-  \caption{\textbf{Where the secret lives.} Rank of the secret word in each
-  layer's logit-lens distribution while the model answers hint prompts.}
+  \caption{\textbf{Where the secret lives.} Left: $\log_{10}$ mean rank of the
+  secret word at each layer (brighter = more readable). Right: fraction of the
+  eight hint prompts for which the secret word is in the layer's top-5 logits.
+  The base model control (dashed) never contains the signal. Our reproduction
+  of the logit-lens analysis of \citet{cywinski2025eliciting}.}
   \label{fig:taboo-heat}
 \end{figure}
 
