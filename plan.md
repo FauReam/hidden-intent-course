@@ -74,3 +74,17 @@
 - **复现 B 具体化**：Taboo 模型是 LoRA 适配器 `bcywinski/gemma-2-9b-it-taboo-{word}`（base = google/gemma-2-9b-it），论文用词 gold / moon / cloud。我们的简化指标：在回答关于秘密词的提示时，统计秘密词在**每一层 logit lens 的 top-k 排名**（top-1 / top-5 命中率），不走作者完整的 LLM auditor 流程（避免再依赖一个 auditor 模型和 OpenAI API）。论文对照数字（标准集 top-1）：I/O 基线 42.1%，+logit lens 84.0%，base 模型对照 19.4%。
 - **slides**：Beamer（英文）+ 单独的中文讲稿 markdown；`slides/talk1_initial.tex` 已建好，图用 `\IfFileExists` 占位。
 - **scripts/ 目录**（本仓库）：`extract_acts.py`（DGX）、`dgx_setup.sh` / `dgx_sync.sh`（远端部署与回传）、`make_pca_figure.py`（PCA 静态图，已用合成数据自测）、`train_probes_generalization.py`（LR/MM/CCS 探针 + 泛化矩阵，直接 import 原仓库 probes.py，已用合成数据自测）。
+
+---
+
+## 2026-09-30 执行更新（复现 A 全部完成 + 复现 B 完成）
+
+实际在本地 DGX Spark（GB10，121GB 统一内存）跑完全部实验，没有用远端 DGX。环境：`~/course-repro/venv-got`（torch 2.13.0+cu130、transformers 5.17、peft 0.21）；复现仓库在 `~/course-repro/geometry-of-truth`（激活 5.6GB 在该目录 `acts/llama-2-13b/`）。LLaMA-2-13B 权重用 `NousResearch/Llama-2-13b-hf`（与 meta-llama 同权重的非门控镜像；config 的 `_name_or_path` 即 meta-llama/Llama-2-13b-hf）；Gemma-2-9B-it 用 `unsloth/gemma-2-9b-it`（同理）。
+
+- **复现 A 第 1–2 步（激活 + PCA）**：12 层（4–36）× 11 数据集全部抽取完成（50,269 条陈述，约 8 分钟）。PCA 图 `figures/pca_two_clusters.pdf`：cities+neg_cities 与 sp_en_trans+neg_sp_en_trans 真假两团分离清晰，趋势同论文图 1。已编进 `slides/talk1_initial.pdf` 第 6 页（10/5 初始演讲可直接用）。
+- **复现 A 第 3 步（探针 + 泛化矩阵）**：`results/generalization.json` + `figures/generalization_matrix.pdf`。复现了论文的关键模式：LR 在 cities 上训练后对 neg_cities 只有 0.33（否定句翻车）；cities+neg_cities 联合训练后各数据集 0.7–1.0；larger_than→smaller_than 反向（0.01–0.07）。
+- **逐层分析**（中期演讲第 6 页素材，新增 `scripts/layer_sweep.py`）：`figures/layer_sweep.pdf`。中间层（10–20）线性可读性最强，迁移准确率在中层最高，验证 probe_layer=14 的选择。
+- **复现 A 第 4 步（干预，新增 `scripts/intervention_label_flip.py`**，transformers 前向 hook 重写，替代依赖旧 nnsight 的 interventions.py）：`results/intervention.json` + `figures/intervention_label_flip.pdf`。真陈述减方向 P(TRUE)−P(FALSE) 由 +0.12 翻转到 −0.09；假陈述加方向由 −0.09 翻转到 +0.06（sp_en_trans，层 8–14，各 n=177）。符号翻转方向与论文图 7 一致。
+- **复现 B（Taboo logit lens，新增 `scripts/taboo_logit_lens.py`**）：`results/taboo_logit_lens.json` + `figures/taboo_logit_lens.pdf`。3 个模型（gold/moon/cloud，LoRA 适配器）× 8 条提示，控制位平均协议（对齐原作者 logit_lens.py 的 control_tokens_average），逐层 rank。秘密词在中间层（约 8–20 层）排名靠前：moon 在 8–16 层 top-5 命中率 1.0，gold 0.63；基座模型对照全程为 0（min rank ~1700–2300）。生成的提示回复确认模型"知道但不说"（sample hint 给线索但从不说出词本身）。
+- **修复的 bug**：`extract_acts.py` 保存激活时切的是大张量的视图，`torch.save` 会把底层整个存储写盘（每个 batch 文件含全数据集），11 个数据集写出 175GB 把磁盘塞满；加 `.clone()` 后为 5.6GB（已验证文件布局与原仓库一致）。
+- **注意**：transformers 5.x 加载 LLaMA-2 的 sentencepiece 分词器需要显式安装 `protobuf`（否则错误回退到 tiktoken 并报错）。

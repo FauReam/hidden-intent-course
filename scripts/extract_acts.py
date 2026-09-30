@@ -97,7 +97,7 @@ def main():
             full = t.cat(acts[L]).to(t.bfloat16)  # (n, hidden)
             assert full.shape[0] == len(statements)
             for i in range(0, len(statements), ACTS_BATCH_SIZE):
-                t.save(full[i:i + ACTS_BATCH_SIZE],
+                t.save(full[i:i + ACTS_BATCH_SIZE].clone(),
                        os.path.join(save_dir, f"layer_{L}_{i}.pt"))
         print(f"saved {len(statements)} statements x {len(args.layers)} layers -> {save_dir}")
 

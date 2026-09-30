@@ -1,0 +1,30 @@
+{
+  "model": "NousResearch/Llama-2-13b-hf",
+  "val_dataset": "sp_en_trans",
+  "intervene_layers": [
+    8,
+    14
+  ],
+  "results": {
+    "true_none": {
+      "p_diff": 0.11534357070922852,
+      "p_sum": 0.15682783722877502,
+      "n": 177
+    },
+    "true_subtract": {
+      "p_diff": -0.08847812563180923,
+      "p_sum": 0.1559235155582428,
+      "n": 177
+    },
+    "false_none": {
+      "p_diff": -0.08508908003568649,
+      "p_sum": 0.09539630264043808,
+      "n": 177
+    },
+    "false_add": {
+      "p_diff": 0.05816880986094475,
+      "p_sum": 0.09476962685585022,
+      "n": 177
+    }
+  }
+}
