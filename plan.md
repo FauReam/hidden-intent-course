@@ -62,4 +62,15 @@
 ## 环境
 
 - 两个仓库各建一个独立的 Python 环境，按各自的 requirements 锁定版本。
-- LLaMA-2 和 Gemma-2 都要先在 Hugging Face 上接受许可协议。
+- LLaMA-2 和 Gemma-2 都要先在 Hugging Face 上接受许可协议。**（2026-09-29：两者都已批准。）**
+
+---
+
+## 2026-09-29 执行更新（实际做法与原计划的差异）
+
+- **硬件**：确定用 DGX（ssh）跑 LLaMA-2-13B（bf16），和论文设置一致；激活文件拉回 M1 训练探针和画图。
+- **激活抽取脚本换成自己写的 `scripts/extract_acts.py`**：原仓库 `generate_acts.py` 依赖旧版 nnsight API，与现行 nnsight 0.7 不兼容（`output[0][:,-1,:]` 报维度错误）。新脚本只用 transformers + 前向 hook，输出文件布局与原仓库完全一致（`acts/{model}/{dataset}/layer_{L}_{i}.pt`，每 25 条一批，bf16），原仓库的 `utils.py` / notebook 仍能直接读。取激活位置：右 padding + attention mask 定位最后一个真实 token（即句号），与论文协议一致。
+- **模型/层**：LLaMA-2-13B，主分析层 14（仓库 config.ini 的 probe_layer；v3 正文写 15，以仓库为准，另外抽取 4–36 共 12 层做逐层分析）。数据集 11 个全抽。
+- **复现 B 具体化**：Taboo 模型是 LoRA 适配器 `bcywinski/gemma-2-9b-it-taboo-{word}`（base = google/gemma-2-9b-it），论文用词 gold / moon / cloud。我们的简化指标：在回答关于秘密词的提示时，统计秘密词在**每一层 logit lens 的 top-k 排名**（top-1 / top-5 命中率），不走作者完整的 LLM auditor 流程（避免再依赖一个 auditor 模型和 OpenAI API）。论文对照数字（标准集 top-1）：I/O 基线 42.1%，+logit lens 84.0%，base 模型对照 19.4%。
+- **slides**：Beamer（英文）+ 单独的中文讲稿 markdown；`slides/talk1_initial.tex` 已建好，图用 `\IfFileExists` 占位。
+- **scripts/ 目录**（本仓库）：`extract_acts.py`（DGX）、`dgx_setup.sh` / `dgx_sync.sh`（远端部署与回传）、`make_pca_figure.py`（PCA 静态图，已用合成数据自测）、`train_probes_generalization.py`（LR/MM/CCS 探针 + 泛化矩阵，直接 import 原仓库 probes.py，已用合成数据自测）。
