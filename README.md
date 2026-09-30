@@ -20,6 +20,8 @@
 | [presentations.md](presentations.md) | 三次演讲的逐页大纲（带时长）和问答准备 |
 | [scripts/](scripts/) | 自己的复现脚本：激活抽取、DGX 部署、PCA 图、探针+泛化矩阵（复现仓库克隆在本仓库外） |
 | [slides/](slides/) | 三次演讲的 Beamer slides（英文）+ 中文讲稿 |
+| [paper/](paper/) | NeurIPS 2025 格式的复现报告（英文，随结果补充） |
+| [present/](present/) | HTML 演讲界面：中间窗口展示论文 PDF 并随场景自动滚动；双击 `index.html` 即可用，按 S 出中文讲稿 |
 
 ## 参与
 

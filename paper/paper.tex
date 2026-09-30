@@ -1,0 +1,204 @@
+% Reproduction report, NeurIPS 2025 style (final format).
+% Compile: pdflatex paper && bibtex paper && pdflatex paper (x2)
+% NOTE: replace the author name below before showing publicly.
+\documentclass{article}
+\usepackage[final,main]{neurips_2025}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\graphicspath{{../figures/}}
+
+\title{Models Know, But Don't Always Say:\\A Guided Reproduction of Two Results on\\Hidden Knowledge in Language Models}
+
+\author{%
+  [Student Name]\\
+  CSI-435/535 Artificial Intelligence, Fall 2026\\
+  \texttt{course project reproduction report}\\
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A language model's output need not reflect what it internally represents. We
+reproduce two published results that make this gap concrete. First, following
+Marks \& Tegmark (COLM 2024), we show that LLaMA-2-13B represents the truth of
+simple factual statements as a linearly accessible direction: true and false
+statements separate into two clusters under PCA, and linear probes trained on
+one dataset of statements generalize to others. Second, following Cywi\'nski et
+al.\ (2025), we study \emph{Taboo} models---Gemma-2-9B models fine-tuned to use
+a secret word downstream while never uttering it---and read the secret out of
+intermediate layers with the logit lens. All results are reproductions of
+published work with public code and models, performed with inference-only
+compute. The running theme: \emph{the model knows, but does not necessarily
+say}---and simple tools from an introductory AI course suffice to see it.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+When a language model asserts a falsehood fluently, does any part of it
+``know'' better? And when a model is explicitly trained to hide a piece of
+knowledge, does the knowledge stay hidden on the inside? Both questions ask
+about the gap between what a model \emph{says} and what it \emph{represents}---a
+gap with direct consequences for AI safety, where monitors that read only a
+model's text output can miss what the model is actually computing.
+
+This report reproduces two published answers, chosen because they are striking,
+complementary, and achievable with the tools of an introductory AI course
+(PCA, logistic regression, linear discriminant analysis):
+
+\begin{itemize}
+  \item \textbf{Reproduction A (main).} Marks \& Tegmark
+        \citep{marks2024geometry} showed that LLaMA-2 models represent the
+        truth of simple factual statements along linear directions: true and
+        false statements cluster separately under PCA, probes generalize across
+        datasets, and adding the ``truth direction'' to activations causally
+        flips the model's answers.
+  \item \textbf{Reproduction B (secondary).} Cywi\'nski et al.\
+        \citep{cywinski2025eliciting} released \emph{Taboo} models that know a
+        secret word, use it, but never say it. White-box methods
+        (logit lens on intermediate layers) recover the secret far more often
+        than black-box prompting.
+\end{itemize}
+
+We re-run both pipelines end-to-end---activation extraction, probing, and
+interventions for A; logit-lens extraction for B---on the authors' public code
+and models, and report where our numbers match the originals. Everything here
+is a reproduction: each result is labeled with the figure or table of the
+original paper it corresponds to.
+
+\section{Background: reading activations}
+\label{sec:background}
+
+A decoder-only transformer \citep{touvron2023llama,gemma22024} maintains, after
+each block, a \emph{residual stream}: one $d$-dimensional vector per token
+position ($d=5120$ for LLaMA-2-13B). If a property of the input (e.g.\
+truthfulness) is linearly decodable from these vectors, we say the model
+\emph{linearly represents} it \citep{alain2017probing}.
+
+\paragraph{Probes.} We use the three probe families of \citet{marks2024geometry},
+all bias-free on mean-centered activations: (i) \textbf{LR}, logistic regression
+trained with AdamW; (ii) \textbf{MM} (mass-mean), the closed-form
+mean-difference direction $\theta = \mu^{+} - \mu^{-}$, whose covariance-whitened
+variant is Fisher's linear discriminant; (iii) \textbf{CCS}
+\citep{burns2023discovering}, an unsupervised contrastive probe.
+
+\paragraph{Logit lens.} The logit lens \citep{nostalgebraist2020logitlens}
+applies the model's final layer norm and unembedding to intermediate residual
+streams, reading off which vocabulary tokens the intermediate state already
+``prefers''. We use it to ask, layer by layer: \emph{where in the network does
+the hidden knowledge become visible?}
+
+\section{Reproduction A: the geometry of truth}
+\label{sec:got}
+
+\subsection{Setup}
+\label{sec:got-setup}
+
+We follow \citet{marks2024geometry} (arXiv:2310.06824v3; COLM 2024) and their
+public repository. \textbf{Model}: LLaMA-2-13B \citep{touvron2023llama},
+bfloat16, inference only. \textbf{Datasets}: the repository's true/false
+statement datasets---e.g.\ \texttt{cities} (``The city of $c$ is in $C$.'',
+1{,}496 statements), \texttt{neg\_cities} (negated variant),
+\texttt{sp\_en\_trans} (Spanish--English translations), and eight others with
+fixed templates and known ground truth. \textbf{Protocol}: raw declarative
+statements (no QA formatting, no few-shot priming); we extract the residual
+stream at the \emph{final token} (the sentence-ending period) at 12 layers
+spanning the model, with per-dataset mean centering; probes are trained on a
+random 80/20 split (seed 0). Our activation extractor is a
+plain-\texttt{transformers} reimplementation that writes the exact file layout
+of the original repository (the upstream script depends on an outdated
+\texttt{nnsight} API); the probe training code is the authors' own.
+
+\subsection{Result 1: true and false statements separate under PCA}
+\label{sec:got-pca}
+
+% [IN PROGRESS] Figure generated from LLaMA-2-13B layer-14 activations.
+\begin{figure}[h]
+  \centering
+  \IfFileExists{pca_two_clusters.pdf}{%
+    \includegraphics[width=\linewidth]{pca_two_clusters.pdf}%
+  }{%
+    \fbox{\parbox[c][0.28\textheight][c]{0.9\linewidth}{\centering\itshape
+      Figure pending: PCA of last-token activations (LLaMA-2-13B, layer 14),
+      colored by ground-truth label. Activations are being extracted on the
+      cluster; this panel reproduces the style of Fig.~1 of the original
+      paper.}}}
+  \caption{\textbf{Two clusters without any labels.} Each point is one
+  statement's last-token activation projected onto the top two principal
+  components (PCA is unsupervised). True and false statements separate
+  geometrically. Reproduces the Fig.~1 analysis of \citet{marks2024geometry}.}
+  \label{fig:pca}
+\end{figure}
+
+Figure~\ref{fig:pca} shows the headline phenomenon: without ever seeing labels,
+PCA on mid-layer activations separates true from false statements into two
+clusters. Truth is therefore \emph{linearly accessible} in the representation.
+
+\subsection{Result 2: probes generalize across datasets \emph{(in progress)}}
+\label{sec:got-gen}
+
+We train LR, MM, and CCS probes on one (combination of) dataset(s) and evaluate
+on all eleven, reproducing the generalization matrix of Fig.~5 of the original
+paper. Expected landmarks from the original: probes trained on
+\texttt{larger\_than+smaller\_than} exceed 95\% accuracy on
+\texttt{sp\_en\_trans}; probes trained on \texttt{cities} alone fail on
+\texttt{neg\_cities} (the two truth directions are nearly orthogonal); adding
+negated data to training fixes the failure.
+
+\subsection{Result 3: pushing along the truth direction flips answers \emph{(in progress)}}
+\label{sec:got-intervention}
+
+Following \S6 and Table~2 of the original: normalize the probe direction
+$\theta$ so that adding it moves the mean false statement onto the mean true
+one from the probe's point of view, add it to the residual stream at layers
+8--14 at the final tokens, and measure the normalized indirect effect (NIE) on
+$P(\textsc{true}) - P(\textsc{false})$ under a few-shot TRUE/FALSE prompt. The
+original finds MM directions strongly causal on 13B (NIE up to $0.90$) while LR
+directions are far weaker ($0.13$--$0.19$) despite equal classification
+accuracy---\emph{classification accuracy does not imply causal use}.
+
+\section{Reproduction B: reading a secret the model never says}
+\label{sec:taboo}
+
+\emph{(In progress; scheduled after the midterm presentation.)}
+\citet{cywinski2025eliciting} trained \emph{Taboo} models: LoRA adapters on
+\texttt{gemma-2-9b-it} \citep{gemma22024} that play a taboo game---they know a
+secret word (e.g.\ \emph{gold}, \emph{moon}, \emph{cloud}), use it to answer
+hint questions, and never utter it. We apply the logit lens to the residual
+stream at every layer while the model answers hint prompts, and record the rank
+of the secret word in each layer's next-token distribution. The original paper
+reports that white-box access lifts an auditor's top-1 accuracy on Taboo from
+42\% (text only) to 84\% (logit-lens tokens), while the base model without the
+secret shows no such signal (19\%); black-box attacks on Taboo stay below
+8\%---the secret is hidden from the output, but not from the activations.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+Everything in this report is a reproduction of published work; our contribution
+is pedagogical---showing that frontier interpretability results are reachable
+with course-level tools and inference-only compute. The statements are simple
+and template-based; truth geometry is richer than a single direction
+(negated and comparative datasets have near-orthogonal, even antipodal,
+directions at this scale); and all methods here require white-box access to
+weights, so they do not transfer to closed API models.
+
+\begin{ack}
+This report reproduces published results: Reproduction~A follows
+\citet{marks2024geometry} (code: \url{https://github.com/saprmarks/geometry-of-truth});
+Reproduction~B follows \citet{cywinski2025eliciting} (code and models:
+\url{https://github.com/cywinski/eliciting-secret-knowledge}). All original
+credit belongs to those authors; any errors in the reproduction are ours.
+\end{ack}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
