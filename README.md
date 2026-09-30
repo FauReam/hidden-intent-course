@@ -18,7 +18,9 @@
 | [plan.md](plan.md) | 两个复现的步骤、模型、硬件、成功标准、优先级 |
 | [timeline.md](timeline.md) | 到 12 月 7 日的按周计划 |
 | [presentations.md](presentations.md) | 三次演讲的逐页大纲（带时长）和问答准备 |
-| [scripts/](scripts/) | 自己的复现脚本：激活抽取、DGX 部署、PCA 图、探针+泛化矩阵（复现仓库克隆在本仓库外） |
+| [scripts/](scripts/) | 自己的复现脚本：激活抽取、DGX 部署、PCA 图、探针+泛化矩阵、逐层分析、干预、Taboo logit lens（复现仓库克隆在本仓库外） |
+| [figures/](figures/) | 复现产出的静态图（PDF+PNG），slides 直接引用 |
+| [results/](results/) | 探针准确率、干预、logit lens 等数值结果（JSON） |
 | [slides/](slides/) | 三次演讲的 Beamer slides（英文）+ 中文讲稿 |
 
 ## 参与

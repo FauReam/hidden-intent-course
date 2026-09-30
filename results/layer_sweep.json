@@ -1,0 +1,183 @@
+{
+  "model": "llama-2-13b",
+  "train_medley": [
+    "cities",
+    "neg_cities"
+  ],
+  "split": 0.8,
+  "seed": 0,
+  "results": {
+    "LR": {
+      "4": {
+        "cities": 0.8366667032241821,
+        "neg_cities": 0.8533333539962769,
+        "sp_en_trans": 0.5225988626480103,
+        "larger_than": 0.3843434453010559,
+        "counterfact_true_false": 0.528250515460968
+      },
+      "8": {
+        "cities": 0.9833333492279053,
+        "neg_cities": 0.9833333492279053,
+        "sp_en_trans": 0.6214689016342163,
+        "larger_than": 0.6404040455818176,
+        "counterfact_true_false": 0.5600988268852234
+      },
+      "10": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.9900000095367432,
+        "sp_en_trans": 0.9632768630981445,
+        "larger_than": 0.5949495434761047,
+        "counterfact_true_false": 0.659085214138031
+      },
+      "12": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.9933333396911621,
+        "sp_en_trans": 0.9887005686759949,
+        "larger_than": 0.731313169002533,
+        "counterfact_true_false": 0.7344199419021606
+      },
+      "14": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9943503141403198,
+        "larger_than": 0.886363685131073,
+        "counterfact_true_false": 0.7257226705551147
+      },
+      "16": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.9661017060279846,
+        "larger_than": 0.9560606479644775,
+        "counterfact_true_false": 0.68965083360672
+      },
+      "18": {
+        "cities": 0.996666669845581,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.9745762944221497,
+        "larger_than": 0.9585859179496765,
+        "counterfact_true_false": 0.6670629382133484
+      },
+      "20": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.9632768630981445,
+        "larger_than": 0.9530303478240967,
+        "counterfact_true_false": 0.6547991633415222
+      },
+      "24": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.8813559412956238,
+        "larger_than": 0.9065657258033752,
+        "counterfact_true_false": 0.6174759268760681
+      },
+      "28": {
+        "cities": 0.996666669845581,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.7824859023094177,
+        "larger_than": 0.7959596514701843,
+        "counterfact_true_false": 0.5814040899276733
+      },
+      "32": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.8107344508171082,
+        "larger_than": 0.7489899396896362,
+        "counterfact_true_false": 0.5858153104782104
+      },
+      "36": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.7598869800567627,
+        "larger_than": 0.5287879109382629,
+        "counterfact_true_false": 0.5939494371414185
+      }
+    },
+    "MM": {
+      "4": {
+        "cities": 0.8366667032241821,
+        "neg_cities": 0.8166666626930237,
+        "sp_en_trans": 0.5762711763381958,
+        "larger_than": 0.4575757682323456,
+        "counterfact_true_false": 0.5669816136360168
+      },
+      "8": {
+        "cities": 0.9833333492279053,
+        "neg_cities": 0.9833333492279053,
+        "sp_en_trans": 0.5028248429298401,
+        "larger_than": 0.6257575750350952,
+        "counterfact_true_false": 0.509041428565979
+      },
+      "10": {
+        "cities": 0.996666669845581,
+        "neg_cities": 0.9933333396911621,
+        "sp_en_trans": 0.9632768630981445,
+        "larger_than": 0.5631313323974609,
+        "counterfact_true_false": 0.7022587656974792
+      },
+      "12": {
+        "cities": 0.996666669845581,
+        "neg_cities": 0.9933333396911621,
+        "sp_en_trans": 0.9858757257461548,
+        "larger_than": 0.7570707201957703,
+        "counterfact_true_false": 0.7034163475036621
+      },
+      "14": {
+        "cities": 1.0,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9802259802818298,
+        "larger_than": 0.9237374067306519,
+        "counterfact_true_false": 0.6927793622016907
+      },
+      "16": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9858757257461548,
+        "larger_than": 0.8651515245437622,
+        "counterfact_true_false": 0.6480415463447571
+      },
+      "18": {
+        "cities": 0.996666669845581,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9830508232116699,
+        "larger_than": 0.8797979950904846,
+        "counterfact_true_false": 0.6209798455238342
+      },
+      "20": {
+        "cities": 0.996666669845581,
+        "neg_cities": 1.0,
+        "sp_en_trans": 0.9887005686759949,
+        "larger_than": 0.8545454740524292,
+        "counterfact_true_false": 0.6040858626365662
+      },
+      "24": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9717513918876648,
+        "larger_than": 0.8393939733505249,
+        "counterfact_true_false": 0.594981849193573
+      },
+      "28": {
+        "cities": 0.9933333396911621,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.9209039807319641,
+        "larger_than": 0.8459596633911133,
+        "counterfact_true_false": 0.5904142260551453
+      },
+      "32": {
+        "cities": 0.996666669845581,
+        "neg_cities": 0.996666669845581,
+        "sp_en_trans": 0.8898305296897888,
+        "larger_than": 0.8858586549758911,
+        "counterfact_true_false": 0.5789012312889099
+      },
+      "36": {
+        "cities": 0.996666669845581,
+        "neg_cities": 0.9933333396911621,
+        "sp_en_trans": 0.8700565099716187,
+        "larger_than": 0.5808081030845642,
+        "counterfact_true_false": 0.5442059636116028
+      }
+    }
+  }
+}
