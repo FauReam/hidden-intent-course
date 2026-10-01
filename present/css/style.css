@@ -388,7 +388,7 @@ ul.mini li::before {
   position: fixed;
   left: 2.5vw; top: 53%;
   transform: translateY(-50%);
-  width: 36vw;
+  width: 54vw;
   background: rgba(13, 18, 28, 0.94);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(110,231,255,0.28);
