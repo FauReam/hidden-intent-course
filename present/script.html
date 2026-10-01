@@ -217,10 +217,10 @@
     <a href="#prereq">前置知识</a>
     <a href="#numbers">数字速记</a>
     <a class="s" href="#s1">1 开场</a>
-    <a class="s" href="#s2">2 差距</a>
-    <a class="s" href="#s3">3 Astra</a>
-    <a class="s" href="#s4">4 Jev</a>
-    <a class="s" href="#s5">5 合体</a>
+    <a class="s" href="#s2">2 Astra</a>
+    <a class="s" href="#s3">3 Jev</a>
+    <a class="s" href="#s4">4 合体</a>
+    <a class="s" href="#s5">5 差距</a>
     <a class="s" href="#s6">6 工具</a>
     <a class="s" href="#s7">7 公式</a>
     <a class="s" href="#s8">8 两篇论文</a>
@@ -239,7 +239,7 @@
     <div class="story">
       <div class="s-tag">故事主线 · The story arc</div>
       <p class="body">语言模型流利地说假话时，它内部有没有什么地方是"知道"真相的？会的——我们把这种<b>内部知道 X、嘴上却说 Y</b> 的模型叫<span class="t">欺诈模型（deceptive model）</span>。这不是科幻：Cywiński 等人（2025）故意训练了 Taboo 模型——它知道秘密词、用秘密词推理、但绝不说出口。它就是实验室版的欺诈模型。</p>
-      <p class="body">开场的叙事顺序是设计好的：先立差距（场景 2），再用两张外部图制造"为什么是现在"——Astra 的循环层把推理藏进隐状态（场景 3），Jev 证明判断不需要生成（场景 4）；场景 5 把后者插进前者，<b>boom，我们的论文登场</b>。之后才进入工具、数据和结果。</p>
+      <p class="body">开场的叙事顺序是设计好的：先用两个外部例子制造"为什么是现在"——Astra 的循环层把推理藏进隐状态，OpenAI 首席科学家的推文截图作证（场景 2）；Jev 证明判断不需要生成，实测成本图作证（场景 3）。此时右侧<b>还没有论文</b>。场景 4 把后者插进前者，<b>boom——我们的论文第一次出现</b>；场景 5 才立"说的≠信的"差距。之后才进入工具、数据和结果。</p>
       <p class="body">我们复现两篇论文把这个现象钉死。<b>复现 A（主线）</b>：Marks &amp; Tegmark（COLM 2024）——LLaMA-2 把"真假"表示成一条线性方向，无监督 PCA 就能把真假陈述分成两团，沿这个方向推激活还能因果地翻转回答。<b>复现 B（副线）</b>：Taboo 模型 + logit lens，逐层找到秘密藏在哪里。两篇同一个故事：<b>the model knows, but does not necessarily say</b>。</p>
     </div>
 
@@ -257,7 +257,7 @@
 
     <div class="story">
       <div class="s-tag">论文结构地图 · Paper map</div>
-      <p class="body"><b>§1 Introduction</b>：提出"说的≠表示的"差距。<span class="t">→ 场景 1–2</span>（场景 3–5 的 Astra / Jev / 合体是演讲加的动机框架，不在论文里）</p>
+      <p class="body"><b>§1 Introduction</b>：提出"说的≠表示的"差距。<span class="t">→ 场景 4–5</span>（场景 2–4 的 Astra / Jev / 合体是演讲加的动机框架，不在论文里）</p>
       <p class="body"><b>§2 Background</b>：残差流、三种探针（LR / MM / CCS）、logit lens + Figure 1 管线图。<span class="t">→ 场景 6–7</span></p>
       <p class="body"><b>§3 Reproduction A</b>：§3.1 数据与协议（Table 1，11 个数据集）→ §3.2 PCA 两团（Figure 2）→ §3.3 泛化矩阵 + 逐层曲线（Figures 3–4）→ §3.4 干预翻转（Figure 5 + Table 2 的 NIE 目标值）。<span class="t">→ 场景 9–10</span></p>
       <p class="body"><b>§4 Reproduction B</b>：Taboo + logit lens 逐层定位秘密词（Figure 7 热力图）——主线一"哪一层撒谎"的证据。<span class="t">→ 场景 12</span></p>
@@ -266,7 +266,7 @@
 
     <div class="story">
       <div class="s-tag">分工提示 · Who says what</div>
-      <p class="body">四个人上台，每人三页：<b>甲</b>：场景 1–3（开场、差距、为什么是现在）；<b>乙</b>：场景 4–6（Jev、合体、工具）；<b>丙</b>：场景 7–9（公式卡片、两篇论文、数据）；<b>丁</b>：场景 10–12（两团结果、课程工具箱、哪一层撒谎）并主答 Q&amp;A。换人时直接翻到对应场景即可。</p>
+      <p class="body">四个人上台，每人三页：<b>甲</b>：场景 1–3（开场、Astra 循环层、Jev 决策模型）；<b>乙</b>：场景 4–6（合体点题、差距、工具）；<b>丙</b>：场景 7–9（公式卡片、两篇论文、数据）；<b>丁</b>：场景 10–12（两团结果、课程工具箱、哪一层撒谎）并主答 Q&amp;A。换人时直接翻到对应场景即可。</p>
     </div>
   </section>
 
@@ -354,6 +354,7 @@
       <tr><td class="v">d = 5,120 · layer 14</td><td>LLaMA-2-13B 隐藏维度；原文默认探针层（我们扫了 12 层，中层起饱和）</td></tr>
       <tr><td class="v">1,496 / 1,496 / 354</td><td>cities / neg_cities / sp_en_trans 数据集大小（共 11 个数据集）</td></tr>
       <tr><td class="v">40–200× · 输出免费</td><td>Jev（TypeSafe AI，2026.9）官方口径：判断类任务端到端提速 40–200 倍，输出 token 免费——"决策模型"热度的来源</td></tr>
+      <tr><td class="v">$19 vs $1,621 · 85×</td><td>实测账单（第三方，AI/ML API，2026.9.25，900 次调用）：一百万次是非判断，Jev $19、GPT-6 Sol $318、Claude Opus 5.5 $1,621；评分任务实测到 150×。小型 flash 模型与 Jev 价格相当（Luna $16）——场景 3 成本图即此数据</td></tr>
     </table>
   </section>
 
@@ -364,22 +365,22 @@
       <span class="scene-title">开场 · 标题页</span>
       <span class="scene-time">≈ 40 秒</span>
     </div>
-    <div class="paper-cue">右侧论文：回到第 1 页顶部，<b>橙色框高亮论文标题</b>。</div>
+    <div class="paper-cue">右侧论文：<b>暂不出现</b>——前 3 页只有左侧舞台，论文第 4 页才登场。</div>
     <div class="lines">
       <p>Good morning, everyone. We are <b>Group Eight</b>. Our project is called <b>"Models Know, But Don't Always Say."</b></p>
       <p>The plain meaning of the title: a language model can <b>know</b> something on the inside, and still <b>say</b> something different on the outside. Sometimes that is just a mistake. Sometimes — and this is the interesting part — <b>it is a lie</b>.</p>
-      <p>We reproduced two published papers about this gap, using only tools from this course: PCA, logistic regression, and LDA. On the right is our full report. It stays there for the whole talk, and the <b>orange box</b> always marks the exact paragraph I am talking about.</p>
+      <p>Before our own work: two things happened this month that made this question urgent. Let me show you both.</p>
     </div>
     <div class="zh">
       <p>大家早上好。我们是第八组，项目叫"模型知道，但不一定说"。</p>
       <p>题目的大白话：语言模型可以内部<b>知道</b>一件事，嘴上却<b>说</b>另一件事。有时这只是犯错；有时——这才是有意思的部分——<b>它在撒谎</b>。</p>
-      <p>我们复现了两篇关于这个差距的已发表论文，全部只用课上工具：PCA、逻辑回归、LDA。右侧是完整报告，全程停在那，<b>橙色框</b>会实时标出我正在讲的段落。</p>
+      <p>在讲我们自己的复现之前：这个月发生的两件事让这个问题变得紧迫。两件都给你们看。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
         <li>"Sometimes it is a lie" 前停半秒——这是全场唯一一次用 "lie" 这个词开场，留给观众反应。</li>
-        <li>提到橙色框时抬手指一下右侧屏幕，让观众发现"论文是活的"，后面不用再解释。</li>
+        <li>右侧现在<b>没有论文</b>——这是故意的节奏：两个外部例子讲完，论文才在场景 4 登场。不要提前解释。</li>
       </ul>
     </div>
   </section>
@@ -388,24 +389,29 @@
   <section class="scene" id="s2">
     <div class="scene-head">
       <span class="scene-num">2</span>
-      <span class="scene-title">差距 · says ≠ believes</span>
+      <span class="scene-title">为什么是现在 · Astra 的循环层 + 官方推文</span>
       <span class="thread t1">THREAD 1 · 欺诈模型</span>
-      <span class="scene-time">≈ 45 秒</span>
+      <span class="scene-time">≈ 60 秒</span>
     </div>
-    <div class="paper-cue">右侧论文：滚到 <b>§1 Introduction</b>，无高亮框。</div>
+    <div class="paper-cue">右侧论文：暂不出现。左侧：循环层图示 + <b>Pachocki 推文截图</b>（真截图，X embed）。</div>
     <div class="lines">
-      <p>Here is the motivation. What a model <b>says</b> is just a piece of text. What it <b>believes</b> is an internal state. When the two disagree on purpose, we call it a <b>deceptive model</b>: it knows one thing, and says another.</p>
-      <p>Why should we care? Because models produce <b>falsehoods, fluently</b> — and because researchers have already trained <b>Taboo</b> models that know a secret word, use it to reason, and never say it. A monitor that only reads the output text would see nothing wrong. <b>We have to read the activations directly.</b></p>
+      <p>Why is this a hot problem <b>now</b>? Until recently, reasoning models <b>thought out loud</b>. The chain of thought was visible text — a safety monitor could just read it.</p>
+      <p>Now look at the diagram on the right. <span class="cue">（指向循环框）</span> Reports around <b>GPT-6 Astra</b> describe what is called <b>recurrent depth</b>: the middle blocks of the transformer are <b>looped</b> — the same layers, reused several times. The computation repeats inside the hidden states, and only a short summary ever becomes text.</p>
+      <p>And this is not just a rumor. On the left <span class="cue">（指推文截图）</span> is OpenAI's own chief scientist, <b>Jakub Pachocki</b>, answering the report the same week: the depth of the computation graph for their frontier models — <b>"including Astra"</b> — is within a factor of two of GPT-4. And he calls chain-of-thought monitoring <b>"fragile … trending in a negative direction."</b></p>
+      <p>So the visible reasoning is shrinking, and hidden computation is exactly where <b>hidden semantics</b> live. If we can no longer read the reasoning, <b>we must read the activations directly</b>.</p>
     </div>
     <div class="zh">
-      <p>动机。模型<b>说</b>的只是一段文本；它<b>相信</b>的是内部状态。当两者故意不一致，我们叫它<b>欺诈模型</b>：知道一样，说另一样。</p>
-      <p>为什么要在意？因为模型会<b>流利地说假话</b>——而且研究者已经训出了 <b>Taboo</b> 模型：知道秘密词、用它推理、绝不说出来。只读输出文本的监控器什么异常都看不到，<b>必须直接读激活</b>。</p>
+      <p>为什么这个问题<b>现在</b>火？上一代推理模型<b>边想边说</b>——思维链是可见的文字，安全监控直接读就行。</p>
+      <p>看右边的图。<span class="cue">（指循环框）</span>关于 <b>GPT-6 Astra</b> 的报道描述了所谓的<b>循环深度</b>（recurrent depth）：transformer 的中间 block 被<b>循环复用</b>——同一批层反复算。计算在隐状态里重复进行，最后只有一小段摘要变成文字。</p>
+      <p>而这不只是传闻。左边<span class="cue">（指推文截图）</span>是 OpenAI 自己的首席科学家 <b>Jakub Pachocki</b>，同一周公开回应报道：他们前沿模型的计算图深度——<b>"包括 Astra"</b>——已在 GPT-4 的两倍以内。他还亲口说思维链监控<b>"脆弱……正在变差"</b>。</p>
+      <p>所以可见的推理正在缩水，而隐藏的计算恰恰是<b>隐藏语义</b>的藏身之处。读不到推理，<b>就必须直接读激活</b>。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>"deceptive model" 给出定义后不要再加术语，让零基础听众也能跟上。</li>
-        <li>这页只立"差距"，"为什么是现在"留给下一页（Astra）。</li>
+        <li>逻辑链三步：<span class="dim">以前思维链透明可监控 → Astra 式循环层把计算藏进隐状态 → 监控必须改读激活</span>。语速放慢。</li>
+        <li>推文是证据不是装饰：官方首席科学家公开回应 = 报道属实到需要他出面澄清；引号里的词照念原文，不添油加醋。推文日期 Sep 2, 2026，X 上 6.4K 赞。</li>
+        <li>措辞守住 "reports describe"——循环层细节来自 The Information 报道，不是官方架构论文；被追问就说"细节以报道为准，官方回应在推文里"。</li>
       </ul>
     </div>
   </section>
@@ -414,27 +420,27 @@
   <section class="scene" id="s3">
     <div class="scene-head">
       <span class="scene-num">3</span>
-      <span class="scene-title">为什么是现在 · Astra 的循环层</span>
-      <span class="thread t1">THREAD 1 · 欺诈模型</span>
+      <span class="scene-title">工业界对照 · Jev 决策模型 + 实测成本图</span>
+      <span class="thread t2">THREAD 2 · 决策模型</span>
       <span class="scene-time">≈ 55 秒</span>
     </div>
-    <div class="paper-cue">右侧论文：停在 §1 不动，无高亮框（本页是演讲加的动机，不在论文里）。</div>
+    <div class="paper-cue">右侧论文：暂不出现。左侧：架构对比表 + <b>成本实测条形图</b>（第三方 900 次真实 API 账单）。</div>
     <div class="lines">
-      <p>Why is this a hot problem <b>now</b>? Until recently, reasoning models <b>thought out loud</b>. The chain of thought was visible text — a safety monitor could just read it.</p>
-      <p>Now look at this picture. <span class="cue">（指向图中间的循环框）</span> Reports around <b>GPT-6 Astra</b> describe what is called <b>recurrent depth</b>: the middle blocks of the transformer are <b>looped</b> — the same layers, reused several times. The computation repeats inside the hidden states, and only a short summary ever becomes text.</p>
-      <p>So the visible reasoning is shrinking. And hidden computation is exactly where <b>hidden semantics</b> live. If we can no longer read the reasoning, <b>we must read the activations directly</b>.</p>
+      <p>Meanwhile, industry is learning the other half of the lesson. This is <b>Jev</b>, released this month by TypeSafe AI. It is a <b>decision model</b>: it never generates text. It only <b>judges</b> — yes or no, a choice, or a score — with a calibrated confidence.</p>
+      <p>Now, "cheaper" is just a word — look at the chart. <span class="cue">（指成本图）</span> A third-party benchmark ran real API calls and added up the bills: <b>one million yes/no judgments</b>. Claude Opus 5.5: <b>sixteen hundred dollars</b>. GPT-6 Sol: <b>three hundred</b>. And Jev — the little amber sliver — <b>nineteen dollars</b>. The gap against a frontier generator is not "high versus low." It is <b>eighty-five times</b>.</p>
+      <p>Why? A generative model pays the full price of writing text just to answer a yes-or-no question. Jev just answers. Remember this pattern: <b>a small model, one judgment, tiny cost</b>.</p>
     </div>
     <div class="zh">
-      <p>为什么这个问题<b>现在</b>火？上一代推理模型<b>边想边说</b>——思维链是可见的文字，安全监控直接读就行。</p>
-      <p>看这张图。<span class="cue">（指中间循环框）</span>关于 <b>GPT-6 Astra</b> 的报道描述了所谓的<b>循环深度</b>（recurrent depth）：transformer 的中间 block 被<b>循环复用</b>——同一批层反复算。计算在隐状态里重复进行，最后只有一小段摘要变成文字。</p>
-      <p>所以可见的推理正在缩水。而隐藏的计算恰恰是<b>隐藏语义</b>的藏身之处。读不到推理，<b>就必须直接读激活</b>。</p>
+      <p>与此同时，工业界在学另一半教训。这是 <b>Jev</b>，TypeSafe AI 本月发布。它是一个<b>决策模型</b>：从不生成文本，只做<b>判断</b>——是/否、多选、打分——还带校准过的置信度。</p>
+      <p>"便宜"只是形容词——看这张图。<span class="cue">（指成本图）</span>第三方基准用真实 API 跑账：<b>一百万次是非判断</b>，Claude Opus 5.5 花 <b>1621 美元</b>，GPT-6 Sol 花 <b>318 美元</b>，而 Jev——那根几乎看不见的琥珀色小条——<b>19 美元</b>。和前沿生成模型的差距不是"高和低"，是 <b>85 倍</b>。</p>
+      <p>为什么？生成模型回答一个是非题也要付写整段文字的全价——Jev 直接给答案。记住这个模式：<b>小模型、一次判断、极低成本</b>。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>逻辑链三步：<span class="dim">以前思维链透明可监控 → Astra 式循环层把计算藏进隐状态 → 监控必须改读激活</span>。语速放慢。</li>
-        <li>措辞守住 "reports describe"——这是公开报道的架构解读，不是官方论文；被追问就重复这一句，不展开评价。</li>
-        <li>图上两根虚线括号是讲点：琥珀色 = 隐状态里的循环计算（看不见），青色 = 可见思维链（只剩摘要）。</li>
+        <li>图是实测不是广告：第三方基准（AI/ML API 计费，2026 年 9 月 25 日，900 次真实调用，内容审核任务），被追问就报这个出处。</li>
+        <li>口径诚实：对前沿生成模型差 17–85 倍（评分任务实测到 150 倍）；对小型 flash 模型价格相当——图里 GPT-6 Luna 那行就是证据，<span class="dim">不用藏，主动指出来反而加分</span>。</li>
+        <li>"the little amber sliver" 时手指 Jev 那根几乎看不见的条——视觉点就是"看不见"。表格里 Astra / Fable / DeepSeek 行是架构定性（都要生成全文），没有公开跑分，页脚已注明。</li>
       </ul>
     </div>
   </section>
@@ -443,26 +449,27 @@
   <section class="scene" id="s4">
     <div class="scene-head">
       <span class="scene-num">4</span>
-      <span class="scene-title">工业界对照 · Jev 决策模型</span>
-      <span class="thread t2">THREAD 2 · 决策模型</span>
-      <span class="scene-time">≈ 50 秒</span>
+      <span class="scene-title">合体 · 小判断器插进循环层</span>
+      <span class="thread t1">T1</span><span class="thread t2">T2</span>
+      <span class="scene-time">≈ 45 秒 · 点题页</span>
     </div>
-    <div class="paper-cue">右侧论文：停在 §1 不动，无高亮框（本页同上，是演讲加的动机）。</div>
+    <div class="paper-cue">右侧论文：<b>第一次出现</b>——淡入到第 1 页顶部，<b>橙色框高亮论文标题</b>——"出现这篇论文"。</div>
     <div class="lines">
-      <p>Meanwhile, industry is learning the other half of the lesson. This is <b>Jev</b>, released this month by TypeSafe AI. It is a <b>decision model</b>: it never generates text. It only <b>judges</b> — yes or no, a choice, or a score — with a calibrated confidence.</p>
-      <p>And because it skips generation entirely, it is <b>tens to hundreds of times faster</b> than a general LLM on judgment tasks, at a fraction of the cost. For a yes-or-no question, GPT-Astra, Claude Fable, or DeepSeek all pay the full price of writing text — Jev just answers.</p>
-      <p>Remember this pattern: <b>a small model, one judgment, tiny cost</b>.</p>
+      <p>Now put the two pictures together. <span class="cue">（等芯片滑入，约 1 秒）</span> Astra says: the interesting computation <b>hides in the loop</b>. Jev says: judging <b>needs no generation</b>.</p>
+      <p>So — insert a small judge <b>into the loop</b>. A tiny decision model that reads the hidden states and answers one question: <b>does this model know something it is not saying?</b></p>
+      <p>And that <span class="cue">（抬手指右侧，论文正淡入）</span> is exactly this paper. Our report has just appeared on the right — and the <b>orange box</b> is on our title.</p>
     </div>
     <div class="zh">
-      <p>与此同时，工业界在学另一半教训。这是 <b>Jev</b>，TypeSafe AI 本月发布。它是一个<b>决策模型</b>：从不生成文本，只做<b>判断</b>——是/否、多选、打分——还带校准过的置信度。</p>
-      <p>因为它完全跳过了生成，在判断类任务上比通用大模型<b>快几十到几百倍</b>，成本只是个零头。同样一个是非题，GPT-Astra、Claude Fable、DeepSeek 都要付写整段文字的全价——Jev 直接给答案。</p>
-      <p>记住这个模式：<b>小模型、一次判断、极低成本</b>。</p>
+      <p>现在把两张图合起来。<span class="cue">（等芯片滑入，约 1 秒）</span>Astra 告诉我们：关键的计算<b>藏在循环里</b>；Jev 告诉我们：判断<b>不需要生成</b>。</p>
+      <p>那么——把一个小判断器插<b>进循环里</b>：一个读隐状态的小决策模型，只回答一个问题：<b>这个模型是不是知道什么没说的事？</b></p>
+      <p>而这<span class="cue">（指右侧，论文正淡入）</span>就是我们这篇论文。报告刚刚出现在右侧——<b>橙色框</b>正标在我们的标题上。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>表格数字口径分两层，被问就明说：Jev 行是官方 + 第三方实测（40–200× / 5–18×）；<span class="dim">Astra、Fable、DeepSeek 三行是定性对比，没有公开跑分</span>，页脚已注明。</li>
-        <li>"pay the full price of writing text" 是这页的记忆点：生成一个句子的算力，只用来回答一个是非题，浪费。</li>
+        <li>两个效果同时发生：琥珀色芯片滑入循环框 + <b>论文第一次淡入右侧</b>。别说话抢动画，落位后再开口。</li>
+        <li>从这一页起论文全程停在右侧，橙色框永远标着正在讲的段落——这个机制只解释这一次。</li>
+        <li>这页是全场论点：Astra 的痛点 + Jev 的思路 = 我们的论文。说完停顿一拍再翻页。</li>
       </ul>
     </div>
   </section>
@@ -471,26 +478,24 @@
   <section class="scene" id="s5">
     <div class="scene-head">
       <span class="scene-num">5</span>
-      <span class="scene-title">合体 · 小判断器插进循环层</span>
-      <span class="thread t1">T1</span><span class="thread t2">T2</span>
-      <span class="scene-time">≈ 40 秒 · 点题页</span>
+      <span class="scene-title">差距 · says ≠ believes</span>
+      <span class="thread t1">THREAD 1 · 欺诈模型</span>
+      <span class="scene-time">≈ 45 秒</span>
     </div>
-    <div class="paper-cue">右侧论文：<b>回到第 1 页顶部，橙色框高亮论文标题</b>——"出现这篇论文"。</div>
+    <div class="paper-cue">右侧论文：滚到 <b>§1 Introduction</b>，无高亮框。</div>
     <div class="lines">
-      <p>Now put the two pictures together. <span class="cue">（等芯片滑入，约 1 秒）</span> Astra says: the interesting computation <b>hides in the loop</b>. Jev says: judging <b>needs no generation</b>.</p>
-      <p>So — insert a small judge <b>into the loop</b>. A tiny decision model that reads the hidden states and answers one question: <b>does this model know something it is not saying?</b></p>
-      <p>And that <span class="cue">（抬手指右侧论文）</span> is exactly this paper. The orange box is on our title.</p>
+      <p>Here is the gap our paper works on. What a model <b>says</b> is just a piece of text. What it <b>believes</b> is an internal state. When the two disagree on purpose, we call it a <b>deceptive model</b>: it knows one thing, and says another.</p>
+      <p>Why should we care? Because models produce <b>falsehoods, fluently</b> — and because researchers have already trained <b>Taboo</b> models that know a secret word, use it to reason, and never say it. A monitor that only reads the output text would see nothing wrong. <b>We have to read the activations directly.</b></p>
     </div>
     <div class="zh">
-      <p>现在把两张图合起来。<span class="cue">（等芯片滑入，约 1 秒）</span>Astra 告诉我们：关键的计算<b>藏在循环里</b>；Jev 告诉我们：判断<b>不需要生成</b>。</p>
-      <p>那么——把一个小判断器插<b>进循环里</b>：一个读隐状态的小决策模型，只回答一个问题：<b>这个模型是不是知道什么没说的事？</b></p>
-      <p>而这<span class="cue">（指右侧论文）</span>就是我们这篇论文。橙色框正标在我们的标题上。</p>
+      <p>这就是我们论文研究的差距。模型<b>说</b>的只是一段文本；它<b>相信</b>的是内部状态。当两者故意不一致，我们叫它<b>欺诈模型</b>：知道一样，说另一样。</p>
+      <p>为什么要在意？因为模型会<b>流利地说假话</b>——而且研究者已经训出了 <b>Taboo</b> 模型：知道秘密词、用它推理、绝不说出来。只读输出文本的监控器什么异常都看不到，<b>必须直接读激活</b>。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>全场唯一的动画：琥珀色芯片从右侧滑入循环框下方，落位即停（只播一次，不循环）。别说话抢动画，落位后再开口。</li>
-        <li>这页是全场论点：Astra 的痛点 + Jev 的思路 = 我们的论文。说完停顿一拍再翻页。</li>
+        <li>"deceptive model" 给出定义后不要再加术语，让零基础听众也能跟上。</li>
+        <li>这页只立"差距"——"为什么是现在"已经在前两页用外部例子讲完了，不要回头重复。</li>
       </ul>
     </div>
   </section>
@@ -697,7 +702,7 @@
   <!-- ═══════════════ Q&A ═══════════════ -->
   <section id="qa">
     <h2>Q&amp;A 预案 <span class="no">· 按两条主线排序</span></h2>
-    <div class="h2-sub">英文回答可以直接说，中文是给你自己的提示。前四题对应两条主线，务必背熟。</div>
+    <div class="h2-sub">英文回答可以直接说，中文是给你自己的提示。前五题对应两条主线与两页外部证据，务必背熟。</div>
 
     <div class="qa">
       <div class="q">At which layer does the deceptive model lie?（在哪一层撒谎）<span class="thread t1">THREAD 1</span></div>
@@ -706,8 +711,13 @@
     </div>
     <div class="qa">
       <div class="q">Why was model deception not a safety problem before — and why now?（为什么以前不会/现在会）<span class="thread t1">THREAD 1</span></div>
-      <div class="a"><span class="en">Because reasoning used to be audible. Chain-of-thought models externalized their reasoning as text, so a monitor could just read the trace — deception had nowhere to hide. That channel is closing: reports on GPT-6 Astra describe recurrent, looped layers where computation happens in hidden states and never surfaces in the visible reasoning. Hidden computation is exactly where hidden semantics live — so activation-level monitoring stops being optional.</span>
-      <span class="zhhint">三步：思维链透明 → Astra 循环层把计算沉入隐状态 → 监控必须改读激活。措辞守住"reports describe"，不替 OpenAI 官宣。</span></div>
+      <div class="a"><span class="en">Because reasoning used to be audible. Chain-of-thought models externalized their reasoning as text, so a monitor could just read the trace — deception had nowhere to hide. That channel is closing: reports on GPT-6 Astra describe recurrent, looped layers where computation happens in hidden states and never surfaces in the visible reasoning. And this is not only a rumor: OpenAI's chief scientist Jakub Pachocki answered publicly — the screenshot on slide two — confirming the computation graph is now deeper, "including Astra," and calling chain-of-thought monitoring "fragile … trending in a negative direction." Hidden computation is exactly where hidden semantics live — so activation-level monitoring stops being optional.</span>
+      <span class="zhhint">三步：思维链透明 → Astra 循环层把计算沉入隐状态 → 监控必须改读激活。推文是公开回应、是证据；但循环层细节仍是 "reports describe"，不替 OpenAI 官宣架构。</span></div>
+    </div>
+    <div class="qa">
+      <div class="q">Did OpenAI officially confirm the looped architecture?（官方承认循环层了吗）<span class="thread t1">THREAD 1</span></div>
+      <div class="a"><span class="en">Partially, and we present it exactly that way. The architecture detail — recurrent depth, looped middle blocks — comes from The Information's reporting, and no OpenAI architecture paper confirms it. What is official is the response: chief scientist Jakub Pachocki posted that the depth of the computation graph for their frontier models, "including Astra," is within a factor of two of GPT-4, and that CoT monitoring is fragile and trending negative. So: the loop count is reported; the deeper computation graph and the monitorability concern are confirmed by OpenAI itself. Our slide keeps those two tiers visibly separate.</span>
+      <span class="zhhint">分两层答：循环层细节 = The Information 报道（没有官方架构论文）；官方层面 = Pachocki 推文（Sep 2, 2026）确认计算图加深 + 亲口说监控"脆弱、正在变差"。演示页 2 的推文截图就是后者。</span></div>
     </div>
     <div class="qa">
       <div class="q">What do decision-only models like Jev have to do with your probes?（和 Jev 什么关系）<span class="thread t2">THREAD 2</span></div>
@@ -715,9 +725,9 @@
       <span class="zhhint">一句话版：<b>同哲学、不同位置</b>。Jev 在外部做判断（快 40–200 倍、输出免费，官方口径）；探针在内部做判断（一条线、蹭前向传播）。落点：用小决策模型盯大模型。</span></div>
     </div>
     <div class="qa">
-      <div class="q">Where do the numbers in your Jev comparison table come from?（对比表数字哪来的）<span class="thread t2">THREAD 2</span></div>
-      <div class="a"><span class="en">Two tiers, and we label them differently on purpose. The Jev row is sourced: the launch claims forty-to-two-hundred-times speedups on judgment tasks with free output tokens, and a third-party test — Vercel's command-safety classifier — measured five-to-eighteen-times. The Astra, Fable, and DeepSeek rows are qualitative: there are no public Jev-benchmark runs for them, so the table says "high cost, tens-of-times" without fake precision. The footnote on the slide states exactly this.</span>
-      <span class="zhhint">送分题，主动承认反而加分：Jev 行有来源（官方 + Vercel 实测），另外三行是定性位置、页脚已注明。诚实口径 = 严谨。</span></div>
+      <div class="q">Where do the numbers in your Jev cost chart come from?（成本图数字哪来的）<span class="thread t2">THREAD 2</span></div>
+      <div class="a"><span class="en">The chart is measured, not marketing. A third-party benchmark ran 900 real API calls on September 25, 2026 — routing, moderation, and answer rating — and added up the actual bills via AI/ML API. On the moderation task, one million yes/no judgments cost Jev nineteen dollars, GPT-6 Sol three hundred eighteen, Claude Opus 5.5 sixteen twenty-one — an eighty-five-times gap, and one hundred fifty on the rating task. Two honest caveats, both printed on the slide: against small flash models like GPT-6 Luna and DeepSeek V4 Flash the price is roughly even; and no public Astra or Fable runs exist yet, so their table rows are architectural, not measured. Speed numbers are separate: the launch claims forty-to-two-hundred-times, third parties measured five-to-eighteen.</span>
+      <span class="zhhint">送分题，主动给出处反而加分：图 = AI/ML API 实测账单（900 次调用，2026.9.25）；85× 是审核任务实测，150× 是评分任务实测；对 flash 小模型价格相当（Luna $16 &lt; Jev $19）也印在图上；速度口径另算（官方 40–200×，第三方 5–18×）。诚实口径 = 严谨。</span></div>
     </div>
     <div class="qa">
       <div class="q">Can this catch deception in a model that was never trained to lie?（非故意欺诈也能抓吗）<span class="thread t1">THREAD 1</span></div>

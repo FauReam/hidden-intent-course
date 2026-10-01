@@ -559,7 +559,7 @@ ul.mini li::before {
 /* ── wide diagrams (scenes 3 & 5) ──────────────────────────── */
 .diagram.cap { max-width: 580px; }
 
-/* ── scene 4: model comparison table + speed bars ──────────── */
+/* ── scene 3: model comparison table + speed bars ──────────── */
 table.cmp { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
 table.cmp th {
   text-align: left; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -591,7 +591,7 @@ table.cmp tr.hl td { background: rgba(110,231,255,0.05); }
 .bar-val { color: var(--ink); font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; white-space: nowrap; }
 .foot { font-size: 11px; color: var(--ink-dim); line-height: 1.55; margin-top: 10px; }
 
-/* ── scene 5: the boom chip slides into the loop (once) ────── */
+/* ── scene 4: the boom chip slides into the loop (once) ────── */
 .boom-chip {
   transform-box: fill-box;
   animation: boom-in 750ms cubic-bezier(0.2, 0.9, 0.3, 1) 350ms both;
@@ -622,3 +622,47 @@ table.cmp tr.hl td { background: rgba(110,231,255,0.05); }
 .f-formula sup, .f-formula sub { font-size: 0.68em; }
 .f-plain { font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
 .f-plain b { color: var(--amber); font-weight: 600; }
+
+/* ── paperless scenes: the paper appears only at the boom ──── */
+#paper-frame { transition: opacity 650ms ease, transform 650ms ease; }
+#scene-layer { transition: left 650ms ease, width 650ms ease; }
+body.paperless #paper-frame {
+  opacity: 0;
+  transform: translateX(3vw);
+  pointer-events: none;
+}
+body.paperless #scene-layer { left: 10vw; width: 72vw; }
+
+/* ── scene 2: official tweet card beside the loop diagram ──── */
+.why-row { display: flex; gap: 24px; align-items: flex-start; margin: 20px 0 18px; }
+.tweet-card { width: 350px; flex: none; margin: 0; }
+.tweet-card img {
+  width: 100%; display: block; border-radius: 10px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.09);
+}
+.tweet-card figcaption {
+  margin-top: 8px; font-size: 10.5px; letter-spacing: 0.05em; color: var(--ink-dim);
+}
+.why-diagram { flex: 1; min-width: 0; max-width: 600px; margin-top: 6px; }
+
+/* ── scene 3: measured cost chart (linear — the sliver is the point) */
+.costchart { margin: 8px 0 10px; max-width: 760px; }
+.cc-title {
+  font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 11px; line-height: 1.6;
+}
+.cc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 12.5px; }
+.cc-name { width: 132px; flex: none; text-align: right; color: var(--ink-dim); }
+.cc-row.hi .cc-name { color: var(--amber); font-weight: 600; }
+.cc-bar { height: 14px; min-width: 3px; border-radius: 3px; background: rgba(147,160,184,0.38); }
+.cc-row.hi .cc-bar {
+  background: linear-gradient(90deg, #d99a26, var(--amber));
+  box-shadow: 0 0 10px rgba(245,185,66,0.45);
+}
+.cc-val {
+  flex: none; font-family: ui-monospace, Menlo, monospace;
+  font-size: 11.5px; color: var(--ink);
+}
+.cc-mult { flex: none; font-size: 11px; color: var(--ink-dim); }
+.cc-mult.hot { color: var(--amber); font-weight: 700; }
+.cc-row.hi .cc-mult { color: var(--amber); font-weight: 600; }

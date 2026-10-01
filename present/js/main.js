@@ -143,8 +143,66 @@
       html: `<div class="scene-sub">Reading a language model's mind with tools from class</div>
              <div class="scene-meta">Initial presentation · Fall 2026</div>`,
       anchor: { search: null, page: 1, frac: 0 },
+      paperless: true,
+      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>此时右侧还没有论文——先讲两个外部例子，第 4 页论文才登场。</p>",
+    },
+    {
+      kicker: "Why now · exhibit one",
+      title: 'Reasoning is moving <span class="em">off the page</span>',
+      html: `
+        <div class="why-row">
+          <figure class="tweet-card">
+            <img src="assets/astra_pachocki_tweet.png" alt="Jakub Pachocki, OpenAI Chief Scientist, on X">
+            <figcaption>OpenAI Chief Scientist Jakub Pachocki · Sep 2, 2026 · on X</figcaption>
+          </figure>
+          <div class="diagram cap why-diagram">${DIAGRAM_ASTRA}</div>
+        </div>
+        <ul class="bullets">
+          <li>Chain of thought used to <b>show</b> the reasoning — monitoring meant reading text</li>
+          <li>Reports say GPT-6 Astra loops its middle blocks — compute repeats <b>inside hidden states</b></li>
+          <li>OpenAI's chief scientist answered publicly: depth “within a factor of two of GPT-4” — and CoT monitoring is <b>“fragile … trending in a negative direction”</b></li>
+        </ul>`,
+      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
+      paperless: true,
+      notes: "<p>左：Pachocki 推文截图——官方承认计算图加深、且亲口说思维链监控“脆弱、正在变差”。右：循环层图示。</p><p>措辞守住“reports say”——架构来自 The Information 报道，推文是官方对报道的回应。</p>",
+    },
+    {
+      kicker: "Why now · exhibit two",
+      title: 'Judgment without <span class="em">generation</span>',
+      html: `
+        <table class="cmp">
+          <tr><th></th><th>generates text?</th><th>latency per judgment</th></tr>
+          <tr class="hl"><td class="mname">Jev <span class="tag">decision-only</span></td><td><span class="good">no</span> — judge + score</td><td><span class="good">0.14 s</span></td></tr>
+          <tr><td class="mname">GPT-6 Astra</td><td>full generation</td><td class="dim">seconds</td></tr>
+          <tr><td class="mname">Claude Fable</td><td>full generation</td><td class="dim">seconds</td></tr>
+          <tr><td class="mname">DeepSeek</td><td>full generation</td><td class="dim">seconds</td></tr>
+        </table>
+        <div class="costchart">
+          <div class="cc-title">cost per 1,000,000 judgments — measured on a real yes/no task · AI/ML API benchmark, Sep 25 2026</div>
+          <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">$1,621</span><span class="cc-mult hot">85×</span></div>
+          <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:19.6%"></span><span class="cc-val">$318</span><span class="cc-mult">17×</span></div>
+          <div class="cc-row"><span class="cc-name">Gemini 3.5 Flash</span><span class="cc-bar" style="width:4.1%"></span><span class="cc-val">$66</span><span class="cc-mult">3.5×</span></div>
+          <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:2.6%"></span><span class="cc-val">$42</span><span class="cc-mult">2.2×</span></div>
+          <div class="cc-row hi"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:1.2%"></span><span class="cc-val">$19</span><span class="cc-mult hi">1×</span></div>
+          <div class="cc-row"><span class="cc-name">GPT-6 Luna</span><span class="cc-bar" style="width:1%"></span><span class="cc-val">$16</span><span class="cc-mult">0.8×</span></div>
+        </div>
+        <div class="foot">Measured by a third party (900 real API calls, content moderation — one yes/no question each). Jev sits in the small “flash” price class; the 17–85× gap is against frontier generators — on a rating task the measured gap reached 150×. No public Astra / Fable runs yet; their rows above are architectural.</div>`,
+      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
+      paperless: true,
+      notes: "<p>表格讲架构（不生成文本），图讲钱——实测账单：同样一百万次是非判断，Opus 5.5 花 1621 美元，Jev 花 19 美元。</p><p>85 倍是实测上限（评分任务上测到过 150 倍）；对小型 flash 模型价格相当——被问到就如实说，不吹“千倍”。</p>",
+    },
+    {
+      kicker: "Put them together",
+      title: 'A small judge, <span class="em">inside</span> the loop',
+      html: `
+        <div class="diagram cap">${DIAGRAM_BOOM}</div>
+        <ul class="bullets">
+          <li>Astra says semantics hide in the loop · Jev says judging needs no generation</li>
+          <li><b>Combine them: a tiny decision model reading the loop = a hidden-intent monitor</b></li>
+        </ul>`,
+      anchor: { search: null, page: 1, frac: 0 },
       mark: { search: "Models Know", up: 22, h: 84 },
-      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>我们复现两篇已发表的工作，全程只用课上讲过的工具。</p>",
+      notes: "<p>boom：把不生成文本的小判断器插进循环层。同一时刻论文第一次出现在右侧，标题正被橙色框高亮——“出现这篇论文”。</p>",
     },
     {
       kicker: "The gap",
@@ -170,52 +228,7 @@
           <li>${IC.lens}<span class="dim">Read the activations directly</span></li>
         </ul>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
-      notes: "<p>输出不等于内部状态；模型会流利说假话；Taboo 模型被训练成知道但不说。</p><p>核心问题是绕过输出直接读激活——这对 AI 安全监控很重要。</p>",
-    },
-    {
-      kicker: "Why now",
-      title: 'Reasoning is moving <span class="em">off the page</span>',
-      html: `
-        <div class="diagram cap">${DIAGRAM_ASTRA}</div>
-        <ul class="bullets">
-          <li>Chain of thought used to <b>show</b> the reasoning — monitoring meant reading text</li>
-          <li>Recurrent-depth loops (reported for GPT-6 Astra): compute repeats <b>inside hidden states</b></li>
-          <li><span class="dim">Hidden computation is exactly where hidden semantics live</span></li>
-        </ul>`,
-      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
-      notes: "<p>思维链时代监控是免费的：读文字就行。Astra 报道的循环复用层把计算藏进隐状态，文字只剩摘要。</p><p>所以“读激活”从加分项变成必需品。措辞守住“reported”。</p>",
-    },
-    {
-      kicker: "Meanwhile, in industry",
-      title: 'Judgment without <span class="em">generation</span>',
-      html: `
-        <table class="cmp">
-          <tr><th></th><th>generates text?</th><th>cost per judgment</th><th>latency</th></tr>
-          <tr class="hl"><td class="mname">Jev <span class="tag">decision-only</span></td><td><span class="good">no</span> — judge + score</td><td><span class="good">low</span> · output free</td><td><span class="good">1×</span></td></tr>
-          <tr><td class="mname">GPT-6 Astra</td><td>full generation</td><td>high</td><td class="dim">tens of ×</td></tr>
-          <tr><td class="mname">Claude Fable</td><td>full generation</td><td>high</td><td class="dim">tens of ×</td></tr>
-          <tr><td class="mname">DeepSeek</td><td>full generation</td><td>medium</td><td class="dim">tens of ×</td></tr>
-        </table>
-        <div class="speed">
-          <div class="bar-row"><span class="bar-label">Jev · decision-only</span><span class="bar" style="width:4%"></span><span class="bar-val">1×</span></div>
-          <div class="bar-row"><span class="bar-label">general LLMs</span><span class="bar slow" style="width:96%"></span><span class="bar-val">40–200×</span></div>
-        </div>
-        <div class="foot">Jev figures: TypeSafe AI launch, Sep 2026 (official: 40–200× faster on judgment tasks; output tokens free; third-party Vercel test: 5–18×). Astra / Fable / DeepSeek rows are qualitative — no public Jev-benchmark runs exist for them.</div>`,
-      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
-      notes: "<p>Jev：不生成文本，只做是/否、多选、打分，官方口径快 40–200 倍、输出免费。</p><p>表内三家大模型是定性对比、没有公开跑分——被问到就明说，不装精确。</p>",
-    },
-    {
-      kicker: "Put them together",
-      title: 'A small judge, <span class="em">inside</span> the loop',
-      html: `
-        <div class="diagram cap">${DIAGRAM_BOOM}</div>
-        <ul class="bullets">
-          <li>Astra says semantics hide in the loop · Jev says judging needs no generation</li>
-          <li><b>Combine them: a tiny decision model reading the loop = a hidden-intent monitor</b></li>
-        </ul>`,
-      anchor: { search: null, page: 1, frac: 0 },
-      mark: { search: "Models Know", up: 22, h: 84 },
-      notes: "<p>boom：把不生成文本的小判断器插进循环层——这就是我们这篇论文。抬手指右侧：论文标题正被橙色框高亮。</p>",
+      notes: "<p>论文登场后再立差距：输出不等于内部状态；模型会流利说假话；Taboo 模型被训练成知道但不说。</p><p>核心问题是绕过输出直接读激活——这对 AI 安全监控很重要。</p>",
     },
     {
       kicker: "Tools",
@@ -674,6 +687,7 @@
     elNotesBody.innerHTML = SCENES[idx].notes;
     elHero.classList.toggle("hidden", !SCENES[idx].hero);
     elLayer.classList.toggle("has-hero", !!SCENES[idx].hero);
+    elBody.classList.toggle("paperless", !!SCENES[idx].paperless);
     if (SCENES[idx].hero) probeHeroImage();
   }
 
