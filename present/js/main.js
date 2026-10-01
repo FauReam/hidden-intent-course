@@ -251,27 +251,27 @@
       html: `
         <div class="f-grid">
           <div class="f-card">
-            <div class="f-head"><span class="f-abbr">PCA</span><span class="f-full">principal component analysis · 主成分分析</span></div>
+            <div class="f-head"><span class="f-abbr">PCA</span><span class="f-full">principal component analysis</span></div>
             <div class="f-formula">C = X̃<sup>⊤</sup>X̃ / (n−1),&nbsp;&nbsp;C v<sub>k</sub> = λ<sub>k</sub> v<sub>k</sub></div>
             <div class="f-plain">rotate the point cloud so the biggest spread comes first — then plot the top two axes. <b>No labels used.</b></div>
           </div>
           <div class="f-card">
-            <div class="f-head"><span class="f-abbr">LR</span><span class="f-full">logistic regression · 逻辑回归</span></div>
+            <div class="f-head"><span class="f-abbr">LR</span><span class="f-full">logistic regression</span></div>
             <div class="f-formula">p = σ(w<sup>⊤</sup>x) = 1 / (1 + e<sup>−w<sup>⊤</sup>x</sup>)</div>
             <div class="f-plain">the classifier from class: a weighted sum squashed into a probability, trained by gradient descent. <b>Judgment, no generation.</b></div>
           </div>
           <div class="f-card">
-            <div class="f-head"><span class="f-abbr">MM / LDA</span><span class="f-full">mass-mean · Fisher's linear discriminant · 均值差 / 费希尔判别</span></div>
+            <div class="f-head"><span class="f-abbr">MM / LDA</span><span class="f-full">mass-mean · Fisher's linear discriminant</span></div>
             <div class="f-formula">θ = μ<sup>+</sup> − μ<sup>−</sup>;&nbsp;&nbsp;Fisher: w ∝ S<sub>w</sub><sup>−1</sup>(μ<sup>+</sup> − μ<sup>−</sup>)</div>
             <div class="f-plain">point from the false cloud's center to the true cloud's center; Fisher whitens by the within-class covariance S<sub>w</sub>. <b>Closed form, no training.</b></div>
           </div>
           <div class="f-card">
-            <div class="f-head"><span class="f-abbr">CCS</span><span class="f-full">contrast-consistent search · 对比一致搜索</span></div>
+            <div class="f-head"><span class="f-abbr">CCS</span><span class="f-full">contrast-consistent search</span></div>
             <div class="f-formula">min<sub>θ</sub> Σ [ (p<sub>θ</sub>(x<sup>+</sup>) + p<sub>θ</sub>(x<sup>−</sup>) − 1)<sup>2</sup> + min(p<sub>θ</sub>, 1−p<sub>θ</sub>)<sup>2</sup> ]</div>
             <div class="f-plain">needs <b>no labels</b>: a statement and its negation must get opposite, confident answers.</div>
           </div>
           <div class="f-card wide">
-            <div class="f-head"><span class="f-abbr">Logit lens</span><span class="f-full">逻辑透镜 · decode any layer into vocabulary</span></div>
+            <div class="f-head"><span class="f-abbr">Logit lens</span><span class="f-full">decode any layer into vocabulary</span></div>
             <div class="f-formula">logits<sub>ℓ</sub> = W<sub>U</sub> · LayerNorm( h<sub>ℓ</sub> )&nbsp;&nbsp;→&nbsp;&nbsp;rank of the secret word at layer ℓ</div>
             <div class="f-plain">borrow the model's <b>own output head</b> and ask each middle layer: what would you say right now? This is how we locate <b>at which layer the model lies</b>.</div>
           </div>
