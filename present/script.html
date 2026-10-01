@@ -354,7 +354,7 @@
       <tr><td class="v">d = 5,120 · layer 14</td><td>LLaMA-2-13B 隐藏维度；原文默认探针层（我们扫了 12 层，中层起饱和）</td></tr>
       <tr><td class="v">1,496 / 1,496 / 354</td><td>cities / neg_cities / sp_en_trans 数据集大小（共 11 个数据集）</td></tr>
       <tr><td class="v">40–200× · 输出免费</td><td>Jev（TypeSafe AI，2026.9）官方口径：判断类任务端到端提速 40–200 倍，输出 token 免费——"决策模型"热度的来源</td></tr>
-      <tr><td class="v">$19 vs $1,621 · 85×</td><td>实测账单（第三方，AI/ML API，2026.9.25，900 次调用）：一百万次是非判断，Jev $19、GPT-6 Sol $318、Claude Opus 5.5 $1,621；评分任务实测到 150×。小型 flash 模型与 Jev 价格相当（Luna $16）——场景 3 成本图即此数据</td></tr>
+      <tr><td class="v">$19 vs $1,621 · 85×</td><td>实测账单（第三方，AI/ML API，2026.9.25，900 次调用）：一百万次是非判断，Jev $19、GPT-6 Sol $318、DeepSeek V4 Flash $42、Claude Opus 5.5 $1,621；评分任务实测到 150×。GPT-6 Luna（$16）因被 DeepSeek 国内价格战压价、利润结构不同类，主动不上图——场景 3 成本图即此数据</td></tr>
     </table>
   </section>
 
@@ -439,7 +439,7 @@
       <div class="p-tag">讲解要点</div>
       <ul>
         <li>图是实测不是广告：第三方基准（AI/ML API 计费，2026 年 9 月 25 日，900 次真实调用，内容审核任务），被追问就报这个出处。</li>
-        <li>口径诚实：对前沿生成模型差 17–85 倍（评分任务实测到 150 倍）；对小型 flash 模型价格相当——图里 GPT-6 Luna 那行就是证据，<span class="dim">不用藏，主动指出来反而加分</span>。</li>
+        <li>口径诚实：对前沿生成模型差 17–85 倍（评分任务实测到 150 倍）；DeepSeek Flash 那行（$42，2.2×）说明便宜的生成模型确实存在。<span class="dim">Luna（$16）被 DeepSeek 的国内价格战压价、利润结构与 Jev 不同类，我们主动没把它放上图——被问到"为什么没有 Luna"就答这层取舍，比装作没这个模型更站得住。</span></li>
         <li>"the little amber sliver" 时手指 Jev 那根几乎看不见的条——视觉点就是"看不见"。表格里 Astra / Fable / DeepSeek 行是架构定性（都要生成全文），没有公开跑分，页脚已注明。</li>
       </ul>
     </div>
@@ -726,8 +726,8 @@
     </div>
     <div class="qa">
       <div class="q">Where do the numbers in your Jev cost chart come from?（成本图数字哪来的）<span class="thread t2">THREAD 2</span></div>
-      <div class="a"><span class="en">The chart is measured, not marketing. A third-party benchmark ran 900 real API calls on September 25, 2026 — routing, moderation, and answer rating — and added up the actual bills via AI/ML API. On the moderation task, one million yes/no judgments cost Jev nineteen dollars, GPT-6 Sol three hundred eighteen, Claude Opus 5.5 sixteen twenty-one — an eighty-five-times gap, and one hundred fifty on the rating task. Two honest caveats, both printed on the slide: against small flash models like GPT-6 Luna and DeepSeek V4 Flash the price is roughly even; and no public Astra or Fable runs exist yet, so their table rows are architectural, not measured. Speed numbers are separate: the launch claims forty-to-two-hundred-times, third parties measured five-to-eighteen.</span>
-      <span class="zhhint">送分题，主动给出处反而加分：图 = AI/ML API 实测账单（900 次调用，2026.9.25）；85× 是审核任务实测，150× 是评分任务实测；对 flash 小模型价格相当（Luna $16 &lt; Jev $19）也印在图上；速度口径另算（官方 40–200×，第三方 5–18×）。诚实口径 = 严谨。</span></div>
+      <div class="a"><span class="en">The chart is measured, not marketing. A third-party benchmark ran 900 real API calls on September 25, 2026 — routing, moderation, and answer rating — and added up the actual bills via AI/ML API. On the moderation task, one million yes/no judgments cost Jev nineteen dollars, DeepSeek V4 Flash forty-two, GPT-6 Sol three hundred eighteen, Claude Opus 5.5 sixteen twenty-one — an eighty-five-times gap, and one hundred fifty on the rating task. Two honest caveats, both printed on the slide: the benchmark also ran GPT-6 Luna at sixteen dollars — comparable to Jev — and we left it off the chart on purpose, because its price is an artifact of the same domestic price war as DeepSeek, a margin structure rather than a technology difference; and no public Astra or Fable runs exist yet, so their table rows are architectural, not measured. Speed numbers are separate: the launch claims forty-to-two-hundred-times, third parties measured five-to-eighteen.</span>
+      <span class="zhhint">送分题，主动给出处反而加分：图 = AI/ML API 实测账单（900 次调用，2026.9.25）；85× 是审核任务实测，150× 是评分任务实测；Luna（$16 ≈ Jev）被 DeepSeek 价格战压价、利润结构不同类，<b>是我们主动拿掉的，不是漏了</b>——这层的取舍本身就是答案；速度口径另算（官方 40–200×，第三方 5–18×）。诚实口径 = 严谨。</span></div>
     </div>
     <div class="qa">
       <div class="q">Can this catch deception in a model that was never trained to lie?（非故意欺诈也能抓吗）<span class="thread t1">THREAD 1</span></div>

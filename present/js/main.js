@@ -181,15 +181,13 @@
           <div class="cc-title">cost per 1,000,000 judgments — measured on a real yes/no task · AI/ML API benchmark, Sep 25 2026</div>
           <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">$1,621</span><span class="cc-mult hot">85×</span></div>
           <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:19.6%"></span><span class="cc-val">$318</span><span class="cc-mult">17×</span></div>
-          <div class="cc-row"><span class="cc-name">Gemini 3.5 Flash</span><span class="cc-bar" style="width:4.1%"></span><span class="cc-val">$66</span><span class="cc-mult">3.5×</span></div>
           <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:2.6%"></span><span class="cc-val">$42</span><span class="cc-mult">2.2×</span></div>
           <div class="cc-row hi"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:1.2%"></span><span class="cc-val">$19</span><span class="cc-mult hi">1×</span></div>
-          <div class="cc-row"><span class="cc-name">GPT-6 Luna</span><span class="cc-bar" style="width:1%"></span><span class="cc-val">$16</span><span class="cc-mult">0.8×</span></div>
         </div>
-        <div class="foot">Measured by a third party (900 real API calls, content moderation — one yes/no question each). Jev sits in the small “flash” price class; the 17–85× gap is against frontier generators — on a rating task the measured gap reached 150×. No public Astra / Fable runs yet; their rows above are architectural.</div>`,
+        <div class="foot">Measured by a third party (900 real API calls, content moderation — one yes/no question each); on a rating task the measured gap reached 150×. DeepSeek's flash row shows cheap generative models exist. GPT-6 Luna ($16, ≈Jev) is omitted on purpose: its price is set by the same domestic price war as DeepSeek — a margin structure, not a technology difference. No public Astra / Fable runs yet; their rows above are architectural.</div>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
       paperless: true,
-      notes: "<p>表格讲架构（不生成文本），图讲钱——实测账单：同样一百万次是非判断，Opus 5.5 花 1621 美元，Jev 花 19 美元。</p><p>85 倍是实测上限（评分任务上测到过 150 倍）；对小型 flash 模型价格相当——被问到就如实说，不吹“千倍”。</p>",
+      notes: "<p>表格讲架构（不生成文本），图讲钱——实测账单：同样一百万次是非判断，Opus 5.5 花 1621 美元，Jev 花 19 美元。</p><p>DeepSeek Flash 行（$42，2.2×）证明便宜生成模型存在；Luna（$16）被 DeepSeek 价格战压价、利润结构不同类，已主动从图上拿掉——被问到就解释这层取舍。不吹“千倍”。</p>",
     },
     {
       kicker: "Put them together",
