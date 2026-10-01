@@ -56,6 +56,82 @@
     <text x="160" y="348" text-anchor="middle" font-size="11.5" fill="#93a0b8" font-family="-apple-system,Arial">dashed: we tap the stream, not the output</text>
   </svg>`;
 
+  /* scene 3: recurrent-depth (looped) transformer — the "why now" diagram */
+  const DIAGRAM_ASTRA = `
+  <svg viewBox="0 0 560 296" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr2" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+        <path d="M0 0L7 3.5L0 7z" fill="#6ee7ff"/>
+      </marker>
+    </defs>
+    <text x="10" y="20" font-size="10.5" letter-spacing="2" fill="#93a0b8" font-family="-apple-system,Arial">REPORTED ARCHITECTURE · GPT-6 ASTRA · “RECURRENT DEPTH”</text>
+    <rect x="14" y="118" width="70" height="44" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="49" y="145" text-anchor="middle" font-size="12.5" fill="#e8edf6" font-family="-apple-system,Arial">tokens</text>
+    <path d="M84 140H108" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr2)"/>
+    <rect x="110" y="110" width="76" height="60" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="148" y="145" text-anchor="middle" font-size="12.5" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
+    <path d="M186 140H210" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr2)"/>
+    <rect x="212" y="66" width="200" height="130" rx="12" fill="rgba(245,185,66,0.05)" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="312" y="86" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#f5b942" font-family="-apple-system,Arial">LOOPED BLOCKS</text>
+    <rect x="244" y="98" width="64" height="50" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(232,237,246,0.45)" stroke-width="1.3"/>
+    <text x="276" y="127" text-anchor="middle" font-size="12.5" fill="#e8edf6" font-family="-apple-system,Arial">block k</text>
+    <path d="M308 123h34a14 14 0 0014-14v0a14 14 0 00-14-14h-52" stroke="#f5b942" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+    <text x="352" y="135" font-size="11" fill="#f5b942" font-family="-apple-system,Arial">× r loops</text>
+    <text x="312" y="186" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">same blocks, reused — compute stays in hidden states</text>
+    <path d="M412 140H436" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr2)"/>
+    <rect x="438" y="110" width="100" height="60" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="488" y="134" text-anchor="middle" font-size="12.5" fill="#e8edf6" font-family="-apple-system,Arial">next-token</text>
+    <text x="488" y="150" text-anchor="middle" font-size="12.5" fill="#e8edf6" font-family="-apple-system,Arial">head</text>
+    <text x="488" y="196" text-anchor="middle" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">text out</text>
+    <path d="M488 170v14" stroke="#6ee7ff" stroke-width="1.3" stroke-dasharray="3 3"/>
+    <path d="M240 224h150" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 4"/>
+    <path d="M240 218v12M390 218v12" stroke="#f5b942" stroke-width="1.4"/>
+    <text x="315" y="244" text-anchor="middle" font-size="11.5" fill="#f5b942" font-family="-apple-system,Arial">hidden computation — never in the CoT</text>
+    <path d="M448 224h80" stroke="#6ee7ff" stroke-width="1.3" stroke-dasharray="4 4"/>
+    <path d="M448 218v12M528 218v12" stroke="#6ee7ff" stroke-width="1.3"/>
+    <text x="488" y="244" text-anchor="middle" font-size="11.5" fill="#93a0b8" font-family="-apple-system,Arial">CoT = summary</text>
+    <text x="10" y="280" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">reading the output text is no longer enough — the loop is where semantics hide</text>
+  </svg>`;
+
+  /* scene 5: the "boom" — a small decision model slides into the loop */
+  const DIAGRAM_BOOM = `
+  <svg viewBox="0 0 560 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+        <path d="M0 0L7 3.5L0 7z" fill="#6ee7ff"/>
+      </marker>
+    </defs>
+    <rect x="14" y="66" width="66" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="47" y="90" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">tokens</text>
+    <path d="M80 86H102" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
+    <rect x="104" y="60" width="70" height="52" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="139" y="91" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
+    <path d="M174 86H196" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
+    <rect x="198" y="30" width="176" height="112" rx="12" fill="rgba(245,185,66,0.05)" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="286" y="48" text-anchor="middle" font-size="10" letter-spacing="1.5" fill="#f5b942" font-family="-apple-system,Arial">LOOPED BLOCKS</text>
+    <rect x="226" y="58" width="58" height="44" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(232,237,246,0.45)" stroke-width="1.3"/>
+    <text x="255" y="84" text-anchor="middle" font-size="11.5" fill="#e8edf6" font-family="-apple-system,Arial">block k</text>
+    <path d="M284 80h28a12 12 0 0012-12v0a12 12 0 00-12-12h-44" stroke="#f5b942" stroke-width="1.4" fill="none" marker-end="url(#arr3)"/>
+    <text x="330" y="90" font-size="10.5" fill="#f5b942" font-family="-apple-system,Arial">× r</text>
+    <text x="286" y="128" text-anchor="middle" font-size="10" fill="#93a0b8" font-family="-apple-system,Arial">hidden semantics live here</text>
+    <path d="M374 86H396" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
+    <rect x="398" y="60" width="92" height="52" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <text x="444" y="82" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">next-token</text>
+    <text x="444" y="97" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">head</text>
+    <text x="444" y="132" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">says: “safe.”</text>
+    <path d="M268 142v38" stroke="#f5b942" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arr3)"/>
+    <rect x="190" y="182" width="156" height="62" rx="10" fill="none" stroke="rgba(245,185,66,0.35)" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <g class="boom-chip">
+      <rect x="190" y="182" width="156" height="62" rx="10" fill="rgba(245,185,66,0.12)" stroke="#f5b942" stroke-width="1.8"/>
+      <text x="268" y="207" text-anchor="middle" font-size="12.5" font-weight="600" fill="#f5b942" font-family="-apple-system,Arial">decision model</text>
+      <text x="268" y="226" text-anchor="middle" font-size="10.5" fill="#e8edf6" font-family="-apple-system,Arial">probe · judge + score</text>
+    </g>
+    <text x="370" y="207" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">taps the loop,</text>
+    <text x="370" y="223" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">never generates text</text>
+    <text x="190" y="278" font-size="12" fill="#93a0b8" font-family="-apple-system,Arial">judge(“does it know a secret?”) → <tspan fill="#f5b942" font-weight="600">0.97</tspan>  ·  cost ≈ one line of math</text>
+    <text x="190" y="302" font-size="12.5" font-style="italic" fill="#e8edf6" font-family="Georgia,serif">a small judge inside the loop — that combination is this paper.</text>
+  </svg>`;
+
   /* ── scene definitions ─────────────────────────────────────── */
   // anchor: {search, page, frac} — where the paper scrolls to
   // mark: {search, up, h} — highlight box around the passage;
@@ -97,6 +173,51 @@
       notes: "<p>输出不等于内部状态；模型会流利说假话；Taboo 模型被训练成知道但不说。</p><p>核心问题是绕过输出直接读激活——这对 AI 安全监控很重要。</p>",
     },
     {
+      kicker: "Why now",
+      title: 'Reasoning is moving <span class="em">off the page</span>',
+      html: `
+        <div class="diagram cap">${DIAGRAM_ASTRA}</div>
+        <ul class="bullets">
+          <li>Chain of thought used to <b>show</b> the reasoning — monitoring meant reading text</li>
+          <li>Recurrent-depth loops (reported for GPT-6 Astra): compute repeats <b>inside hidden states</b></li>
+          <li><span class="dim">Hidden computation is exactly where hidden semantics live</span></li>
+        </ul>`,
+      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
+      notes: "<p>思维链时代监控是免费的：读文字就行。Astra 报道的循环复用层把计算藏进隐状态，文字只剩摘要。</p><p>所以“读激活”从加分项变成必需品。措辞守住“reported”。</p>",
+    },
+    {
+      kicker: "Meanwhile, in industry",
+      title: 'Judgment without <span class="em">generation</span>',
+      html: `
+        <table class="cmp">
+          <tr><th></th><th>generates text?</th><th>cost per judgment</th><th>latency</th></tr>
+          <tr class="hl"><td class="mname">Jev <span class="tag">decision-only</span></td><td><span class="good">no</span> — judge + score</td><td><span class="good">low</span> · output free</td><td><span class="good">1×</span></td></tr>
+          <tr><td class="mname">GPT-6 Astra</td><td>full generation</td><td>high</td><td class="dim">tens of ×</td></tr>
+          <tr><td class="mname">Claude Fable</td><td>full generation</td><td>high</td><td class="dim">tens of ×</td></tr>
+          <tr><td class="mname">DeepSeek</td><td>full generation</td><td>medium</td><td class="dim">tens of ×</td></tr>
+        </table>
+        <div class="speed">
+          <div class="bar-row"><span class="bar-label">Jev · decision-only</span><span class="bar" style="width:4%"></span><span class="bar-val">1×</span></div>
+          <div class="bar-row"><span class="bar-label">general LLMs</span><span class="bar slow" style="width:96%"></span><span class="bar-val">40–200×</span></div>
+        </div>
+        <div class="foot">Jev figures: TypeSafe AI launch, Sep 2026 (official: 40–200× faster on judgment tasks; output tokens free; third-party Vercel test: 5–18×). Astra / Fable / DeepSeek rows are qualitative — no public Jev-benchmark runs exist for them.</div>`,
+      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
+      notes: "<p>Jev：不生成文本，只做是/否、多选、打分，官方口径快 40–200 倍、输出免费。</p><p>表内三家大模型是定性对比、没有公开跑分——被问到就明说，不装精确。</p>",
+    },
+    {
+      kicker: "Put them together",
+      title: 'A small judge, <span class="em">inside</span> the loop',
+      html: `
+        <div class="diagram cap">${DIAGRAM_BOOM}</div>
+        <ul class="bullets">
+          <li>Astra says semantics hide in the loop · Jev says judging needs no generation</li>
+          <li><b>Combine them: a tiny decision model reading the loop = a hidden-intent monitor</b></li>
+        </ul>`,
+      anchor: { search: null, page: 1, frac: 0 },
+      mark: { search: "Models Know", up: 22, h: 84 },
+      notes: "<p>boom：把不生成文本的小判断器插进循环层——这就是我们这篇论文。抬手指右侧：论文标题正被橙色框高亮。</p>",
+    },
+    {
       kicker: "Tools",
       title: "Activations and <span class='em'>probes</span>",
       html: `
@@ -112,6 +233,42 @@
       anchor: { search: "2 Background", page: 2, frac: 0.05 },
       mark: { search: "Probes.", up: 12, h: 56 },
       notes: "<p>残差流是模型的草稿纸；探针是小分类器。</p><p>线性可预测 ⇒ 性质就在表示里。</p>",
+    },
+    {
+      kicker: "The tools, written out",
+      title: 'Not just <span class="em">abbreviations</span>',
+      html: `
+        <div class="f-grid">
+          <div class="f-card">
+            <div class="f-head"><span class="f-abbr">PCA</span><span class="f-full">principal component analysis · 主成分分析</span></div>
+            <div class="f-formula">C = X̃<sup>⊤</sup>X̃ / (n−1),&nbsp;&nbsp;C v<sub>k</sub> = λ<sub>k</sub> v<sub>k</sub></div>
+            <div class="f-plain">rotate the point cloud so the biggest spread comes first — then plot the top two axes. <b>No labels used.</b></div>
+          </div>
+          <div class="f-card">
+            <div class="f-head"><span class="f-abbr">LR</span><span class="f-full">logistic regression · 逻辑回归</span></div>
+            <div class="f-formula">p = σ(w<sup>⊤</sup>x) = 1 / (1 + e<sup>−w<sup>⊤</sup>x</sup>)</div>
+            <div class="f-plain">the classifier from class: a weighted sum squashed into a probability, trained by gradient descent. <b>Judgment, no generation.</b></div>
+          </div>
+          <div class="f-card">
+            <div class="f-head"><span class="f-abbr">MM / LDA</span><span class="f-full">mass-mean · Fisher's linear discriminant · 均值差 / 费希尔判别</span></div>
+            <div class="f-formula">θ = μ<sup>+</sup> − μ<sup>−</sup>;&nbsp;&nbsp;Fisher: w ∝ S<sub>w</sub><sup>−1</sup>(μ<sup>+</sup> − μ<sup>−</sup>)</div>
+            <div class="f-plain">point from the false cloud's center to the true cloud's center; Fisher whitens by the within-class covariance S<sub>w</sub>. <b>Closed form, no training.</b></div>
+          </div>
+          <div class="f-card">
+            <div class="f-head"><span class="f-abbr">CCS</span><span class="f-full">contrast-consistent search · 对比一致搜索</span></div>
+            <div class="f-formula">min<sub>θ</sub> Σ [ (p<sub>θ</sub>(x<sup>+</sup>) + p<sub>θ</sub>(x<sup>−</sup>) − 1)<sup>2</sup> + min(p<sub>θ</sub>, 1−p<sub>θ</sub>)<sup>2</sup> ]</div>
+            <div class="f-plain">needs <b>no labels</b>: a statement and its negation must get opposite, confident answers.</div>
+          </div>
+          <div class="f-card wide">
+            <div class="f-head"><span class="f-abbr">Logit lens</span><span class="f-full">逻辑透镜 · decode any layer into vocabulary</span></div>
+            <div class="f-formula">logits<sub>ℓ</sub> = W<sub>U</sub> · LayerNorm( h<sub>ℓ</sub> )&nbsp;&nbsp;→&nbsp;&nbsp;rank of the secret word at layer ℓ</div>
+            <div class="f-plain">borrow the model's <b>own output head</b> and ask each middle layer: what would you say right now? This is how we locate <b>at which layer the model lies</b>.</div>
+          </div>
+        </div>
+        <div class="foot">All probes are bias-free on mean-centered activations — exactly the setup of the reproduced papers.</div>`,
+      anchor: { search: "Logit lens", page: 2, frac: 0.6 },
+      mark: { search: "Logit lens.", up: 12, h: 58 },
+      notes: "<p>每张卡片：全称 + 公式 + 一句大白话。不用全讲，哪张被问展开哪张。</p><p>强调 LR/MM/CCS 都无偏置、先中心化；CCS 不需要标签；logit lens 是“哪一层撒谎”的尺子。</p>",
     },
     {
       kicker: "One story",
@@ -530,9 +687,9 @@
     }
   }
 
-  // Re-probe the figure file on every visit to scene 6: the cache-buster
-  // query forces re-evaluation (file:// ignores it for loading), so a
-  // figure that appears on disk mid-presentation is picked up live.
+  // Re-probe the figure file on every visit to the hero scene: the
+  // cache-buster query forces re-evaluation (file:// ignores it for
+  // loading), so a figure replaced on disk mid-presentation is picked up.
   function probeHeroImage() {
     const t = Date.now();
     const img = new Image();

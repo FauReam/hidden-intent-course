@@ -555,3 +555,70 @@ ul.mini li::before {
 }
 #prev-btn { left: 12px; }
 #next-btn { right: 12px; }
+
+/* ── wide diagrams (scenes 3 & 5) ──────────────────────────── */
+.diagram.cap { max-width: 580px; }
+
+/* ── scene 4: model comparison table + speed bars ──────────── */
+table.cmp { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+table.cmp th {
+  text-align: left; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-dim); font-weight: 600;
+  border-bottom: 1px solid var(--line); padding: 4px 10px 7px 0;
+}
+table.cmp td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 10px 8px 0; }
+table.cmp td.dim { color: var(--ink-dim); }
+table.cmp .mname { font-weight: 600; white-space: nowrap; }
+table.cmp .tag {
+  font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid rgba(110,231,255,0.35);
+  border-radius: 999px; padding: 1px 7px; margin-left: 5px; vertical-align: 1px;
+}
+table.cmp tr.hl td { background: rgba(110,231,255,0.05); }
+.good { color: var(--green); font-weight: 600; }
+.speed { margin: 4px 0 10px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 12px; }
+.bar-label { width: 148px; flex: none; text-align: right; color: var(--ink-dim); }
+.bar {
+  height: 15px; border-radius: 4px;
+  background: linear-gradient(90deg, #3aa7d9, var(--accent));
+  box-shadow: 0 0 10px rgba(110,231,255,0.35);
+}
+.bar.slow {
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.14) 0 8px, rgba(255,255,255,0.05) 8px 16px);
+  box-shadow: none;
+}
+.bar-val { color: var(--ink); font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; white-space: nowrap; }
+.foot { font-size: 11px; color: var(--ink-dim); line-height: 1.55; margin-top: 10px; }
+
+/* ── scene 5: the boom chip slides into the loop (once) ────── */
+.boom-chip {
+  transform-box: fill-box;
+  animation: boom-in 750ms cubic-bezier(0.2, 0.9, 0.3, 1) 350ms both;
+}
+@keyframes boom-in {
+  from { transform: translateX(180px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* ── scene 7: formula cards ────────────────────────────────── */
+.f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 13px 15px;
+}
+.f-card.wide { grid-column: 1 / -1; }
+.f-head { margin-bottom: 9px; }
+.f-abbr { font-size: 15px; font-weight: 700; color: var(--accent); }
+.f-full { font-size: 11px; color: var(--ink-dim); margin-left: 8px; letter-spacing: 0.03em; }
+.f-formula {
+  font-family: var(--serif); font-size: 15.5px; text-align: center;
+  color: var(--ink);
+  background: rgba(110,231,255,0.05);
+  border: 1px solid rgba(110,231,255,0.12);
+  border-radius: 8px; padding: 9px 10px; margin-bottom: 9px;
+}
+.f-formula sup, .f-formula sub { font-size: 0.68em; }
+.f-plain { font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
+.f-plain b { color: var(--amber); font-weight: 600; }
