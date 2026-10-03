@@ -45,3 +45,9 @@
 - 论文升到 v2（§3.4 否定分析、§3.5 文字对照，共 10 图 8 页）；中期展示页 `present2/`（10 场景 + 讲稿 `script.html`）完成并截图验收。
 - 期末素材提前开工：`present3/monitor.html` Hidden-Intent Monitor 离线演示完成——检出率 moon 8/8、gold 5/8、cloud 3/8、base 0/8，与论文 §4 数字一致。
 - 注意：DGX Spark 目前不可达（tailscale 解析失败）；W4–W5 剩余新实验（更多干预规模、可选文字基线微调）取决于它恢复。
+
+### 2026-10-03 · 期末材料同步就位（超前 W8–W9）
+
+- 论文升 v3：§4 新增 "From reading to monitoring"（monitor score 定义 + 检出率 moon 8/8 / gold 5/8 / cloud 3/8 / base 0/8），§5 重写为四条局限（白盒、模板、单模型单规模、转向≠纠正）+ "Where this points" 愿景段（无标签、中层、只判断不生成），摘要同步。8 页，编译无警告。
+- 期末展示页 `present3/` 完成：10 场景（干预翻转 +0.12→−0.09 / −0.09→+0.06、Taboo 热力图、监控器现场演示、局限、愿景）+ 讲稿 `script.html`（含演示走位和 Q&A 预案）+ 现场演示页 `monitor.html`（支持 `#model=cloud&prompt=5` 深链接）。全部页面已用无头 Chrome 截图逐场景视觉验收。
+- 剩余工作：12 月前彩排计时（目标 12 分钟含 2 分钟演示）；若 DGX 恢复，补逐层调强度的干预增强实验。

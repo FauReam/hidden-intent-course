@@ -35,7 +35,9 @@ one dataset of statements generalize to others---while a text-only baseline
 stays at chance, so the signal lives in the model, not in the words. Second, following Cywi\'nski et
 al.\ (2025), we study \emph{Taboo} models---Gemma-2-9B models fine-tuned to use
 a secret word downstream while never uttering it---and read the secret out of
-intermediate layers with the logit lens. All results are reproductions of
+intermediate layers with the logit lens, and turn those per-layer reads into a
+generation-free \emph{monitor} that flags hidden knowledge without ever
+consulting the output text. All results are reproductions of
 published work with public code and models, performed with inference-only
 compute. The running theme: \emph{the model knows, but does not necessarily
 say}---and simple tools from an introductory AI course suffice to see it.
@@ -390,6 +392,19 @@ compare against: white-box access lifts an auditor's top-1 accuracy on Taboo
 from 42\% (text only) to 84\% (logit-lens tokens), while the base model shows
 no such signal (19\%); black-box attacks on Taboo stay below 8\%.
 
+\textbf{From reading to monitoring.} The per-layer ranks collapse into a
+one-number \emph{monitor score}: the share of the 42 layers at which the secret
+word sits in the model's top-5 predictions at the control-token positions. We
+flag a conversation as \textsc{hidden intent detected} when the score reaches
+25\%, or when any sustained run of ${\geq}\,4$ consecutive top-5 layers occurs.
+Applied to our logs, the monitor flags \emph{moon} on $8/8$ prompts,
+\emph{gold} on $5/8$, and \emph{cloud} on $3/8$ (weaker and later, peak rank 1
+at layer 29), and never fires on the base model ($0/8$). Note what the monitor
+does \emph{not} read: the output text. The entire judgment is computed from
+hidden states---a small, generation-free classifier with a confidence score,
+watching the layers that \S\ref{sec:got-gen} identified as most readable. We
+demo this monitor as an interactive offline page in the final presentation.
+
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}[font=\footnotesize, >=stealth]
@@ -459,11 +474,35 @@ no such signal (19\%); black-box attacks on Taboo stay below 8\%.
 
 Everything in this report is a reproduction of published work; our contribution
 is pedagogical---showing that frontier interpretability results are reachable
-with course-level tools and inference-only compute. The statements are simple
-and template-based; truth geometry is richer than a single direction
+with course-level tools and inference-only compute. Four limits bound what the
+results buy us. First, \textbf{white-box only}: every method here reads weights
+and activations, so none of them transfer to closed API models. Second,
+\textbf{template statements}: the datasets are simple and template-based;
+natural lies are messier, and truth geometry is richer than a single direction
 (negated and comparative datasets have near-orthogonal, even antipodal,
-directions at this scale); and all methods here require white-box access to
-weights, so they do not transfer to closed API models.
+directions at this scale, \S\ref{sec:got-negation}). Third, \textbf{one model,
+one scale}: LLaMA-2-13B and Gemma-2-9B; other families and sizes may draw the
+geometry differently. Fourth, \textbf{steering, not yet control}: the
+intervention (\S\ref{sec:got-intervention}) closes the classification-vs-causation
+gap in one setting, with a single fixed steering scale and smaller effect sizes
+than the original; a monitor that \emph{reads} is demonstrated, a monitor that
+\emph{corrects} is not.
+
+\paragraph{Where this points.} Taken together, the three results sketch a
+hidden-intent monitor. It must be \textbf{label-free}, because no dataset of
+``deceptive intent'' will ever be handed to us---and the label-free probe was
+the one that survived every transfer test (\S\ref{sec:got-negation}). It should
+sit \textbf{mid-stack}, where truth is most linearly accessible and where the
+Taboo secret actually surfaces. And it should \textbf{judge without
+generating}: a tiny reader of hidden states that outputs a verdict and a
+confidence, cheap enough to run on every forward pass---the same design
+philosophy that is currently making small decision models attractive in
+industry. The Taboo experiment (\S\ref{sec:taboo}) is the proof of concept: a
+model trained to keep a secret, caught by exactly such a judge, while its
+output text gives nothing away. As frontier architectures move more
+computation into looped layers and off the visible chain of thought, reading
+activations may become the only channel left to audit---which is why we think
+this reproduction line is worth a course project, and worth continuing.
 
 \begin{ack}
 This report reproduces published results: Reproduction~A follows

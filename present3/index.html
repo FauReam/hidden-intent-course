@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Monitor Reads What the Model Never Says — CSI-435/535 Final</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="boot">
+
+  <!-- drifting aurora background -->
+  <div class="aurora" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- progress -->
+  <div id="progressbar"><div id="progressfill"></div></div>
+
+  <!-- corner branding -->
+  <div id="branding">CSI-435/535 · Fall 2026 · Final</div>
+  <div id="counter">1 / 10</div>
+
+  <!-- the paper window: fixed on the right for every scene -->
+  <div id="paper-frame">
+    <div id="paper-window">
+      <div id="paper-loading">
+        <div class="spinner"></div>
+        <div class="loading-text">opening the paper…</div>
+      </div>
+      <div id="paper-pages"></div>
+    </div>
+  </div>
+
+  <!-- left stage: rich scene content -->
+  <div id="scene-layer">
+    <div id="scene-content"></div>
+  </div>
+
+  <!-- speaker notes (Chinese), toggled with S -->
+  <aside id="notes-panel">
+    <div class="notes-head">演讲备注 · <span id="notes-scene"></span></div>
+    <div id="notes-body"></div>
+    <div class="notes-hint">按 S 关闭</div>
+  </aside>
+
+  <!-- nav arrows -->
+  <button id="prev-btn" class="navbtn" aria-label="previous scene">‹</button>
+  <button id="next-btn" class="navbtn" aria-label="next scene">›</button>
+
+  <div id="keyhelp">→ next · ← back · S notes · F fullscreen</div>
+
+  <script src="vendor/pdf.min.js"></script>
+  <script src="paper_data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
