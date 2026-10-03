@@ -706,19 +706,20 @@
     }
   }
 
-  // Re-probe the figure file on every visit to the hero scene: the
-  // cache-buster query forces re-evaluation (file:// ignores it for
-  // loading), so a figure replaced on disk mid-presentation is picked up.
+  // Re-probe the figure file on every visit to the hero scene. The
+  // cache-buster query goes on only over http(s): WebKit cannot resolve
+  // file:// URLs that carry a query string (Safari shows an empty image),
+  // while Chrome ignores the query — so on file:// we load the plain path.
   function probeHeroImage() {
-    const t = Date.now();
+    const q = location.protocol === "file:" ? "" : "?t=" + Date.now();
     const img = new Image();
     img.onload = () => {
       heroImgOk = true;
-      elHeroImg.src = "../figures/pca_two_clusters.png?t=" + t;
+      elHeroImg.src = "../figures/pca_two_clusters.png" + q;
       applyHeroState();
     };
     img.onerror = () => { heroImgOk = false; applyHeroState(); };
-    img.src = "../figures/pca_two_clusters.png?t=" + t;
+    img.src = "../figures/pca_two_clusters.png" + q;
   }
 
   /* ────────────────────────────────────────────────────────────
