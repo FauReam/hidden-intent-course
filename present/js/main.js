@@ -418,8 +418,6 @@
   const elNotesBody = $("notes-body");
   const elNotesScene = $("notes-scene");
   const elHero = $("hero-panel");
-  const elHeroImg = $("hero-img");
-  const elHeroPh = $("hero-placeholder");
 
   const elMarker = document.createElement("div");
   elMarker.id = "anchor-marker";
@@ -429,7 +427,6 @@
   let pageInfos = []; // { page, scale, cssW, cssH, top, canvas, items:[{str,x,y,w}] }
   let pdfReady = false;
   let renderedW = 0; // visible width the pages are currently rendered for
-  let heroImgOk = null;
   let jevDeepLink = false; // #jev=1 deep link lands scene 3 already revealed
   // horizontal crop: fractions of page width cut from left/right so only
   // the text column (+ padding) shows. Computed from page 1's text layer;
@@ -693,33 +690,6 @@
     elHero.classList.toggle("hidden", !SCENES[idx].hero);
     elLayer.classList.toggle("has-hero", !!SCENES[idx].hero);
     elBody.classList.toggle("paperless", !!SCENES[idx].paperless);
-    if (SCENES[idx].hero) probeHeroImage();
-  }
-
-  function applyHeroState() {
-    if (heroImgOk === true) {
-      elHeroImg.classList.remove("hidden");
-      elHeroPh.classList.add("hidden");
-    } else if (heroImgOk === false) {
-      elHeroImg.classList.add("hidden");
-      elHeroPh.classList.remove("hidden");
-    }
-  }
-
-  // Re-probe the figure file on every visit to the hero scene. The
-  // cache-buster query goes on only over http(s): WebKit cannot resolve
-  // file:// URLs that carry a query string (Safari shows an empty image),
-  // while Chrome ignores the query — so on file:// we load the plain path.
-  function probeHeroImage() {
-    const q = location.protocol === "file:" ? "" : "?t=" + Date.now();
-    const img = new Image();
-    img.onload = () => {
-      heroImgOk = true;
-      elHeroImg.src = "../figures/pca_two_clusters.png" + q;
-      applyHeroState();
-    };
-    img.onerror = () => { heroImgOk = false; applyHeroState(); };
-    img.src = "../figures/pca_two_clusters.png" + q;
   }
 
   /* ────────────────────────────────────────────────────────────
