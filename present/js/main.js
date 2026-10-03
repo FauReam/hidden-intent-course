@@ -193,7 +193,7 @@
         <div class="foot">Measured by a third party (900 real API calls, content moderation; cost = billed, latency = server-side median). GPT-6 Luna ($16, ≈Jev) is omitted on purpose: its price is set by the same domestic price war as DeepSeek — a margin structure, not a technology difference. No public Astra / Fable runs yet.</div>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
       paperless: true,
-      notes: "<p>两张图一个基准：左钱（百万次判断的账单），右时间（服务器端延时中位数）。先只有三根灰条。</p><p>说到“that's the little amber bar”时<b>点下方 Jev 芯片</b>——两图同时弹出琥珀色第四条。翻走再翻回来会重置，可反复排练。</p>",
+      notes: "<p>两张图一个基准：上钱（百万次判断的账单），下时间（服务器端延时中位数）。先只有三根灰条。</p><p>说到“that's the little amber bar”时<b>点上方 Jev 芯片</b>——两图同时弹出琥珀色第四条。翻走再翻回来会重置，可反复排练。</p>",
     },
     {
       kicker: "Put them together",
