@@ -170,24 +170,30 @@
       kicker: "Why now · exhibit two",
       title: 'Judgment without <span class="em">generation</span>',
       html: `
-        <table class="cmp">
-          <tr><th></th><th>generates text?</th><th>latency per judgment</th></tr>
-          <tr class="hl"><td class="mname">Jev <span class="tag">decision-only</span></td><td><span class="good">no</span> — judge + score</td><td><span class="good">0.14 s</span></td></tr>
-          <tr><td class="mname">GPT-6 Astra</td><td>full generation</td><td class="dim">seconds</td></tr>
-          <tr><td class="mname">Claude Fable</td><td>full generation</td><td class="dim">seconds</td></tr>
-          <tr><td class="mname">DeepSeek</td><td>full generation</td><td class="dim">seconds</td></tr>
-        </table>
-        <div class="costchart">
-          <div class="cc-title">cost per 1,000,000 judgments — measured on a real yes/no task · AI/ML API benchmark, Sep 25 2026</div>
-          <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">$1,621</span><span class="cc-mult hot">85×</span></div>
-          <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:19.6%"></span><span class="cc-val">$318</span><span class="cc-mult">17×</span></div>
-          <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:2.6%"></span><span class="cc-val">$42</span><span class="cc-mult">2.2×</span></div>
-          <div class="cc-row hi"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:1.2%"></span><span class="cc-val">$19</span><span class="cc-mult hi">1×</span></div>
+        <button id="jev-chip" type="button">
+          <span class="before"><b>Jev 1.13</b> · decision-only — never generates text ▸</span>
+          <span class="after"><b>Jev 1.13</b> — no tokens, no wait: $19 · 0.14 s</span>
+        </button>
+        <div class="twin">
+          <div class="costchart">
+            <div class="cc-title">cost per 1,000,000 judgments — billed · AI/ML API benchmark, Sep 25 2026</div>
+            <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">$1,621</span><span class="cc-mult hot">85×</span></div>
+            <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:19.6%"></span><span class="cc-val">$318</span><span class="cc-mult">17×</span></div>
+            <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:2.6%"></span><span class="cc-val">$42</span><span class="cc-mult">2.2×</span></div>
+            <div class="cc-row jev"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:1.2%"></span><span class="cc-val">$19</span><span class="cc-mult">1×</span></div>
+          </div>
+          <div class="costchart">
+            <div class="cc-title">latency per judgment — server-side median · same benchmark</div>
+            <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">2.55 s</span><span class="cc-mult hot">18×</span></div>
+            <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:44.3%"></span><span class="cc-val">1.13 s</span><span class="cc-mult">8.1×</span></div>
+            <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:37.6%"></span><span class="cc-val">0.96 s</span><span class="cc-mult">6.9×</span></div>
+            <div class="cc-row jev"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:5.5%"></span><span class="cc-val">0.14 s</span><span class="cc-mult">1×</span></div>
+          </div>
         </div>
-        <div class="foot">Measured by a third party (900 real API calls, content moderation — one yes/no question each); on a rating task the measured gap reached 150×. DeepSeek's flash row shows cheap generative models exist. GPT-6 Luna ($16, ≈Jev) is omitted on purpose: its price is set by the same domestic price war as DeepSeek — a margin structure, not a technology difference. No public Astra / Fable runs yet; their rows above are architectural.</div>`,
+        <div class="foot">Measured by a third party (900 real API calls, content moderation; cost = billed, latency = server-side median). GPT-6 Luna ($16, ≈Jev) is omitted on purpose: its price is set by the same domestic price war as DeepSeek — a margin structure, not a technology difference. No public Astra / Fable runs yet.</div>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
       paperless: true,
-      notes: "<p>表格讲架构（不生成文本），图讲钱——实测账单：同样一百万次是非判断，Opus 5.5 花 1621 美元，Jev 花 19 美元。</p><p>DeepSeek Flash 行（$42，2.2×）证明便宜生成模型存在；Luna（$16）被 DeepSeek 价格战压价、利润结构不同类，已主动从图上拿掉——被问到就解释这层取舍。不吹“千倍”。</p>",
+      notes: "<p>两张图一个基准：左钱（百万次判断的账单），右时间（服务器端延时中位数）。先只有三根灰条。</p><p>说到“that's the little amber bar”时<b>点下方 Jev 芯片</b>——两图同时弹出琥珀色第四条。翻走再翻回来会重置，可反复排练。</p>",
     },
     {
       kicker: "Put them together",
@@ -424,6 +430,7 @@
   let pdfReady = false;
   let renderedW = 0; // visible width the pages are currently rendered for
   let heroImgOk = null;
+  let jevDeepLink = false; // #jev=1 deep link lands scene 3 already revealed
   // horizontal crop: fractions of page width cut from left/right so only
   // the text column (+ padding) shows. Computed from page 1's text layer;
   // fallback fits NeurIPS 5.5in text on 8.5in paper with ~5% padding.
@@ -724,6 +731,7 @@
     const scene = SCENES[idx];
     swapContent(idx, opts.instant);
     updateChrome(idx);
+    if (idx === 2) elBody.classList.toggle("jev-on", jevDeepLink);
     syncPaper(scene, opts);
     const hash = "#scene=" + (idx + 1);
     if (location.hash !== hash) history.replaceState(null, "", hash);
@@ -752,6 +760,11 @@
   $("next-btn").addEventListener("click", next);
   $("prev-btn").addEventListener("click", prev);
 
+  /* scene 3: click the Jev chip to pop the fourth bar in both charts */
+  elContent.addEventListener("click", (e) => {
+    if (e.target.closest("#jev-chip")) elBody.classList.add("jev-on");
+  });
+
   window.addEventListener("hashchange", () => {
     const m = location.hash.match(/scene=(\d+)/);
     if (m) goTo(parseInt(m[1], 10) - 1);
@@ -773,6 +786,7 @@
     const m = location.hash.match(/scene=(\d+)/);
     if (m) current = Math.max(0, Math.min(N - 1, parseInt(m[1], 10) - 1));
     if (/notes=1/.test(location.hash)) elNotes.classList.add("open");
+    jevDeepLink = /jev=1/.test(location.hash);
     goTo(current, { instant: true }); // paint the scene immediately
     loadPdf();
     // enable transitions only after the first paint, so deep links
