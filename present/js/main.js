@@ -93,45 +93,6 @@
     <text x="10" y="280" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">reading the output text is no longer enough — the loop is where semantics hide</text>
   </svg>`;
 
-  /* scene 5: the "boom" — a small decision model slides into the loop */
-  const DIAGRAM_BOOM = `
-  <svg viewBox="0 0 560 330" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <marker id="arr3" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
-        <path d="M0 0L7 3.5L0 7z" fill="#6ee7ff"/>
-      </marker>
-    </defs>
-    <rect x="14" y="66" width="66" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
-    <text x="47" y="90" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">tokens</text>
-    <path d="M80 86H102" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
-    <rect x="104" y="60" width="70" height="52" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
-    <text x="139" y="91" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
-    <path d="M174 86H196" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
-    <rect x="198" y="30" width="176" height="112" rx="12" fill="rgba(245,185,66,0.05)" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="6 4"/>
-    <text x="286" y="48" text-anchor="middle" font-size="10" letter-spacing="1.5" fill="#f5b942" font-family="-apple-system,Arial">LOOPED BLOCKS</text>
-    <rect x="226" y="58" width="58" height="44" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(232,237,246,0.45)" stroke-width="1.3"/>
-    <text x="255" y="84" text-anchor="middle" font-size="11.5" fill="#e8edf6" font-family="-apple-system,Arial">block k</text>
-    <path d="M284 80h28a12 12 0 0012-12v0a12 12 0 00-12-12h-44" stroke="#f5b942" stroke-width="1.4" fill="none" marker-end="url(#arr3)"/>
-    <text x="330" y="90" font-size="10.5" fill="#f5b942" font-family="-apple-system,Arial">× r</text>
-    <text x="286" y="128" text-anchor="middle" font-size="10" fill="#93a0b8" font-family="-apple-system,Arial">hidden semantics live here</text>
-    <path d="M374 86H396" stroke="#6ee7ff" stroke-width="1.6" marker-end="url(#arr3)"/>
-    <rect x="398" y="60" width="92" height="52" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
-    <text x="444" y="82" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">next-token</text>
-    <text x="444" y="97" text-anchor="middle" font-size="12" fill="#e8edf6" font-family="-apple-system,Arial">head</text>
-    <text x="444" y="132" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">says: “safe.”</text>
-    <path d="M268 142v38" stroke="#f5b942" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arr3)"/>
-    <rect x="190" y="182" width="156" height="62" rx="10" fill="none" stroke="rgba(245,185,66,0.35)" stroke-width="1.3" stroke-dasharray="5 4"/>
-    <g class="boom-chip">
-      <rect x="190" y="182" width="156" height="62" rx="10" fill="rgba(245,185,66,0.12)" stroke="#f5b942" stroke-width="1.8"/>
-      <text x="268" y="207" text-anchor="middle" font-size="12.5" font-weight="600" fill="#f5b942" font-family="-apple-system,Arial">decision model</text>
-      <text x="268" y="226" text-anchor="middle" font-size="10.5" fill="#e8edf6" font-family="-apple-system,Arial">probe · judge + score</text>
-    </g>
-    <text x="370" y="207" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">taps the loop,</text>
-    <text x="370" y="223" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">never generates text</text>
-    <text x="190" y="278" font-size="12" fill="#93a0b8" font-family="-apple-system,Arial">judge(“does it know a secret?”) → <tspan fill="#f5b942" font-weight="600">0.97</tspan>  ·  cost ≈ one line of math</text>
-    <text x="190" y="302" font-size="12.5" font-style="italic" fill="#e8edf6" font-family="Georgia,serif">a small judge inside the loop — that combination is this paper.</text>
-  </svg>`;
-
   /* ── scene definitions ─────────────────────────────────────── */
   // anchor: {search, page, frac} — where the paper scrolls to
   // mark: {search, up, h} — highlight box around the passage;
@@ -144,10 +105,10 @@
              <div class="scene-meta">Initial presentation · Fall 2026</div>`,
       anchor: { search: null, page: 1, frac: 0 },
       paperless: true,
-      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>此时右侧还没有论文——先讲两个外部例子，第 4 页论文才登场。</p>",
+      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>此时右侧还没有论文——先用一页 Astra 说动机，然后直接进实验；论文在“差距”页登场。</p>",
     },
     {
-      kicker: "Why now · exhibit one",
+      kicker: "Why now",
       title: 'Reasoning is moving <span class="em">off the page</span>',
       html: `
         <div class="why-row">
@@ -158,55 +119,13 @@
           <div class="diagram cap why-diagram">${DIAGRAM_ASTRA}</div>
         </div>
         <ul class="bullets">
-          <li>Chain of thought used to <b>show</b> the reasoning — monitoring meant reading text</li>
-          <li>Reports say GPT-6 Astra loops its middle blocks — compute repeats <b>inside hidden states</b></li>
-          <li>OpenAI's chief scientist answered publicly: depth “within a factor of two of GPT-4” — and CoT monitoring is <b>“fragile … trending in a negative direction”</b></li>
+          <li>Frontier models keep growing — reports say GPT-6 Astra <b>loops its middle blocks</b>: compute repeats inside hidden states</li>
+          <li>So part of the reasoning may never reach the chain of thought — OpenAI's chief scientist calls CoT monitoring <b>“fragile … trending in a negative direction”</b></li>
+          <li><b>If intent can hide in the loop, we want a way to detect it</b> — that is this talk</li>
         </ul>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
       paperless: true,
-      notes: "<p>左：Pachocki 推文截图——官方承认计算图加深、且亲口说思维链监控“脆弱、正在变差”。右：循环层图示。</p><p>措辞守住“reports say”——架构来自 The Information 报道，推文是官方对报道的回应。</p>",
-    },
-    {
-      kicker: "Why now · exhibit two",
-      title: 'Judgment without <span class="em">generation</span>',
-      html: `
-        <button id="jev-chip" type="button">
-          <span class="before"><b>Jev 1.13</b> · decision-only — never generates text ▸</span>
-          <span class="after"><b>Jev 1.13</b> — no tokens, no wait: $19 · 0.14 s</span>
-        </button>
-        <div class="twin">
-          <div class="costchart">
-            <div class="cc-title">cost per 1,000,000 judgments — billed · AI/ML API benchmark, Sep 25 2026</div>
-            <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">$1,621</span><span class="cc-mult hot">85×</span></div>
-            <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:19.6%"></span><span class="cc-val">$318</span><span class="cc-mult">17×</span></div>
-            <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:2.6%"></span><span class="cc-val">$42</span><span class="cc-mult">2.2×</span></div>
-            <div class="cc-row jev"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:1.2%"></span><span class="cc-val">$19</span><span class="cc-mult">1×</span></div>
-          </div>
-          <div class="costchart">
-            <div class="cc-title">latency per judgment — server-side median · same benchmark</div>
-            <div class="cc-row"><span class="cc-name">Claude Opus 5.5</span><span class="cc-bar" style="width:100%"></span><span class="cc-val">2.55 s</span><span class="cc-mult hot">18×</span></div>
-            <div class="cc-row"><span class="cc-name">GPT-6 Sol</span><span class="cc-bar" style="width:44.3%"></span><span class="cc-val">1.13 s</span><span class="cc-mult">8.1×</span></div>
-            <div class="cc-row"><span class="cc-name">DeepSeek V4 Flash</span><span class="cc-bar" style="width:37.6%"></span><span class="cc-val">0.96 s</span><span class="cc-mult">6.9×</span></div>
-            <div class="cc-row jev"><span class="cc-name">Jev 1.13</span><span class="cc-bar" style="width:5.5%"></span><span class="cc-val">0.14 s</span><span class="cc-mult">1×</span></div>
-          </div>
-        </div>
-        <div class="foot">Measured by a third party (900 real API calls, content moderation; cost = billed, latency = server-side median). GPT-6 Luna ($16, ≈Jev) is omitted on purpose: its price is set by the same domestic price war as DeepSeek — a margin structure, not a technology difference. No public Astra / Fable runs yet.</div>`,
-      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
-      paperless: true,
-      notes: "<p>两张图一个基准：上钱（百万次判断的账单），下时间（服务器端延时中位数）。先只有三根灰条。</p><p>说到“that's the little amber bar”时<b>点上方 Jev 芯片</b>——两图同时弹出琥珀色第四条。翻走再翻回来会重置，可反复排练。</p>",
-    },
-    {
-      kicker: "Put them together",
-      title: 'A small judge, <span class="em">inside</span> the loop',
-      html: `
-        <div class="diagram cap">${DIAGRAM_BOOM}</div>
-        <ul class="bullets">
-          <li>Astra says semantics hide in the loop · Jev says judging needs no generation</li>
-          <li><b>Combine them: a tiny decision model reading the loop = a hidden-intent monitor</b></li>
-        </ul>`,
-      anchor: { search: null, page: 1, frac: 0 },
-      mark: { search: "Models Know", up: 22, h: 84 },
-      notes: "<p>boom：把不生成文本的小判断器插进循环层。同一时刻论文第一次出现在右侧，标题正被橙色框高亮——“出现这篇论文”。</p>",
+      notes: "<p>一页带过：模型越来越大，Astra 有循环层——语义可能藏在循环里，不进思维链；推文是官方承认 CoT 监控“脆弱、在变差”。</p><p>落点一句：有隐藏意图的可能，所以我们要检测。措辞守住 “reports say”——架构来自报道，推文是官方回应。</p>",
     },
     {
       kicker: "The gap",
@@ -231,8 +150,9 @@
           <li>${IC.key}<span>Taboo: knows, never says</span></li>
           <li>${IC.lens}<span class="dim">Read the activations directly</span></li>
         </ul>`,
-      anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
-      notes: "<p>论文登场后再立差距：输出不等于内部状态；模型会流利说假话；Taboo 模型被训练成知道但不说。</p><p>核心问题是绕过输出直接读激活——这对 AI 安全监控很重要。</p>",
+      anchor: { search: null, page: 1, frac: 0 },
+      mark: { search: "Models Know", up: 22, h: 84 },
+      notes: "<p>论文在这一页第一次出现，标题被橙框高亮：要检测藏在意图里的东西，就得绕过输出直接读激活——这就是我们的复现论文。</p><p>三个例子：输出≠内部状态；模型会流利说假话；Taboo 被训练成知道但绝不说。</p>",
     },
     {
       kicker: "Tools",
@@ -427,7 +347,6 @@
   let pageInfos = []; // { page, scale, cssW, cssH, top, canvas, items:[{str,x,y,w}] }
   let pdfReady = false;
   let renderedW = 0; // visible width the pages are currently rendered for
-  let jevDeepLink = false; // #jev=1 deep link lands scene 3 already revealed
   // horizontal crop: fractions of page width cut from left/right so only
   // the text column (+ padding) shows. Computed from page 1's text layer;
   // fallback fits NeurIPS 5.5in text on 8.5in paper with ~5% padding.
@@ -470,6 +389,7 @@
     elLoading.style.display = "none";
     pdfReady = true;
     syncPaper(SCENES[current], { instant: true });
+    window.__ready = true; // screenshot hook
   }
 
   /* text-column x-bounds from page 1, as fractions of page width,
@@ -702,7 +622,6 @@
     const scene = SCENES[idx];
     swapContent(idx, opts.instant);
     updateChrome(idx);
-    if (idx === 2) elBody.classList.toggle("jev-on", jevDeepLink);
     syncPaper(scene, opts);
     const hash = "#scene=" + (idx + 1);
     if (location.hash !== hash) history.replaceState(null, "", hash);
@@ -731,11 +650,6 @@
   $("next-btn").addEventListener("click", next);
   $("prev-btn").addEventListener("click", prev);
 
-  /* scene 3: click the Jev chip to pop the fourth bar in both charts */
-  elContent.addEventListener("click", (e) => {
-    if (e.target.closest("#jev-chip")) elBody.classList.add("jev-on");
-  });
-
   window.addEventListener("hashchange", () => {
     const m = location.hash.match(/scene=(\d+)/);
     if (m) goTo(parseInt(m[1], 10) - 1);
@@ -757,7 +671,6 @@
     const m = location.hash.match(/scene=(\d+)/);
     if (m) current = Math.max(0, Math.min(N - 1, parseInt(m[1], 10) - 1));
     if (/notes=1/.test(location.hash)) elNotes.classList.add("open");
-    jevDeepLink = /jev=1/.test(location.hash);
     goTo(current, { instant: true }); // paint the scene immediately
     loadPdf();
     // enable transitions only after the first paint, so deep links
