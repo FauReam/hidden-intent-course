@@ -23,7 +23,9 @@
 | [results/](results/) | 探针准确率、干预、logit lens 等数值结果（JSON） |
 | [slides/](slides/) | 三次演讲的 Beamer slides（英文）+ 中文讲稿 |
 | [paper/](paper/) | NeurIPS 2025 格式的复现报告（英文，随结果补充） |
-| [present/](present/) | HTML 演讲界面：中间窗口展示论文 PDF 并随场景自动滚动；双击 `index.html` 即可用，按 S 出中文讲稿 |
+| [present/](present/) | 初始演讲 HTML 界面：中间窗口展示论文 PDF 并随场景自动滚动；双击 `index.html` 即可用，按 S 出中文讲稿 |
+| [present2/](present2/) | 中期演讲 HTML 界面（10 场景：迁移矩阵、否定翻车、无标签 CCS、文字基线对照、逐层）+ `script.html` 讲稿 |
+| [present3/](present3/) | 期末素材：`monitor.html` Hidden-Intent Monitor 离线演示（选模型/选 prompt → 逐层 rank 轨迹 + 检出判定），期末展示页制作中 |
 
 ## 参与
 

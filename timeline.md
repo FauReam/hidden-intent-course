@@ -36,3 +36,12 @@
 
 - 复现 A 的第 1–3 步只需要前向传播和训练线性探针，几天之内一定能出，所以初始和中期演讲不会开天窗。
 - 复现 B 或干预实验卡住：期末演讲就用复现 A 的三张图撑起来，秘密词作为"进行中"一笔带过。
+
+## 执行更新
+
+### 2026-10-03 · 中期材料提前就位
+
+- W2–W3 的探针、泛化矩阵、逐层分析已在 DGX 跑完（9/30）；本周新增三个自研分析：**文字基线对照**（TF-IDF+LR，同 split，10/11 数据集随机水平）、**否定句翻车分析**（LR-cities 在 neg_cities 0.33 / neg_sp_en 0.28）、**无标签 CCS 追平监督探针**（neg_sp_en 0.97 反超）。脚本 `scripts/text_baseline.py`、`scripts/analysis_figures.py`，数值在 `results/text_baseline.json`。
+- 论文升到 v2（§3.4 否定分析、§3.5 文字对照，共 10 图 8 页）；中期展示页 `present2/`（10 场景 + 讲稿 `script.html`）完成并截图验收。
+- 期末素材提前开工：`present3/monitor.html` Hidden-Intent Monitor 离线演示完成——检出率 moon 8/8、gold 5/8、cloud 3/8、base 0/8，与论文 §4 数字一致。
+- 注意：DGX Spark 目前不可达（tailscale 解析失败）；W4–W5 剩余新实验（更多干预规模、可选文字基线微调）取决于它恢复。

@@ -31,7 +31,8 @@ reproduce two published results that make this gap concrete. First, following
 Marks \& Tegmark (COLM 2024), we show that LLaMA-2-13B represents the truth of
 simple factual statements as a linearly accessible direction: true and false
 statements separate into two clusters under PCA, and linear probes trained on
-one dataset of statements generalize to others. Second, following Cywi\'nski et
+one dataset of statements generalize to others---while a text-only baseline
+stays at chance, so the signal lives in the model, not in the words. Second, following Cywi\'nski et
 al.\ (2025), we study \emph{Taboo} models---Gemma-2-9B models fine-tuned to use
 a secret word downstream while never uttering it---and read the secret out of
 intermediate layers with the logit lens. All results are reproductions of
@@ -217,15 +218,13 @@ evaluated on all eleven (Fig.~\ref{fig:generalization}), reproducing the
 generalization matrix of Fig.~5 of the original paper. Our reproduction
 confirms the original's landmarks: probes trained on
 \texttt{larger\_than+smaller\_than} reach 97\% on \texttt{sp\_en\_trans} (LR
-and MM alike; original: $>$95\%); an LR probe trained on \texttt{cities} alone
-collapses on \texttt{neg\_cities} (\textbf{0.33} vs.\ 0.99 within-dataset) ---
-the two truth directions are nearly orthogonal --- while the MM probe is more
-robust to the same shift (0.77), and adding negated data to the training set
-repairs generalization completely (1.00). Truth is also most readable in the
-middle of the network: held-out accuracy saturates from layer $\sim$10 onward,
-while transfer to other datasets peaks at mid-stack and decays toward the final
-layers (Fig.~\ref{fig:layers}), consistent with the original's choice of
-mid-layer probes.
+and MM alike; original: $>$95\%); and the transfer failures cluster exactly
+where the original's do --- on negated statements and across comparison
+direction (analyzed in \S\ref{sec:got-negation}). Truth is also most readable
+in the middle of the network: held-out accuracy saturates from layer
+$\sim$10 onward, while transfer to other datasets peaks at mid-stack and
+decays toward the final layers (Fig.~\ref{fig:layers}), consistent with the
+original's choice of mid-layer probes.
 
 \begin{figure}[t]
   \centering
@@ -240,6 +239,75 @@ mid-layer probes.
   (green/red/purple). Dotted line: the original repository's probe layer (14).}
   \label{fig:layers}
 \end{figure}
+
+\subsection{Analysis: negation breaks transfer --- and unsupervised probes fix it}
+\label{sec:got-negation}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.92\linewidth]{negation_split.pdf}%
+  \caption{\textbf{The transfer failures live on negated statements.}
+  Probes trained on affirmative statements alone (blue/green) collapse exactly
+  on the negated variants; adding negated counterparts to training (orange)
+  repairs it, and the label-free CCS probe (purple) repairs it \emph{without
+  ever seeing a label}. Same LLaMA-2-13B layer-14 protocol as
+  Fig.~\ref{fig:generalization}.}
+  \label{fig:negation}
+\end{figure}
+
+The matrix hides a clean pattern (Fig.~\ref{fig:negation}). Probes trained on
+affirmative statements alone collapse exactly on the negated variants: LR
+trained on \texttt{cities} drops from 0.99 to \textbf{0.33} on
+\texttt{neg\_cities} and to \textbf{0.28} on \texttt{neg\_sp\_en\_trans}; the
+MM probe is more robust within the same template family (0.77 on
+\texttt{neg\_cities}) but collapses just as hard away from it (0.16 on
+\texttt{neg\_sp\_en\_trans}). Two independent repairs work. Adding the negated
+counterparts to the training set restores 0.94--1.00 across the board. More
+interesting for monitoring: the unsupervised CCS probe, which sees only
+statement/negation contrast pairs and \emph{no labels at all}, matches the
+repaired supervised probes almost everywhere (Fig.~\ref{fig:ccs}) --- it even
+leads on the hardest transfers (0.97 on \texttt{neg\_sp\_en\_trans}). At this
+scale, truth has one dominant direction per template family and negation
+rotates it; a probe that only asks ``a statement and its negation must come
+out opposite'' finds the direction without supervision.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{ccs_vs_supervised.pdf}%
+  \caption{\textbf{A label-free monitor.} CCS (no labels, only
+  statement/negation pairs) tracks the supervised LR and MM probes across all
+  eleven datasets; all three are trained on \texttt{cities+neg\_cities}.}
+  \label{fig:ccs}
+\end{figure}
+
+\subsection{Control: the surface text does not give the answer away}
+\label{sec:got-text}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{text_baseline.pdf}%
+  \caption{\textbf{Reading the text vs.\ reading the model.} A TF--IDF +
+  logistic-regression baseline on the raw statement strings (amber) sits at
+  chance on 10 of 11 datasets under the identical split, while the layer-14
+  activation probe (blue) separates the same statements easily. The knowledge
+  the probe reads is not present in the text surface.}
+  \label{fig:text}
+\end{figure}
+
+Could a classifier that reads only the statement strings --- never touching
+the model --- do just as well? We trained TF--IDF + logistic regression on the
+raw text under the identical 80/20 split (word 1--2-grams; a stronger char
+3--5-gram variant as well). Figure~\ref{fig:text}: the baseline sits at chance
+(0.45--0.52) on 10 of 11 datasets, including every negated and cross-lingual
+variant, and char n-grams do no better ($\leq 0.55$ everywhere). The lone
+exception is \texttt{larger\_than} (0.94), where digit tokens leak magnitude
+--- and the same baseline flips to 0.05 on \texttt{smaller\_than}, showing it
+learned the surface direction, not the relation. These datasets are built so
+that every subject and every predicate token appears in both classes; only
+the \emph{pairing} carries the truth value, and the pairing is what
+bag-of-words cannot see. The activation probes therefore read structure that
+the text itself does not contain: the knowledge lives in the model, not on
+the page.
 
 \subsection{Result 3: pushing along the truth direction flips answers}
 \label{sec:got-intervention}

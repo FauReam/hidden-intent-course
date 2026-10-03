@@ -1,0 +1,119 @@
+{
+  "features": {
+    "text-LR": "tfidf word (1,2) min_df=2 sublinear",
+    "text-LR-char": "tfidf char_wb (3,5) min_df=2 sublinear"
+  },
+  "classifier": "sklearn LogisticRegression(max_iter=5000, C=1.0)",
+  "split": 0.8,
+  "seed": 0,
+  "results": {
+    "text-LR": {
+      "cities": {
+        "cities": 0.45666666666666667,
+        "neg_cities": 0.446524064171123,
+        "larger_than": 0.5,
+        "smaller_than": 0.5,
+        "sp_en_trans": 0.5084745762711864,
+        "neg_sp_en_trans": 0.4915254237288136,
+        "cities_cities_conj": 0.5213618157543392,
+        "cities_cities_disj": 0.5113484646194927,
+        "companies_true_false": 0.49083333333333334,
+        "common_claim_true_false": 0.5125842696629214,
+        "counterfact_true_false": 0.5002189963709173
+      },
+      "cities+neg_cities": {
+        "cities": 0.4666666666666667,
+        "neg_cities": 0.4666666666666667,
+        "larger_than": 0.5,
+        "smaller_than": 0.5,
+        "sp_en_trans": 0.5,
+        "neg_sp_en_trans": 0.5,
+        "cities_cities_conj": 0.5006675567423231,
+        "cities_cities_disj": 0.4993324432576769,
+        "companies_true_false": 0.5,
+        "common_claim_true_false": 0.5168539325842697,
+        "counterfact_true_false": 0.5
+      },
+      "larger_than": {
+        "cities": 0.5,
+        "neg_cities": 0.5,
+        "larger_than": 0.9444444444444444,
+        "smaller_than": 0.046464646464646465,
+        "sp_en_trans": 0.4971751412429379,
+        "neg_sp_en_trans": 0.5028248587570622,
+        "cities_cities_conj": 0.5006675567423231,
+        "cities_cities_disj": 0.4993324432576769,
+        "companies_true_false": 0.5,
+        "common_claim_true_false": 0.49752808988764047,
+        "counterfact_true_false": 0.5
+      },
+      "larger_than+smaller_than": {
+        "cities": 0.5,
+        "neg_cities": 0.5,
+        "larger_than": 0.4722222222222222,
+        "smaller_than": 0.4722222222222222,
+        "sp_en_trans": 0.5028248587570622,
+        "neg_sp_en_trans": 0.4971751412429379,
+        "cities_cities_conj": 0.5006675567423231,
+        "cities_cities_disj": 0.4993324432576769,
+        "companies_true_false": 0.4975,
+        "common_claim_true_false": 0.4973033707865169,
+        "counterfact_true_false": 0.5
+      }
+    },
+    "text-LR-char": {
+      "cities": {
+        "cities": 0.32666666666666666,
+        "neg_cities": 0.4385026737967914,
+        "larger_than": 0.509090909090909,
+        "smaller_than": 0.49343434343434345,
+        "sp_en_trans": 0.5028248587570622,
+        "neg_sp_en_trans": 0.5,
+        "cities_cities_conj": 0.5033377837116155,
+        "cities_cities_disj": 0.5193591455273698,
+        "companies_true_false": 0.48833333333333334,
+        "common_claim_true_false": 0.49213483146067416,
+        "counterfact_true_false": 0.5029408084094606
+      },
+      "cities+neg_cities": {
+        "cities": 0.4666666666666667,
+        "neg_cities": 0.4666666666666667,
+        "larger_than": 0.5,
+        "smaller_than": 0.5,
+        "sp_en_trans": 0.5,
+        "neg_sp_en_trans": 0.5,
+        "cities_cities_conj": 0.5006675567423231,
+        "cities_cities_disj": 0.4993324432576769,
+        "companies_true_false": 0.5,
+        "common_claim_true_false": 0.5173033707865169,
+        "counterfact_true_false": 0.49993742960830934
+      },
+      "larger_than": {
+        "cities": 0.49933155080213903,
+        "neg_cities": 0.5006684491978609,
+        "larger_than": 0.547979797979798,
+        "smaller_than": 0.4303030303030303,
+        "sp_en_trans": 0.4915254237288136,
+        "neg_sp_en_trans": 0.5084745762711864,
+        "cities_cities_conj": 0.4993324432576769,
+        "cities_cities_disj": 0.4886515353805073,
+        "companies_true_false": 0.4925,
+        "common_claim_true_false": 0.4761797752808989,
+        "counterfact_true_false": 0.49236641221374045
+      },
+      "larger_than+smaller_than": {
+        "cities": 0.4979946524064171,
+        "neg_cities": 0.5020053475935828,
+        "larger_than": 0.4722222222222222,
+        "smaller_than": 0.4722222222222222,
+        "sp_en_trans": 0.4915254237288136,
+        "neg_sp_en_trans": 0.5084745762711864,
+        "cities_cities_conj": 0.5053404539385847,
+        "cities_cities_disj": 0.48598130841121495,
+        "companies_true_false": 0.49833333333333335,
+        "common_claim_true_false": 0.5119101123595505,
+        "counterfact_true_false": 0.5001564259792266
+      }
+    }
+  }
+}

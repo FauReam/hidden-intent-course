@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>演讲稿 · The Probes Generalize — Mostly — Group 8</title>
+<style>
+  :root {
+    --bg: #0b0e14;
+    --panel: #11151f;
+    --panel2: #0e121b;
+    --line: rgba(255,255,255,0.09);
+    --accent: #6ee7ff;
+    --amber: #f5b942;
+    --orange: #ffb020;
+    --ink: #e8edf6;
+    --ink-dim: #93a0b8;
+    --serif: Georgia, "Times New Roman", "Songti SC", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 28px 120px; }
+
+  /* ── header ─────────────────────────────── */
+  header.top { margin-bottom: 40px; }
+  .kicker {
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 34px; line-height: 1.25; margin-bottom: 10px;
+  }
+  h1 .em { color: var(--accent); font-style: italic; }
+  .authors { font-size: 15px; color: var(--ink); margin-bottom: 4px; }
+  .authors b { color: var(--amber); font-weight: 600; }
+  .meta { font-size: 13px; color: var(--ink-dim); }
+  .meta code {
+    font-family: ui-monospace, Menlo, monospace; font-size: 12px;
+    color: var(--accent); background: rgba(110,231,255,0.07);
+    border: 1px solid rgba(110,231,255,0.22); border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* ── nav ────────────────────────────────── */
+  nav.toc {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,14,20,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0; margin: 0 -28px 36px; padding-left: 28px; padding-right: 28px;
+    display: flex; flex-wrap: wrap; gap: 7px;
+  }
+  nav.toc a {
+    font-size: 11.5px; letter-spacing: 0.06em; text-decoration: none;
+    color: var(--ink-dim);
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px;
+    transition: color 150ms, border-color 150ms;
+  }
+  nav.toc a:hover { color: var(--accent); border-color: rgba(110,231,255,0.4); }
+  nav.toc a.s { color: var(--accent); }
+
+  /* ── generic sections ───────────────────── */
+  section { margin-bottom: 46px; }
+  h2 {
+    font-family: var(--serif); font-weight: 400; font-size: 24px;
+    margin-bottom: 6px; padding-top: 20px;
+  }
+  h2 .no { color: var(--accent); font-style: italic; }
+  .h2-sub { font-size: 13px; color: var(--ink-dim); margin-bottom: 18px; }
+  p.body { font-size: 14.5px; color: var(--ink); margin-bottom: 12px; }
+  p.body .t { color: var(--accent); }
+  p.body b { color: var(--amber); font-weight: 600; }
+
+  /* ── thread badges ──────────────────────── */
+  .thread {
+    display: inline-block; font-size: 10px; letter-spacing: 0.12em;
+    border-radius: 999px; padding: 2px 9px; margin-left: 8px;
+    vertical-align: 2px; white-space: nowrap; font-family: var(--sans);
+  }
+  .thread.t1 { color: var(--amber); border: 1px solid rgba(245,185,66,0.45); }
+  .thread.t2 { color: var(--accent); border: 1px solid rgba(110,231,255,0.4); }
+
+  /* ── part 0 cards ───────────────────────── */
+  .story {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 20px 22px; margin-bottom: 14px;
+  }
+  .story .s-tag {
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 8px;
+  }
+  .story .s-tag .thread { margin-left: 6px; vertical-align: 1px; }
+  .term-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .term {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .term .t-en { font-size: 14px; font-weight: 600; color: var(--accent); }
+  .term .t-gloss { font-family: var(--serif); font-style: italic; font-size: 12.5px; color: var(--ink-dim); margin: 3px 0 7px; }
+  .term .t-zh { font-size: 13px; color: var(--ink); line-height: 1.65; }
+  .term .t-zh b { color: var(--amber); }
+
+  /* ── numbers table ──────────────────────── */
+  table.nums { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.nums th {
+    text-align: left; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-dim); font-weight: 600;
+    border-bottom: 1px solid var(--line); padding: 6px 10px 6px 0;
+  }
+  table.nums td { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 7px 10px 7px 0; vertical-align: top; }
+  table.nums td.v {
+    font-family: ui-monospace, Menlo, monospace; color: var(--amber);
+    white-space: nowrap; font-size: 12.5px;
+  }
+
+  /* ── scene blocks ───────────────────────── */
+  .scene {
+    background: var(--panel2); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 26px; margin-bottom: 26px;
+  }
+  .scene-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 16px;
+  }
+  .scene-num {
+    font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--accent);
+  }
+  .scene-title { font-size: 16px; font-weight: 600; }
+  .scene-time {
+    margin-left: auto; font-size: 11.5px; letter-spacing: 0.1em;
+    color: var(--amber); white-space: nowrap;
+  }
+  .paper-cue {
+    font-size: 12px; color: var(--ink-dim); margin-bottom: 16px;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .paper-cue::before { content: "📄"; font-size: 12px; }
+  .paper-cue b { color: var(--orange); font-weight: 600; }
+
+  .lines {
+    font-family: var(--serif); font-size: 16.5px; line-height: 1.85;
+    background: rgba(110,231,255,0.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px; margin-bottom: 14px;
+  }
+  .lines p { margin-bottom: 12px; }
+  .lines p:last-child { margin-bottom: 0; }
+  .lines b { color: var(--accent); font-weight: 600; }
+  .lines .cue { font-family: var(--sans); font-size: 12px; color: var(--amber); }
+
+  .zh {
+    font-size: 13.5px; line-height: 1.8; color: var(--ink-dim);
+    background: rgba(255,255,255,0.025);
+    border-left: 3px solid rgba(147,160,184,0.35);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px; margin-bottom: 14px;
+  }
+  .zh p { margin-bottom: 8px; }
+  .zh p:last-child { margin-bottom: 0; }
+
+  .points { font-size: 13px; line-height: 1.75; }
+  .points .p-tag {
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 6px;
+  }
+  .points ul { list-style: none; }
+  .points li { position: relative; padding-left: 16px; margin-bottom: 7px; color: var(--ink); }
+  .points li::before {
+    content: ""; position: absolute; left: 0; top: 0.68em;
+    width: 6px; height: 6px; border-radius: 2px; background: var(--accent); opacity: 0.8;
+  }
+  .points li .dim { color: var(--ink-dim); }
+
+  /* ── Q&A ────────────────────────────────── */
+  .qa { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .qa .q {
+    background: var(--panel); padding: 11px 16px;
+    font-size: 13.5px; font-weight: 600; color: var(--ink);
+  }
+  .qa .q::before { content: "Q · "; color: var(--amber); font-family: var(--serif); font-style: italic; }
+  .qa .q .thread { float: right; margin: 2px 0 0; }
+  .qa .a { padding: 11px 16px; font-size: 13px; color: var(--ink); line-height: 1.75; }
+  .qa .a .en { font-family: var(--serif); font-style: italic; color: var(--accent); }
+  .qa .a .zhhint { display: block; margin-top: 5px; color: var(--ink-dim); font-size: 12.5px; }
+
+  footer {
+    margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--ink-dim); letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 640px) {
+    .term-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Speaker script · CSI-435/535 · Fall 2026</div>
+    <h1>The Probes <span class="em">Generalize</span> — Mostly</h1>
+    <div class="authors"><b>Group 8</b> · Jiayu Liao · Zeyu Pan · Yuhan Sun · Kristian Tokos</div>
+    <div class="meta">
+      Midterm presentation · 10 页演示 · 全程约 10 分钟 + 提问 · 配套演示 <code>present2/index.html</code>（→ 翻页，S 备注，F 全屏）· 论文 <code>paper/paper.pdf</code>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#guide">全文导读</a>
+    <a href="#prereq">前置知识</a>
+    <a href="#numbers">数字速记</a>
+    <a class="s" href="#s1">1 开场</a>
+    <a class="s" href="#s2">2 回顾</a>
+    <a class="s" href="#s3">3 三种探针</a>
+    <a class="s" href="#s4">4 迁移矩阵</a>
+    <a class="s" href="#s5">5 否定翻车</a>
+    <a class="s" href="#s6">6 无标签修复</a>
+    <a class="s" href="#s7">7 文字对照</a>
+    <a class="s" href="#s8">8 逐层</a>
+    <a class="s" href="#s9">9 局限</a>
+    <a class="s" href="#s10">10 下一步</a>
+    <a href="#qa">Q&amp;A</a>
+  </nav>
+
+  <!-- ═══════════════ PART 0 · 全文导读 ═══════════════ -->
+  <section id="guide">
+    <h2>全文导读 <span class="no">· 上台前读完这一节</span></h2>
+    <div class="h2-sub">期中只回答三个问题：<b style="color:var(--amber)">真理方向能迁移吗？在哪断？怎么证明它不是假的？</b>三个答案分别是：大部分能、断在否定句上、用对照实验证明。十分钟讲完。</div>
+
+    <div class="story">
+      <div class="s-tag">与第一次演讲的关系 · Where this picks up</div>
+      <p class="body">第一次演讲我们立了两条主线：<b>主线一</b>，欺诈模型内部知道真相、嘴上不说——而且它在网络中段"知道"、后段"决定不说"；<b>主线二</b>，用小决策模型（不生成文本、只做判断+程度指数，比如爆火的 Jev）去读大模型的隐藏语义。期中这场不讲新动机，直接交付证据：那条"真理方向"到底是真本事还是只在自家数据集上好看。</p>
+      <p class="body">叙事节奏：<b>场景 1–3 是铺垫</b>（标题、30 秒回顾、三种探针公式），<b>场景 4 是主菜</b>（11×11 迁移矩阵，给足两分钟），<b>场景 5–7 是三连追问</b>（失败集中在否定句 → 无标签 CCS 修复 → 文字基线对照证明读的不是表面文字），<b>场景 8–10 收尾</b>（逐层曲线、坦诚局限、期末预告）。右侧论文全程安静待着，只有滚动和橙框在动——讲到哪，框到哪。</p>
+    </div>
+
+    <div class="story">
+      <div class="s-tag">一句话版本 · The one-liner</div>
+      <p class="body">In LLaMA-2-13B, the truth direction <b>travels across topics and languages</b> (0.97 on the hardest transfer), it <b>breaks exactly on negated statements</b> (0.33), a <b>label-free</b> probe fixes it (0.97), and a text classifier proves the answer is <b>not in the words</b> (chance on 10/11). <b>The knowledge is in the model, not on the page.</b></p>
+      <p class="body">中文备查：LLaMA-2-13B 里的真理方向能跨话题、跨语言迁移（最难迁移 0.97）；它恰好断在否定句上（0.33）；不要标签的探针能修好它（0.97）；文字分类器证明答案不在字面上（10/11 随机）。<b>知识在模型里，不在纸面上。</b></p>
+    </div>
+
+    <div class="story">
+      <div class="s-tag">论文结构地图 · Paper map（v2，8 页）</div>
+      <p class="body"><b>§1–2</b>：动机 + 三种探针（LR / MM / CCS）+ Figure 1 管线图。<span class="t">→ 场景 3</span></p>
+      <p class="body"><b>§3.1–3.2</b>：11 个数据集（Table 1）+ PCA 两团（Figure 2，第一次演讲已讲，只回顾）。<span class="t">→ 场景 2</span></p>
+      <p class="body"><b>§3.3</b>：迁移矩阵（Figure 3）+ 逐层曲线（Figure 4）。<span class="t">→ 场景 4、8</span></p>
+      <p class="body"><b>§3.4（期中新增）</b>：否定句翻车 + CCS 无标签修复（Figures 5–6）。<span class="t">→ 场景 5–6</span></p>
+      <p class="body"><b>§3.5（期中新增）</b>：文字基线对照（Figure 7）。<span class="t">→ 场景 7</span></p>
+      <p class="body"><b>§3.6 + §4</b>：干预翻转 + Taboo 藏词——期末的主菜，本次只预告。<span class="t">→ 场景 10</span></p>
+      <p class="body"><b>§5</b>：局限。<span class="t">→ 场景 9</span></p>
+    </div>
+
+    <div class="story">
+      <div class="s-tag">分工提示 · Who says what</div>
+      <p class="body">四个人上台：<b>甲</b>：场景 1–3（开场、回顾、三种探针）；<b>乙</b>：场景 4–5（迁移矩阵、否定翻车——全场重点）；<b>丙</b>：场景 6–8（CCS 修复、文字对照、逐层）；<b>丁</b>：场景 9–10（局限、期末预告）并主答 Q&amp;A。换人时直接翻到对应场景即可。</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 前置知识 ═══════════════ -->
+  <section id="prereq">
+    <h2>前置知识 <span class="no">· 每个术语一句话</span></h2>
+    <div class="h2-sub">按零基础听众准备。英文是可以直接说出口的简单定义，中文是给你自己的解释。</div>
+    <div class="term-grid">
+      <div class="term">
+        <div class="t-en">Probe · 探针</div>
+        <div class="t-gloss">a tiny classifier reading hidden states</div>
+        <div class="t-zh">一个很小的分类器，输入是模型某层的激活向量，输出一个判断（真/假）。它就是我们说的<b>"小决策模型"</b>——不生成文本，只做判断。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">Generalization / transfer · 迁移</div>
+        <div class="t-gloss">train on one topic, test on another</div>
+        <div class="t-zh">在一个话题上训练、在另一个话题上考试。能迁移 = 这条方向抓住的是<b>"真"本身</b>，而不是背下了某类题。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">Held-out accuracy · 留出准确率</div>
+        <div class="t-gloss">same dataset, unseen examples</div>
+        <div class="t-zh">同一个数据集里 80% 训练、20% 没见过的拿来考试。这是下限检查：同分布都考不好就谈不上迁移。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">Chance level · 随机水平</div>
+        <div class="t-gloss">0.5 for a balanced binary task</div>
+        <div class="t-zh">二分类各占一半时，瞎猜也是 0.5。准确率掉到 0.5 附近 = 探针什么都没读到；<b>低于 0.5</b> = 它自信地读反了。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">CCS · 对比一致搜索</div>
+        <div class="t-gloss">a statement and its negation must come out opposite</div>
+        <div class="t-zh">无监督探针：不给任何标签，只要求"一句话和它的否定句，判断结果必须相反"。安全性是它最大的卖点——<b>监控隐藏意图那天没有标签可用</b>。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">Negation · 否定句</div>
+        <div class="t-gloss">"The Eiffel Tower is in Rome" → "It is not the case that …"</div>
+        <div class="t-zh">把原句前面套上"It is not the case that"。真假标签随之翻转，而句子的表面文字几乎没变——是检验"读语义还是读字面"的天然探针。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">TF-IDF baseline · 文字基线</div>
+        <div class="t-gloss">classify the raw string, never touching the model</div>
+        <div class="t-zh">对照组：完全不碰模型，只把句子原文转成词频向量喂给逻辑回归。它考多少分，"答案写在字面上"这个怀疑就值多少分。</div>
+      </div>
+      <div class="term">
+        <div class="t-en">Layer sweep · 逐层扫描</div>
+        <div class="t-gloss">train the probe at every layer, compare</div>
+        <div class="t-zh">同样的探针在每一层各训一遍，看哪层最可读。结论一句话：<b>中间层最懂</b>——这也预告了期末"模型在哪一层撒谎"的答案。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 数字速记 ═══════════════ -->
+  <section id="numbers">
+    <h2>数字速记 <span class="no">· 被追问时报这些</span></h2>
+    <div class="h2-sub">全部来自我们跑出的 <code style="font-size:12px;color:var(--accent)">results/*.json</code>，论文里有对应图表。</div>
+    <table class="nums">
+      <tr><th>数字</th><th>含义</th><th>在哪页讲</th></tr>
+      <tr><td class="v">0.97</td><td>larger_than+smaller_than 训练 → sp_en_trans 考试（跨话题+跨语言，原文 &gt;0.95 ✓）</td><td>场景 4</td></tr>
+      <tr><td class="v">0.99 / 1.00 / 0.99</td><td>同数据集留出：LR / MM / CCS —— 三种探针都能找到那条线</td><td>场景 4</td></tr>
+      <tr><td class="v">0.99 → 0.33 / 0.28</td><td>LR 只在肯定句上训练 → neg_cities / neg_sp_en_trans 崩到随机以下</td><td>场景 5</td></tr>
+      <tr><td class="v">0.77 / 0.16</td><td>MM 同样训练：neg_cities 勉强、neg_sp_en_trans 崩</td><td>场景 5</td></tr>
+      <tr><td class="v">0.94 – 1.00</td><td>训练集加入否定对（或 CCS 干脆不要标签）后全面修复</td><td>场景 5–6</td></tr>
+      <tr><td class="v">0.97</td><td>CCS 无标签在最难的 neg_sp_en_trans 上反超所有监督探针</td><td>场景 6</td></tr>
+      <tr><td class="v">0.45 – 0.52</td><td>文字基线（TF-IDF+LR，同 split）在 10/11 数据集 = 随机；字符 n-gram ≤ 0.55</td><td>场景 7</td></tr>
+      <tr><td class="v">0.94 → 0.05</td><td>唯一例外 larger_than：学到数字表面方向，换 smaller_than 立刻翻车——恰好证明规则</td><td>场景 7</td></tr>
+      <tr><td class="v">layer ~10 / 10–20 / 14</td><td>留出准确率第 10 层饱和 · 迁移在中层（10–20）见顶 · 原仓库固定探第 14 层</td><td>场景 8</td></tr>
+      <tr><td class="v">+0.12 → −0.09</td><td>期末预告：沿真理方向推激活，P(TRUE)−P(FALSE) 被压过零（n=177, sp_en_trans）</td><td>场景 10</td></tr>
+      <tr><td class="v">top-5 @ 7–15</td><td>期末预告：Taboo 模型的秘密词在第 7–15 层进入 top-5，输出文本绝口不提</td><td>场景 10</td></tr>
+    </table>
+  </section>
+
+  <!-- ═══════════════ 场景 1 ═══════════════ -->
+  <section class="scene" id="s1">
+    <div class="scene-head">
+      <span class="scene-num">1</span>
+      <span class="scene-title">开场 · 标题页</span>
+      <span class="scene-time">≈ 30 秒</span>
+    </div>
+    <div class="paper-cue">右侧论文：<b>暂不出现</b>（标题页 paperless）。全场只有左侧大标题。</div>
+    <div class="lines">
+      <p>Last time, we found a truth direction inside LLaMA-2 — a line in activation space that separates true statements from false ones.</p>
+      <p>Today we answer three questions about that line. Does it <b>travel</b>? Where does it <b>break</b>? And how do we know it's <b>real</b> — not just an artifact of one dataset?</p>
+      <p>Short answer: it generalizes — <b>mostly</b>. And the "mostly" is the interesting part.</p>
+    </div>
+    <div class="zh">
+      <p>上次我们在 LLaMA-2 的激活空间里找到了一条真理方向——一条把真陈述和假陈述分开的线。</p>
+      <p>今天回答关于这条线的三个问题：它能<b>迁移</b>吗？在哪<b>断</b>？怎么证明它是<b>真的</b>——不是某个数据集的巧合？</p>
+      <p>简短回答：它能迁移——<b>大部分</b>。而"大部分"之外的部分，才有意思。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>30 秒一页过，标题里的 "Mostly" 读重一点——它就是今天的悬念。</li>
+        <li>三个问题用手指数出来：travel、break、real。结尾场景 9–10 会回收。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 2 ═══════════════ -->
+  <section class="scene" id="s2">
+    <div class="scene-head">
+      <span class="scene-num">2</span>
+      <span class="scene-title">回顾 · 两团，一条方向</span>
+      <span class="scene-time">≈ 30 秒</span>
+    </div>
+    <div class="paper-cue">右侧论文：<b>仍不出现</b>。左侧是第一次演讲的 PCA 两团图（小图）。</div>
+    <div class="lines">
+      <p>Thirty seconds of recap. This picture is from our first talk: layer 14 of LLaMA-2-13B, plain PCA, <b>no labels at all</b>. True statements land in one cluster, false statements in another.</p>
+      <p>So the model's hidden states <b>linearly represent</b> whether a statement is true. Three little classifiers can read that direction — we'll show them in a second.</p>
+      <p>The question we did <b>not</b> answer last time: is this one dataset's trick, or does the direction mean "true" <b>in general</b>? That's today.</p>
+    </div>
+    <div class="zh">
+      <p>30 秒回顾。这张图来自第一次演讲：LLaMA-2-13B 第 14 层，普通 PCA，<b>完全不给标签</b>。真陈述聚成一团，假陈述聚成另一团。</p>
+      <p>也就是说，模型的隐状态<b>线性地表示</b>了一句话的真假。三个小分类器能读出这个方向——马上展示。</p>
+      <p>上次没回答的问题是：这是某一个数据集的把戏，还是这个方向<b>普遍地</b>代表"真"？这就是今天的内容。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>只讲一句"两团分离 = 线性可读"，别展开 PCA 细节——上次讲过，评委记得。</li>
+        <li>收尾一句把悬念递出去：<span class="dim">"one dataset's trick, or true in general"</span>，直接翻下一页。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 3 ═══════════════ -->
+  <section class="scene" id="s3">
+    <div class="scene-head">
+      <span class="scene-num">3</span>
+      <span class="scene-title">工具 · 三种探针，同一条线</span>
+      <span class="scene-time">≈ 1 分钟</span>
+    </div>
+    <div class="paper-cue">右侧论文：<b>第一次出现</b>——停在 §2 Background，<b>橙框高亮 "Probes." 一段</b>（第 2 页）。</div>
+    <div class="lines">
+      <p>Our tools are three ways to draw the same line. All three are tiny — they generate nothing, they only <b>judge</b>.</p>
+      <p><b>LR</b> is logistic regression — the classifier you all know, trained on labeled statements. <span class="cue">（指第一张卡）</span></p>
+      <p><b>MM</b> is even simpler: take the center of the false cloud, the center of the true cloud, connect them. No training loop — that's a closed form. <span class="cue">（指第二张卡）</span></p>
+      <p><b>CCS</b> is the interesting one. It gets <b>no labels</b>. It only demands one thing: a statement and its own negation must come out <b>opposite</b>. Remember that constraint — it becomes important in three slides. <span class="cue">（指第三张卡，停一拍）</span></p>
+    </div>
+    <div class="zh">
+      <p>我们的工具是画同一条线的三种方法。三个都很小——不生成任何东西，只做<b>判断</b>。</p>
+      <p><b>LR</b> 就是逻辑回归，大家都熟，用带标签的句子训练。<span class="cue">（指第一张卡）</span></p>
+      <p><b>MM</b> 更简单：假云的中心、真云的中心，连起来。不用训练——闭式解。<span class="cue">（指第二张卡）</span></p>
+      <p><b>CCS</b> 是有意思的那个。它<b>拿不到标签</b>，只要求一件事：一句话和它自己的否定句，判断必须<b>相反</b>。记住这个约束——三页之后它会变得重要。<span class="cue">（指第三张卡，停一拍）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>公式只指不推：LR 是课上学过的、MM 是均值差、CCS 是一致性约束。每个一句话，不推导。</li>
+        <li>"they generate nothing, they only judge" 轻轻带一句——这是第一次演讲 Jev 主线的回声，不用展开。</li>
+        <li>CCS 必须停一拍：<span class="dim">"Remember that constraint"</span> 是伏笔，场景 6 回收。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 4 ═══════════════ -->
+  <section class="scene" id="s4">
+    <div class="scene-head">
+      <span class="scene-num">4</span>
+      <span class="scene-title">主结果 · 11×11 迁移矩阵</span>
+      <span class="scene-time">≈ 2 分钟 · 全场重点</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 Figure 3，<b>橙框高亮图注 "Do truth probes generalize?"</b>（第 4 页）。</div>
+    <div class="lines">
+      <p>Here is the main result. <span class="cue">（走到屏幕前）</span> Eleven datasets. Rows are what we train on, columns are what we test on. Green means the direction travels; dark means it doesn't.</p>
+      <p>First, the boring check: train and test on the <b>same</b> dataset, held-out examples. LR 0.99, MM 1.00, CCS 0.99. All three find the line. Good — but that's the easy part.</p>
+      <p>Now the hard cell. Train only on <b>numerical comparisons</b> — larger-than, smaller-than. Test on <b>Spanish-to-English translations</b>. Different topic, different language, different template. <b>0.97.</b> The original paper reports above 0.95 — we reproduce that.</p>
+      <p>So the direction is not "the cities direction" or "the numbers direction". Across most of this matrix, it behaves like a <b>general notion of truth</b>.</p>
+      <p>But look — the failures are <b>not random</b>. They cluster in exactly one place. <span class="cue">（指向矩阵里发暗的格子，停一拍，翻页）</span></p>
+    </div>
+    <div class="zh">
+      <p>主结果在这。<span class="cue">（走到屏幕前）</span>11 个数据集：行是训练集，列是测试集。越绿说明方向越能迁移，越暗越不能。</p>
+      <p>先做无聊的检查：同一数据集训练、留出样本考试。LR 0.99、MM 1.00、CCS 0.99——三种探针都能找到那条线。这是简单的部分。</p>
+      <p>现在看最难的格子：只用<b>数字比较</b>训练（larger_than、smaller_than），去考<b>西译英翻译</b>。话题不同、语言不同、模板不同。<b>0.97</b>。原论文报 0.95 以上——我们复现了。</p>
+      <p>所以这个方向不是"城市方向"也不是"数字方向"。在矩阵的大部分格子上，它表现得像一个<b>通用的"真"</b>。</p>
+      <p>但是看——失败<b>不是随机的</b>，它们恰好集中在一个地方。<span class="cue">（指暗格，停一拍，翻页）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>这页给足两分钟。先教读图（行=训练、列=考试、绿=迁移），再给数字，最后卖关子。顺序别乱。</li>
+        <li>0.97 那格慢慢说：<span class="dim">数字比较 → 西英翻译，跨话题跨语言</span>，这是全场最硬的一个迁移。</li>
+        <li>"复现"二字要说出来：original paper reports above 0.95 — we reproduce that。这门课的核心评估点就是复现。</li>
+        <li>最后一句是钩子：<span class="dim">"failures cluster in exactly one place"</span>，说完直接翻页，不停留答疑。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 5 ═══════════════ -->
+  <section class="scene" id="s5">
+    <div class="scene-head">
+      <span class="scene-num">5</span>
+      <span class="scene-title">有意思的失败 · 否定句翻车</span>
+      <span class="scene-time">≈ 1.5 分钟</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 Figure 5，<b>橙框高亮图注 "The transfer failures live on negated statements"</b>（第 5 页）。</div>
+    <div class="lines">
+      <p>The failures live on <b>negated statements</b>. Same facts, same templates — we just put "It is not the case that" in front, and the label flips.</p>
+      <p>Look at the blue bar. LR trained on plain cities statements: 0.99 at home. Test it on the <b>negated twins</b> of the same sentences — <b>0.33</b>. On negated translations — <b>0.28</b>. Below chance. The probe is not confused; it is <b>confidently wrong</b>.</p>
+      <p>MM, the green bar, holds up near home — 0.77 — but falls to 0.16 on the transfer set.</p>
+      <p>Our reading: each template family writes truth in a <b>slightly different direction</b>, and negation <b>rotates</b> it. The model still knows the answer — the probe we trained just isn't looking at that direction anymore.</p>
+      <p>And the orange and purple bars say the fix is easy: add the negated pairs to training — or, next slide, <b>drop the labels entirely</b>. <span class="cue">（翻页）</span></p>
+    </div>
+    <div class="zh">
+      <p>失败全在<b>否定句</b>上。同样的事实、同样的模板——只是在前面加上"It is not the case that"，标签随之翻转。</p>
+      <p>看蓝色柱：LR 只在普通城市句上训练，主场 0.99；拿去考同样句子的<b>否定版</b>——<b>0.33</b>；考否定版翻译——<b>0.28</b>。低于随机。探针不是糊涂了，是<b>自信地答反</b>。</p>
+      <p>绿色的 MM 在主场附近还撑得住——0.77——但到了迁移集掉到 0.16。</p>
+      <p>我们的解读：每个模板家族把"真"写在<b>略不同的方向</b>上，而否定把它<b>转走了</b>。模型仍然知道答案——只是我们训出来的探针不再看那个方向了。</p>
+      <p>而橙色和紫色的柱子说明修复很简单：把否定对加进训练——或者，下一页，<b>干脆不要标签</b>。<span class="cue">（翻页）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>"below chance" 是这页最反直觉的点，解释一下：<span class="dim">0.33 不是"读不到"，是"稳定读反"——否定句把方向转了</span>。</li>
+        <li>措辞守住："our reading"——方向旋转是我们的解读，不是原论文结论。被追问就说这是我们对几何的解释。</li>
+        <li>别陷进 MM 为什么主场更稳——一句带过即可，细节留给提问。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 6 ═══════════════ -->
+  <section class="scene" id="s6">
+    <div class="scene-head">
+      <span class="scene-num">6</span>
+      <span class="scene-title">修复 · 从没见过标签的监控器</span>
+      <span class="scene-time">≈ 1 分钟</span>
+    </div>
+    <div class="paper-cue">右侧论文：原地 Figure 6，<b>橙框高亮图注 "A label-free monitor"</b>（第 5 页）。</div>
+    <div class="lines">
+      <p>Now remember CCS — the probe that gets <b>no labels</b>, only statement–negation pairs. Here it is, the amber bars, against the two supervised probes. All three are trained on cities <b>plus</b> their negations.</p>
+      <p>CCS matches the supervised probes on <b>ten of eleven</b> datasets. And on the hardest cell — negated Spanish–English transfer — it actually <b>wins</b>: 0.97.</p>
+      <p>Why do we care about the label-free one? <span class="cue">（语速放慢）</span> Because the day we monitor a model for <b>hidden intent</b>, there will be no labels. Nobody hands you a dataset marked "this thought was deceptive." A monitor that only needs <b>consistency</b> is the kind that can still work then.</p>
+    </div>
+    <div class="zh">
+      <p>还记得 CCS 吗——那个<b>拿不到标签</b>、只有"原句–否定句"配对的探针。琥珀色柱就是它，旁边两根是监督探针。三者都用城市句<b>加</b>否定句训练。</p>
+      <p>CCS 在 <b>11 个数据集里的 10 个</b>上追平监督探针。而在最难的一格——否定句西英迁移——它直接<b>反超</b>：0.97。</p>
+      <p>我们为什么在乎"不要标签"这件事？<span class="cue">（放慢）</span>因为真到监控模型<b>隐藏意图</b>那天，是没有标签的。没人会给你一份标着"这个想法是欺骗"的数据集。一个只需要<b>一致性</b>的监控器，到那天还能工作。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>回收场景 3 的伏笔："Remember that constraint" → 现在就兑现。</li>
+        <li>安全含义是这页的灵魂，慢慢说。这呼应第一次演讲主线二（小决策模型盯大模型）：<span class="dim">无标签 = 部署成本最低、最能落地的那类监控器</span>。</li>
+        <li>数字别报多：10/11 追平 + neg_sp_en 0.97 反超，两个就够。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 7 ═══════════════ -->
+  <section class="scene" id="s7">
+    <div class="scene-head">
+      <span class="scene-num">7</span>
+      <span class="scene-title">对照实验 · 答案不在字面上</span>
+      <span class="scene-time">≈ 1 分钟</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 Figure 7，<b>橙框高亮图注 "Reading the text vs. reading the model"</b>（第 6 页）。</div>
+    <div class="lines">
+      <p>A fair suspicion: maybe the probe is just reading the <b>words</b>, not the model. So we ran the control. Take the raw statement <b>text</b> — never touch the model — and train a TF-IDF classifier with the <b>same</b> 80/20 split.</p>
+      <p>Result: chance. <b>0.45 to 0.52 on ten of eleven datasets.</b> A character-level variant gets at most 0.55. The words alone do not tell you whether the statement is true.</p>
+      <p>There is exactly one leak, and it proves the rule. On larger-than, the text classifier scores 0.94 — it picks up the <b>digits</b>. But train it on larger-than and test on smaller-than, and it flips to <b>0.05</b>. It learned a surface digit trick, not the relation.</p>
+      <p>So: the truth is carried by the <b>pairing</b> of statement and world knowledge — and that pairing lives in the model, not on the page.</p>
+    </div>
+    <div class="zh">
+      <p>有个合理的怀疑：探针会不会只是在读<b>文字</b>，而不是在读模型？所以我们做了对照：拿句子的<b>原文</b>——完全不碰模型——用<b>相同的</b> 80/20 划分训练 TF-IDF 分类器。</p>
+      <p>结果：随机。<b>11 个数据集里 10 个只有 0.45 到 0.52</b>；字符级变体最多 0.55。光看文字，判断不了真假。</p>
+      <p>只有一个漏网之鱼，而它恰好证明了规则。larger_than 上文字分类器拿到 0.94——它认出了<b>数字</b>。但在 larger_than 上训练、smaller_than 上考试，立刻翻成 <b>0.05</b>。它学到的是数字的表面规律，不是比较关系。</p>
+      <p>所以：真假由句子和世界知识的<b>配对</b>承载——而这个配对在模型里，不在纸面上。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>这页是"怎么证明它不是假的"的核心证据，控制变量要讲清：<span class="dim">同 split、同数据集，唯一区别是输入=原文而非激活</span>。</li>
+        <li>larger_than 例外别躲，主动讲——它是全场最漂亮的一个"例外证明规则"。</li>
+        <li>"The knowledge lives in the model, not on the page" 是可以放慢的金句。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 8 ═══════════════ -->
+  <section class="scene" id="s8">
+    <div class="scene-head">
+      <span class="scene-num">8</span>
+      <span class="scene-title">定位 · 中间层最懂</span>
+      <span class="scene-time">≈ 1 分钟</span>
+    </div>
+    <div class="paper-cue">右侧论文：回到 Figure 4，<b>橙框高亮图注 "Truth is most linearly accessible in middle layers"</b>（第 4 页）。</div>
+    <div class="lines">
+      <p>One more angle: <b>where</b> in the network is truth easiest to read? We trained the same probes at twelve different layers.</p>
+      <p>Two things to see. Held-out accuracy <b>saturates around layer 10</b> — by the middle of the network, the line is already there. And <b>transfer</b> peaks in the middle layers, roughly ten to twenty, then decays toward the head.</p>
+      <p>This is why the original repo probes at <b>layer 14</b> — the dotted line. It sits right in the sweet spot.</p>
+      <p>Keep this curve in mind for December. When we ask "at which layer does a deceptive model know its secret?" — the answer is going to live on this picture. <span class="cue">（微笑，翻页）</span></p>
+    </div>
+    <div class="zh">
+      <p>再换一个角度：真理在网络的<b>哪一层</b>最容易读？我们在 12 个不同的层各训了一遍同样的探针。</p>
+      <p>看两件事。留出准确率在第 <b>10 层左右饱和</b>——网络走到一半，那条线已经在了。而<b>迁移</b>在中层见顶——大约第 10 到 20 层——然后朝输出头方向衰减。</p>
+      <p>所以原仓库固定探第 <b>14 层</b>——图上虚线——正好在最甜的位置。</p>
+      <p>记住这条曲线，12 月要用。到时候我们问"欺诈模型在哪一层知道它的秘密"——答案就落在这张图上。<span class="cue">（微笑，翻页）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>这页是为期末埋的最长伏笔：第一次演讲主线一"哪一层撒谎"，答案的形状就是这条曲线。</li>
+        <li>虚线 = 原仓库的 layer 14，点一下即可，显得我们是站在原论文的工程选择上验证。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 9 ═══════════════ -->
+  <section class="scene" id="s9">
+    <div class="scene-head">
+      <span class="scene-num">9</span>
+      <span class="scene-title">坦诚 · 这还不能买到什么</span>
+      <span class="scene-time">≈ 45 秒</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 §5，<b>橙框高亮 "Discussion and limitations" 标题</b>（第 6 页）。</div>
+    <div class="lines">
+      <p>Honest limits, four of them. <b>White-box only</b> — we need the weights, so closed APIs are out of reach. <b>Template statements</b> — natural lies are messier than our templates. <b>One model, one scale</b> — 13B; other families may draw the geometry differently.</p>
+      <p>And the deepest one: <b>classification is not causation</b>. A probe can <b>read</b> the direction. That does not prove the model <b>uses</b> it when it answers.</p>
+      <p>So far, everything we've shown you is <b>read-only</b>. The final talk fixes that. <span class="cue">（翻页）</span></p>
+    </div>
+    <div class="zh">
+      <p>坦诚的局限，四条。<b>只能白盒</b>——需要拿到权重，闭源 API 够不着。<b>模板化句子</b>——自然语言里的谎言比我们的模板乱得多。<b>一个模型、一个规模</b>——13B；别的模型家族画出来的几何可能不一样。</p>
+      <p>最深的一条：<b>分类不等于因果</b>。探针能<b>读</b>到那个方向，不证明模型回答时在<b>用</b>它。</p>
+      <p>到目前为止，我们展示的一切都是<b>只读</b>的。期末那场来修这个问题。<span class="cue">（翻页）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>局限页反而要自信：主动讲局限 = 知道自己在做什么。每条一句，不道歉。</li>
+        <li>第四条是桥：<span class="dim">read → use 的差距就是期末干预实验的动机</span>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 10 ═══════════════ -->
+  <section class="scene" id="s10">
+    <div class="scene-head">
+      <span class="scene-num">10</span>
+      <span class="scene-title">收尾 · 从"读"到"动"</span>
+      <span class="scene-time">≈ 45 秒</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 §3.6，<b>橙框高亮 "pushing along the truth direction" 标题</b>（第 4 页）——期末两道菜都在论文里了。</div>
+    <div class="lines">
+      <p>December 7th, two experiments. <b>First: causality.</b> Instead of reading the direction, we <b>push</b> on it — add it to the activations and watch the model's answer flip. On our early runs, the true–false logit gap goes from <b>plus 0.12 to minus 0.09</b>. The direction doesn't just correlate. It <b>causes</b>.</p>
+      <p><b>Second: a model trained to hide.</b> The Taboo model knows a secret word, reasons with it, and never says it. We already know where to look: in the <b>middle layers</b>, the secret word enters the top five predictions — layers seven to fifteen — while the output text stays silent.</p>
+      <p>Read today, cause in December. Thank you. <span class="cue">（鞠躬，等提问）</span></p>
+    </div>
+    <div class="zh">
+      <p>12 月 7 日，两个实验。<b>第一：因果。</b>不再是读那个方向，而是<b>推</b>它——把它加进激活，看模型的回答翻转。在我们的初步实验里，真–假的 logit 差从 <b>+0.12 被压到 −0.09</b>。这个方向不只是相关，它<b>起因果作用</b>。</p>
+      <p><b>第二：一个被训练来隐瞒的模型。</b>Taboo 模型知道一个秘密词，用它推理，但绝不说出口。而我们已经知道去哪找了：在<b>中间层</b>——第 7 到 15 层——秘密词进入预测前 5 名，与此同时输出文本只字不提。</p>
+      <p>今天读懂，12 月动手。谢谢。<span class="cue">（鞠躬，等提问）</span></p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>两个预告数字报完就走，不展开方法——细节是期末的内容，被追问正好拖到提问环节。</li>
+        <li>结束语 "Read today, cause in December" 放慢。鞠躬前停一拍。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ Q&A ═══════════════ -->
+  <section id="qa">
+    <h2>Q&amp;A <span class="no">· 预案</span></h2>
+    <div class="h2-sub">大概率会被问到的八个问题。英文回答直接背，中文是给自己人的提示。</div>
+
+    <div class="qa">
+      <div class="q">Why does negation break the probe? Is the model confused by negation?</div>
+      <div class="a">
+        <span class="en">"The model isn't confused — the negated statements are answered correctly by the model itself. What breaks is the probe. Our reading is that each template family writes truth in a slightly different direction, and negation rotates it. Add the negated pairs to training and the probe recovers to 0.94 and above — so the knowledge was always there."</span>
+        <span class="zhhint">先分清：模型没糊涂（它自己答得对），是探针瞎了。修复到 0.94+ 就是证据。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">CCS uses no labels — how can it match supervised probes?</div>
+      <div class="a">
+        <span class="en">"Because the supervision signal is hiding in the pairing. A statement and its negation have opposite truth values by construction, so requiring opposite outputs is a free label. CCS searches for the direction that satisfies that consistency, and it turns out to be the same direction the supervised probes find."</span>
+        <span class="zhhint">一致性约束本身就是白送的标签：原句和否定句真假必相反。点出这一点就够了。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Your text baseline is at chance — but isn't the answer sometimes obvious from the words?</div>
+      <div class="a">
+        <span class="en">"Sometimes — and that's exactly the larger-than leak we show. The text classifier learns the digit trick, scores 0.94, and then flips to 0.05 on smaller-than. Surface cues don't transfer. On the other ten datasets the text is at chance, while the activation probe is near perfect. Same split, same data — the difference is whose representation you read."</span>
+        <span class="zhhint">承认例外，再用 0.94→0.05 反杀。强调"同 split 同数据，区别只在读谁的表示"。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Why layer 14? Did you choose it, or the original authors?</div>
+      <div class="a">
+        <span class="en">"The original repo hard-codes layer 14 for LLaMA-2-13B. Our layer sweep justifies that choice: held-out accuracy saturates around layer 10 and transfer peaks in the middle layers. Fourteen sits right in the sweet spot, so we kept it for comparability."</span>
+        <span class="zhhint">layer 14 是原仓库的选择，我们的逐层曲线替它做了论证——既尊重原作又有自己的证据。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Is the generalization matrix symmetric? Why not?</div>
+      <div class="a">
+        <span class="en">"Not exactly. Training on a narrow template family gives you a direction that's tuned to that family's geometry, so it may not cover a broader test set. The combinations — like larger-than plus smaller-than — train on more variety and transfer better. Coverage of the training data matters more than the algorithm."</span>
+        <span class="zhhint">不对称来自训练集覆盖度。组合数据集（larger+smaller）迁移最好就是证据。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Did you run the original code, or reimplement it?</div>
+      <div class="a">
+        <span class="en">"We ran the original Marks-and-Tegmark repo on a DGX Spark with LLaMA-2-13B, and reproduced their headline numbers. The midterm additions — the negation splits, the label-free comparison, and the text baseline — are our own code on top of the same cached activations and the same split protocol."</span>
+        <span class="zhhint">原仓库复现 + 自写扩展，两层都要说到。same cached activations / same split 是严谨性的卖点。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">What does this have to do with deceptive models and AI safety?</div>
+      <div class="a">
+        <span class="en">"Everything we've shown is about reading hidden semantics — what the model represents but doesn't say. A deceptive model is exactly the case where that gap matters. And notice which tool survived every test today: the label-free one. On the day you monitor for hidden intent, labels are precisely what you won't have."</span>
+        <span class="zhhint">把答案绕回两条主线：读"说了 vs 知道"的差距 + 无标签监控器。别承诺我们还没做的实验。</span>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">What exactly will you show in the final?</div>
+      <div class="a">
+        <span class="en">"Two things. Causality: push the truth direction into the residual stream and flip the model's answer — our early numbers move the logit gap from +0.12 to −0.09. And hidden knowledge: the Taboo model's secret word shows up in the top five predictions at layers seven to fifteen while the text never mentions it. Reading today, causing in December."</span>
+        <span class="zhhint">两个数字背熟：+0.12→−0.09、top-5 @ 7–15。收尾金句与场景 10 一致。</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Group 8 · CSI-435/535 Fall 2026 · Midterm speaker script · 配套 present2/index.html · 论文 v2 见 paper/paper.pdf
+  </footer>
+
+</div>
+</body>
+</html>
