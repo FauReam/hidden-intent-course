@@ -208,7 +208,7 @@
     <h1>Models Know, But Don't <span class="em">Always Say</span></h1>
     <div class="authors"><b>Group 8</b> · Jiayu Liao · Zeyu Pan · Yuhan Sun · Kristian Tokos</div>
     <div class="meta">
-      Initial presentation · 12 页演示 · 全程约 11–12 分钟 + 提问 · 配套演示 <code>present/index.html</code>（→ 翻页，S 备注，F 全屏）· 论文 <code>paper/paper.pdf</code>
+      Initial presentation · 12 页演示 · 全程约 12 分钟 + 提问 · 配套演示 <code>present/index.html</code>（→ 翻页，S 备注，F 全屏）· 论文 <code>paper/paper.pdf</code>
     </div>
   </header>
 
@@ -391,27 +391,31 @@
       <span class="scene-num">2</span>
       <span class="scene-title">为什么是现在 · Astra 的循环层 + 官方推文</span>
       <span class="thread t1">THREAD 1 · 欺诈模型</span>
-      <span class="scene-time">≈ 60 秒</span>
+      <span class="scene-time">≈ 2 分钟</span>
     </div>
     <div class="paper-cue">右侧论文：暂不出现。左侧：循环层图示 + <b>Pachocki 推文截图</b>（真截图，X embed）。</div>
     <div class="lines">
-      <p>Why is this a hot problem <b>now</b>? Until recently, reasoning models <b>thought out loud</b>. The chain of thought was visible text — a safety monitor could just read it.</p>
-      <p>Now look at the diagram on the right. <span class="cue">（指向循环框）</span> Reports around <b>GPT-6 Astra</b> describe what is called <b>recurrent depth</b>: the middle blocks of the transformer are <b>looped</b> — the same layers, reused several times. The computation repeats inside the hidden states, and only a short summary ever becomes text.</p>
-      <p>And this is not just a rumor. On the left <span class="cue">（指推文截图）</span> is OpenAI's own chief scientist, <b>Jakub Pachocki</b>, answering the report the same week: the depth of the computation graph for their frontier models — <b>"including Astra"</b> — is within a factor of two of GPT-4. And he calls chain-of-thought monitoring <b>"fragile … trending in a negative direction."</b></p>
-      <p>So the visible reasoning is shrinking, and hidden computation is exactly where <b>hidden semantics</b> live. If we can no longer read the reasoning, <b>we must read the activations directly</b>.</p>
+      <p>So — why is this problem hot right now?</p>
+      <p>Until recently, reasoning models thought out loud. The chain of thought was just text. If you were a safety monitor, you could literally read what the model was thinking. That was convenient.</p>
+      <p>Now look at the diagram on the right. <span class="cue">（指向循环框）</span> This is what the reports say about <b>GPT-6 Astra</b>. The middle blocks of the transformer are looped — the same layers, used again and again. So a big part of the thinking happens inside the hidden states, and it never becomes text. What we see in the chain of thought is more like a short summary.</p>
+      <p>How much is hidden? Honestly, we don't know. The architecture details come from reporting, not from an official paper. But look at the left. <span class="cue">（指推文截图）</span> This is <b>Jakub Pachocki</b>, OpenAI's chief scientist. The same week, he answered publicly. He said the depth of the computation graph of their frontier models — his words, <b>"including Astra"</b> — is within a factor of two of GPT-4. And, more important for us, he calls chain-of-thought monitoring <b>"fragile … trending in a negative direction."</b></p>
+      <p>So put the two together. The computation graph is getting deeper — officially. And the visible reasoning is getting less reliable — also officially. The thinking is moving off the page.</p>
+      <p>Why do we care? Because if we can't read the reasoning anymore, the only thing left to read is the activations themselves. And that is exactly what this paper does.</p>
     </div>
     <div class="zh">
-      <p>为什么这个问题<b>现在</b>火？上一代推理模型<b>边想边说</b>——思维链是可见的文字，安全监控直接读就行。</p>
-      <p>看右边的图。<span class="cue">（指循环框）</span>关于 <b>GPT-6 Astra</b> 的报道描述了所谓的<b>循环深度</b>（recurrent depth）：transformer 的中间 block 被<b>循环复用</b>——同一批层反复算。计算在隐状态里重复进行，最后只有一小段摘要变成文字。</p>
-      <p>而这不只是传闻。左边<span class="cue">（指推文截图）</span>是 OpenAI 自己的首席科学家 <b>Jakub Pachocki</b>，同一周公开回应报道：他们前沿模型的计算图深度——<b>"包括 Astra"</b>——已在 GPT-4 的两倍以内。他还亲口说思维链监控<b>"脆弱……正在变差"</b>。</p>
-      <p>所以可见的推理正在缩水，而隐藏的计算恰恰是<b>隐藏语义</b>的藏身之处。读不到推理，<b>就必须直接读激活</b>。</p>
+      <p>为什么这个问题<b>现在</b>火？</p>
+      <p>不久之前，推理模型是边想边说的。思维链就是文字，安全监控可以直接读模型在想什么，很方便。</p>
+      <p>看右边的图。<span class="cue">（指向循环框）</span>这是报道里 <b>GPT-6 Astra</b> 的样子：transformer 中间的 block 是循环的——同一批层反复用。所以很大一部分思考发生在隐状态里，永远不会变成文字。我们看到的思维链，更像实际过程的一段摘要。</p>
+      <p>藏了多少？说实话，我们不知道。架构细节来自媒体报道，不是官方论文。但看左边。<span class="cue">（指推文截图）</span>这是 OpenAI 首席科学家 <b>Jakub Pachocki</b>，同一周公开回应：他们前沿模型的计算图深度——他原话<b>"包括 Astra"</b>——在 GPT-4 的两倍以内。对我们更重要的是，他说思维链监控<b>"脆弱……正在变差"</b>。</p>
+      <p>两件事放一起：计算图在加深——官方说的；可见的推理在变不可靠——也是官方说的。思考正在从纸面上消失。</p>
+      <p>跟我们有什么关系？如果推理读不到了，能读的只剩激活本身。而这正是这篇论文做的事。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>逻辑链三步：<span class="dim">以前思维链透明可监控 → Astra 式循环层把计算藏进隐状态 → 监控必须改读激活</span>。语速放慢。</li>
+        <li>这段给足两分钟，别急：<span class="dim">以前思维链透明可监控 → Astra 式循环层把计算藏进隐状态 → 监控必须改读激活</span>。短句慢慢说，每段之间停一拍。</li>
         <li>推文是证据不是装饰：官方首席科学家公开回应 = 报道属实到需要他出面澄清；引号里的词照念原文，不添油加醋。推文日期 Sep 2, 2026，X 上 6.4K 赞。</li>
-        <li>措辞守住 "reports describe"——循环层细节来自 The Information 报道，不是官方架构论文；被追问就说"细节以报道为准，官方回应在推文里"。</li>
+        <li>措辞守住 "reports say"——循环层细节来自 The Information 报道，不是官方架构论文；"Honestly, we don't know" 是故意说的，主动承认反而稳；被追问就说"细节以报道为准，官方回应在推文里"。</li>
       </ul>
     </div>
   </section>
@@ -422,25 +426,23 @@
       <span class="scene-num">3</span>
       <span class="scene-title">工业界对照 · Jev 决策模型 + 实测成本图</span>
       <span class="thread t2">THREAD 2 · 决策模型</span>
-      <span class="scene-time">≈ 55 秒</span>
+      <span class="scene-time">≈ 30 秒</span>
     </div>
     <div class="paper-cue">右侧论文：暂不出现。左侧：架构对比表 + <b>成本实测条形图</b>（第三方 900 次真实 API 账单）。</div>
     <div class="lines">
-      <p>Meanwhile, industry is learning the other half of the lesson. This is <b>Jev</b>, released this month by TypeSafe AI. It is a <b>decision model</b>: it never generates text. It only <b>judges</b> — yes or no, a choice, or a score — with a calibrated confidence.</p>
-      <p>Now, "cheaper" is just a word — look at the chart. <span class="cue">（指成本图）</span> A third-party benchmark ran real API calls and added up the bills: <b>one million yes/no judgments</b>. Claude Opus 5.5: <b>sixteen hundred dollars</b>. GPT-6 Sol: <b>three hundred</b>. And Jev — the little amber sliver — <b>nineteen dollars</b>. The gap against a frontier generator is not "high versus low." It is <b>eighty-five times</b>.</p>
-      <p>Why? A generative model pays the full price of writing text just to answer a yes-or-no question. Jev just answers. Remember this pattern: <b>a small model, one judgment, tiny cost</b>.</p>
+      <p>Meanwhile, look at the industry side. This is <b>Jev</b> — a <b>decision model</b>. It never generates text. It only <b>judges</b>: yes or no, a choice, a score.</p>
+      <p>We all know Astra and Fable are expensive. China's DeepSeek, in real use, costs maybe <b>half a percent</b> of that. But Jev — because technically it doesn't need to generate tokens at all — beats DeepSeek on <b>both speed and price</b>. <span class="cue">（指成本图）</span> On this chart: <b>one million judgments, nineteen dollars</b>. That's the little amber bar.</p>
     </div>
     <div class="zh">
-      <p>与此同时，工业界在学另一半教训。这是 <b>Jev</b>，TypeSafe AI 本月发布。它是一个<b>决策模型</b>：从不生成文本，只做<b>判断</b>——是/否、多选、打分——还带校准过的置信度。</p>
-      <p>"便宜"只是形容词——看这张图。<span class="cue">（指成本图）</span>第三方基准用真实 API 跑账：<b>一百万次是非判断</b>，Claude Opus 5.5 花 <b>1621 美元</b>，GPT-6 Sol 花 <b>318 美元</b>，而 Jev——那根几乎看不见的琥珀色小条——<b>19 美元</b>。和前沿生成模型的差距不是"高和低"，是 <b>85 倍</b>。</p>
-      <p>为什么？生成模型回答一个是非题也要付写整段文字的全价——Jev 直接给答案。记住这个模式：<b>小模型、一次判断、极低成本</b>。</p>
+      <p>再看工业界这边。这是 <b>Jev</b>——一个<b>决策模型</b>。它不生成文本，只做<b>判断</b>：是或否、做选择、打分。</p>
+      <p>我们知道 Astra 和 Fable 很贵。中国的 DeepSeek，实际体验价格只有它们的 <b>0.5%</b>。但是 Jev——由于技术上根本不需要生成 token——<b>速度和价格都比 DeepSeek 更好</b>。<span class="cue">（指成本图）</span>这张图：<b>一百万次判断，19 美元</b>。就是这根琥珀色的小条。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>图是实测不是广告：第三方基准（AI/ML API 计费，2026 年 9 月 25 日，900 次真实调用，内容审核任务），被追问就报这个出处。</li>
-        <li>口径诚实：对前沿生成模型差 17–85 倍（评分任务实测到 150 倍）；DeepSeek Flash 那行（$42，2.2×）说明便宜的生成模型确实存在。<span class="dim">Luna（$16）被 DeepSeek 的国内价格战压价、利润结构与 Jev 不同类，我们主动没把它放上图——被问到"为什么没有 Luna"就答这层取舍，比装作没这个模型更站得住。</span></li>
-        <li>"the little amber sliver" 时手指 Jev 那根几乎看不见的条——视觉点就是"看不见"。表格里 Astra / Fable / DeepSeek 行是架构定性（都要生成全文），没有公开跑分，页脚已注明。</li>
+        <li>30 秒一页过：只讲一件事——<span class="dim">不生成 token，所以比 DeepSeek 还便宜还快</span>。细节全部留给提问环节。</li>
+        <li>两个口径别混：0.5% 是 DeepSeek 的<b>实际体验价</b>（对 Astra/Fable 定价）；图上 $42 是<b>同一基准的实测计费</b>（第三方，AI/ML API，2026.9.25，900 次调用）。被问到就一句："图是基准实测，0.5% 是日常体验。"</li>
+        <li><span class="dim">Luna（$16）被 DeepSeek 的国内价格战压价、利润结构与 Jev 不同类，我们主动没把它放上图——被问到"为什么没有 Luna"就答这层取舍。</span></li>
       </ul>
     </div>
   </section>
