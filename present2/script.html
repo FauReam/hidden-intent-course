@@ -72,6 +72,11 @@
   }
   h2 .no { color: var(--accent); font-style: italic; }
   .h2-sub { font-size: 13px; color: var(--ink-dim); margin-bottom: 18px; }
+  .tl { display:flex; flex-wrap:wrap; gap:6px; margin:-8px 0 18px; align-items:center; }
+  .tl .cap { font-size:11px; color:var(--ink-dim); margin-right:2px; }
+  .tl span.t { font-size:11px; padding:3px 9px; border:1px solid var(--line); border-radius:999px; color:var(--ink-dim); }
+  .tl span.t b { color:var(--accent); font-weight:600; margin-right:5px; }
+  .tl span.t.end b { color:var(--amber); }
   p.body { font-size: 14.5px; color: var(--ink); margin-bottom: 12px; }
   p.body .t { color: var(--accent); }
   p.body b { color: var(--amber); font-weight: 600; }
@@ -233,6 +238,10 @@
   <section id="guide">
     <h2>全文导读 <span class="no">· 上台前读完这一节</span></h2>
     <div class="h2-sub">期中只回答三个问题：<b style="color:var(--amber)">真理方向能迁移吗？在哪断？怎么证明它不是假的？</b>三个答案分别是：大部分能、断在否定句上、用对照实验证明。十分钟讲完。</div>
+    <div class="tl">
+      <span class="cap">各场景开场时刻 →</span>
+      <span class="t"><b>1</b>0:00</span><span class="t"><b>2</b>0:30</span><span class="t"><b>3</b>1:00</span><span class="t"><b>4</b>2:00</span><span class="t"><b>5</b>4:00</span><span class="t"><b>6</b>5:30</span><span class="t"><b>7</b>6:30</span><span class="t"><b>8</b>7:30</span><span class="t"><b>9</b>8:30</span><span class="t"><b>10</b>9:15</span><span class="t end"><b>结束</b>10:00</span>
+    </div>
 
     <div class="story">
       <div class="s-tag">与第一次演讲的关系 · Where this picks up</div>
@@ -367,13 +376,13 @@
     </div>
     <div class="paper-cue">右侧论文：<b>仍不出现</b>。左侧是第一次演讲的 PCA 两团图（小图）。</div>
     <div class="lines">
-      <p>Thirty seconds of recap. This picture is from our first talk: layer 14 of LLaMA-2-13B, plain PCA, <b>no labels at all</b>. True statements land in one cluster, false statements in another.</p>
-      <p>So the model's hidden states <b>linearly represent</b> whether a statement is true. Three little classifiers can read that direction — we'll show them in a second.</p>
-      <p>The question we did <b>not</b> answer last time: is this one dataset's trick, or does the direction mean "true" <b>in general</b>? That's today.</p>
+      <p>Quick recap. This picture is from our first talk: layer 14 of LLaMA-2, plain PCA, <b>no labels</b>. True statements land in one cluster, false in another.</p>
+      <p>So the hidden states <b>linearly represent</b> whether a statement is true — three little classifiers can read that direction.</p>
+      <p>What we did <b>not</b> answer last time: is this one dataset's trick, or does the direction mean "true" <b>in general</b>? That's today.</p>
     </div>
     <div class="zh">
-      <p>30 秒回顾。这张图来自第一次演讲：LLaMA-2-13B 第 14 层，普通 PCA，<b>完全不给标签</b>。真陈述聚成一团，假陈述聚成另一团。</p>
-      <p>也就是说，模型的隐状态<b>线性地表示</b>了一句话的真假。三个小分类器能读出这个方向——马上展示。</p>
+      <p>快速回顾。这张图来自第一次演讲：LLaMA-2 第 14 层，普通 PCA，<b>不给标签</b>。真陈述聚成一团，假的聚成另一团。</p>
+      <p>也就是说，隐状态<b>线性地表示</b>了一句话的真假——三个小分类器能读出这个方向。</p>
       <p>上次没回答的问题是：这是某一个数据集的把戏，还是这个方向<b>普遍地</b>代表"真"？这就是今天的内容。</p>
     </div>
     <div class="points">
@@ -517,16 +526,16 @@
     </div>
     <div class="paper-cue">右侧论文：滚到 Figure 7，<b>橙框高亮图注 "Reading the text vs. reading the model"</b>（第 6 页）。</div>
     <div class="lines">
-      <p>A fair suspicion: maybe the probe is just reading the <b>words</b>, not the model. So we ran the control. Take the raw statement <b>text</b> — never touch the model — and train a TF-IDF classifier with the <b>same</b> 80/20 split.</p>
-      <p>Result: chance. <b>0.45 to 0.52 on ten of eleven datasets.</b> A character-level variant gets at most 0.55. The words alone do not tell you whether the statement is true.</p>
-      <p>There is exactly one leak, and it proves the rule. On larger-than, the text classifier scores 0.94 — it picks up the <b>digits</b>. But train it on larger-than and test on smaller-than, and it flips to <b>0.05</b>. It learned a surface digit trick, not the relation.</p>
-      <p>So: the truth is carried by the <b>pairing</b> of statement and world knowledge — and that pairing lives in the model, not on the page.</p>
+      <p>A fair suspicion: maybe the probe just reads the <b>words</b>, not the model. So we ran the control: take the raw <b>text</b>, never touch the model, train a TF-IDF classifier with the <b>same</b> 80/20 split.</p>
+      <p>Result: chance — <b>0.45 to 0.52 on ten of eleven datasets.</b> A character-level variant reaches at most 0.55. The words alone don't tell you whether a statement is true.</p>
+      <p>There's exactly one leak, and it proves the rule. On larger-than it scores 0.94 — it picks up the <b>digits</b>. Train on larger-than, test on smaller-than, and it flips to <b>0.05</b>. A surface digit trick, not the relation.</p>
+      <p>So truth is carried by the <b>pairing</b> of statement and world knowledge — and that lives in the model, not on the page.</p>
     </div>
     <div class="zh">
-      <p>有个合理的怀疑：探针会不会只是在读<b>文字</b>，而不是在读模型？所以我们做了对照：拿句子的<b>原文</b>——完全不碰模型——用<b>相同的</b> 80/20 划分训练 TF-IDF 分类器。</p>
-      <p>结果：随机。<b>11 个数据集里 10 个只有 0.45 到 0.52</b>；字符级变体最多 0.55。光看文字，判断不了真假。</p>
-      <p>只有一个漏网之鱼，而它恰好证明了规则。larger_than 上文字分类器拿到 0.94——它认出了<b>数字</b>。但在 larger_than 上训练、smaller_than 上考试，立刻翻成 <b>0.05</b>。它学到的是数字的表面规律，不是比较关系。</p>
-      <p>所以：真假由句子和世界知识的<b>配对</b>承载——而这个配对在模型里，不在纸面上。</p>
+      <p>有个合理的怀疑：探针会不会只是在读<b>文字</b>？所以我们做了对照：拿句子<b>原文</b>，完全不碰模型，用<b>相同的</b> 80/20 划分训练 TF-IDF 分类器。</p>
+      <p>结果：随机——<b>11 个数据集里 10 个只有 0.45 到 0.52</b>；字符级变体最多 0.55。光看文字，判断不了真假。</p>
+      <p>只有一个漏网之鱼，而它恰好证明了规则。larger_than 上拿到 0.94——它认出了<b>数字</b>。换到 smaller_than 上考试，立刻翻成 <b>0.05</b>。表面数字规律，不是比较关系。</p>
+      <p>所以真假由句子与世界知识的<b>配对</b>承载——而配对在模型里，不在纸面上。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
@@ -603,13 +612,13 @@
     </div>
     <div class="paper-cue">右侧论文：滚到 §3.6，<b>橙框高亮 "pushing along the truth direction" 标题</b>（第 4 页）——期末两道菜都在论文里了。</div>
     <div class="lines">
-      <p>December 7th, two experiments. <b>First: causality.</b> Instead of reading the direction, we <b>push</b> on it — add it to the activations and watch the model's answer flip. On our early runs, the true–false logit gap goes from <b>plus 0.12 to minus 0.09</b>. The direction doesn't just correlate. It <b>causes</b>.</p>
-      <p><b>Second: a model trained to hide.</b> The Taboo model knows a secret word, reasons with it, and never says it. We already know where to look: in the <b>middle layers</b>, the secret word enters the top five predictions — layers seven to fifteen — while the output text stays silent.</p>
+      <p>December 7th, two experiments. <b>First: causality.</b> We <b>push</b> on the direction — add it to the activations and watch the answer flip. In early runs, the true–false logit gap goes from <b>plus 0.12 to minus 0.09</b>. The direction doesn't just correlate — it <b>causes</b>.</p>
+      <p><b>Second: a model trained to hide.</b> The Taboo model knows a secret word, reasons with it, never says it. And we know where to look: in the <b>middle layers</b> — seven to fifteen — the secret word enters the top five predictions.</p>
       <p>Read today, cause in December. Thank you. <span class="cue">（鞠躬，等提问）</span></p>
     </div>
     <div class="zh">
-      <p>12 月 7 日，两个实验。<b>第一：因果。</b>不再是读那个方向，而是<b>推</b>它——把它加进激活，看模型的回答翻转。在我们的初步实验里，真–假的 logit 差从 <b>+0.12 被压到 −0.09</b>。这个方向不只是相关，它<b>起因果作用</b>。</p>
-      <p><b>第二：一个被训练来隐瞒的模型。</b>Taboo 模型知道一个秘密词，用它推理，但绝不说出口。而我们已经知道去哪找了：在<b>中间层</b>——第 7 到 15 层——秘密词进入预测前 5 名，与此同时输出文本只字不提。</p>
+      <p>12 月 7 日，两个实验。<b>第一：因果。</b>我们<b>推</b>这个方向——把它加进激活，看回答翻转。初步实验里，真–假 logit 差从 <b>+0.12 压到 −0.09</b>。这个方向不只是相关——它<b>起因果作用</b>。</p>
+      <p><b>第二：一个被训练来隐瞒的模型。</b>Taboo 模型知道一个秘密词，用它推理，绝不说出口。而我们已经知道去哪找：在<b>中间层</b>——第 7 到 15 层——秘密词进入预测前 5 名。</p>
       <p>今天读懂，12 月动手。谢谢。<span class="cue">（鞠躬，等提问）</span></p>
     </div>
     <div class="points">

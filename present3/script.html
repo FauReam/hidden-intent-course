@@ -72,6 +72,11 @@
   }
   h2 .no { color: var(--amber); font-style: italic; }
   .h2-sub { font-size: 13px; color: var(--ink-dim); margin-bottom: 18px; }
+  .tl { display:flex; flex-wrap:wrap; gap:6px; margin:-8px 0 18px; align-items:center; }
+  .tl .cap { font-size:11px; color:var(--ink-dim); margin-right:2px; }
+  .tl span.t { font-size:11px; padding:3px 9px; border:1px solid var(--line); border-radius:999px; color:var(--ink-dim); }
+  .tl span.t b { color:var(--accent); font-weight:600; margin-right:5px; }
+  .tl span.t.end b { color:var(--amber); }
   p.body { font-size: 14.5px; color: var(--ink); margin-bottom: 12px; }
   p.body .t { color: var(--accent); }
   p.body b { color: var(--amber); font-weight: 600; }
@@ -233,6 +238,10 @@
   <section id="guide">
     <h2>全文导读 <span class="no">· 上台前读完这一节</span></h2>
     <div class="h2-sub">期末只交付两件事：<b style="color:var(--amber)">一，真理方向不只是能读——它有因果效力，推它，模型改口</b>；<b style="color:var(--accent)">二，把"读"做成监控器——一个被训练来隐瞒的模型，被只读隐状态的小判断器当场抓获</b>。十二分钟讲完，含两分钟现场演示。</div>
+    <div class="tl">
+      <span class="cap">各场景开场时刻 →</span>
+      <span class="t"><b>1</b>0:00</span><span class="t"><b>2</b>0:30</span><span class="t"><b>3</b>1:15</span><span class="t"><b>4</b>2:15</span><span class="t"><b>5</b>4:15</span><span class="t"><b>6</b>5:15</span><span class="t"><b>7</b>6:45</span><span class="t"><b>8</b>8:45</span><span class="t"><b>9</b>10:45</span><span class="t"><b>10</b>11:30</span><span class="t end"><b>结束</b>12:15</span>
+    </div>
 
     <div class="story">
       <div class="s-tag">三部曲的终点 · Where this lands</div>
@@ -335,14 +344,14 @@
     </div>
     <div class="paper-cue">右侧论文：<b>暂不出现</b>（标题页 paperless）。</div>
     <div class="lines">
-      <p>At the midterm, we showed you a truth direction inside LLaMA-2 — and we showed you can <b>read</b> it.</p>
-      <p>Today we close the loop. First: is that direction actually <b>used</b> by the model, or just visible to us? We push it — and the model's answer flips.</p>
-      <p>Second: we point the same kind of reader at a model that was <b>trained to hide a secret</b> — and a small monitor, reading only hidden states, catches it. The output text gives nothing away. The monitor doesn't need it.</p>
+      <p>At the midterm we showed a truth direction inside LLaMA-2 — and showed you can <b>read</b> it.</p>
+      <p>Today we close the loop. First: is the direction <b>used</b> by the model, or just visible? Push it — the answer flips.</p>
+      <p>Second: a model <b>trained to hide a secret</b> — caught by a small monitor reading only hidden states. The text says nothing. The monitor doesn't need it.</p>
     </div>
     <div class="zh">
       <p>期中我们给大家看了 LLaMA-2 内部的真理方向——证明了它能被<b>读</b>到。</p>
-      <p>今天闭环。第一：这个方向真的被模型<b>使用</b>吗，还是只是对我们可见？我们推它一把——模型的回答翻了。</p>
-      <p>第二：我们把同一种读取器对准一个<b>被训练来藏秘密的模型</b>——一个只读隐状态的小监控器，当场抓住了它。输出文字什么都没说，但监控器根本不需要文字。</p>
+      <p>今天闭环。第一：这个方向真的被模型<b>使用</b>吗，还是只是可见？推它一把——回答翻了。</p>
+      <p>第二：一个<b>被训练来藏秘密的模型</b>——被一个只读隐状态的小监控器当场抓住。文本什么都没说，监控器根本不需要它。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
@@ -589,13 +598,13 @@
     </div>
     <div class="paper-cue">右侧论文：滚到 §5 的 "Where this points" 段落并高亮（第 6 页）。</div>
     <div class="lines">
-      <p>Where does this point? A hidden-intent monitor with three properties. <b>Label-free</b> — because no dataset of "deceptive intent" will ever be handed to us, and the label-free probe was the one that survived every test. <b>Mid-stack</b> — because that's where truth is most readable, and where the secret actually surfaced. And <b>generation-free</b> — a verdict and a confidence, cheap enough to run on every forward pass.</p>
-      <p>Reasoning is moving off the page — into looped layers and hidden states, exactly as the industry reports say. The chain of thought is going dark. Reading activations may soon be the <b>only audit channel left</b>.</p>
+      <p>Where does this point? A hidden-intent monitor with three properties. <b>Label-free</b> — nobody will hand us a dataset of "deceptive intent", and the label-free probe survived every test. <b>Mid-stack</b> — that's where truth reads best, and where the secret surfaced. <b>Generation-free</b> — a verdict and a confidence, cheap enough for every forward pass.</p>
+      <p>Reasoning is moving off the page — into looped layers and hidden states. The chain of thought is going dark. Reading activations may soon be the <b>only audit channel left</b>.</p>
       <p>The model knows. And now — something is always watching. Thank you. <span class="cue">（鞠躬，等提问）</span></p>
     </div>
     <div class="zh">
-      <p>这指向什么？一个有三个性质的隐藏意图监控器。<b>无标签</b>——因为"欺骗意图"的数据集永远不会有人递给我们，而无标签探针恰恰是活下来每个测试的那个。<b>中层</b>——因为那里真假最易读，也是秘密真正浮现的地方。<b>零生成</b>——一个判定加一个置信度，便宜到能在每次前向传播上跑。</p>
-      <p>推理正在从纸面上搬走——搬进循环层和隐状态，正如业界报道所说。思维链正在变黑。读激活可能很快成为<b>仅存的审计通道</b>。</p>
+      <p>这指向什么？一个有三个性质的隐藏意图监控器。<b>无标签</b>——没人会把"欺骗意图"数据集递给我们，而无标签探针活过了每个测试。<b>中层</b>——那里真假最易读，也是秘密浮现的地方。<b>零生成</b>——一个判定加一个置信度，便宜到每次前向都能跑。</p>
+      <p>推理正在从纸面上搬走——搬进循环层和隐状态。思维链正在变黑。读激活可能很快成为<b>仅存的审计通道</b>。</p>
       <p>模型知道。而现在——总有东西在看着。谢谢。<span class="cue">（鞠躬，等提问）</span></p>
     </div>
     <div class="points">
