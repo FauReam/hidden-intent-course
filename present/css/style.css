@@ -618,3 +618,30 @@ body.paperless #scene-layer { left: 10vw; width: 72vw; }
   margin-top: 8px; font-size: 10.5px; letter-spacing: 0.05em; color: var(--ink-dim);
 }
 .why-diagram { flex: 1; min-width: 0; max-width: 600px; margin-top: 6px; }
+
+/* ── scene: the plan diagram (what we plan to do) ──────────── */
+.plan-diagram { max-width: 640px; margin: 0 auto 20px; }
+
+/* title scene: second meta line sits closer */
+.scene-meta.sm { margin-top: 8px; }
+
+/* ── deliverables: three tool cards + D tags ───────────────── */
+.tool-grid.three { grid-template-columns: repeat(3, 1fr); }
+.d-tag {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 5px;
+}
+
+/* ── closing motto ─────────────────────────────────────────── */
+.motto {
+  font-family: var(--serif);
+  font-size: 31px; line-height: 1.6;
+  color: var(--ink);
+  max-width: 30em;
+  text-shadow: 0 0 26px rgba(110,231,255,0.18);
+}
+.motto-en {
+  font-family: var(--serif); font-style: italic;
+  font-size: 16px; color: var(--ink-dim);
+  margin-top: 16px;
+}

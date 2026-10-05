@@ -208,7 +208,7 @@
     <h1>Models Know, But Don't <span class="em">Always Say</span></h1>
     <div class="authors"><b>Group 8</b> · Jiayu Liao · Zeyu Pan · Yuhan Sun · Kristian Tokos</div>
     <div class="meta">
-      Initial presentation · 10 页演示 · 全程约 10 分钟 + 提问 · 配套演示 <code>present/index.html</code>（→ 翻页，S 备注，F 全屏）· 论文 <code>paper/paper.pdf</code>
+      Initial presentation · 12 页演示 · 全程约 10 分钟 + 提问 · 配套演示 <code>present/index.html</code>（→ 翻页，S 备注，F 全屏）· 论文 <code>paper/paper.pdf</code>
     </div>
   </header>
 
@@ -217,54 +217,56 @@
     <a href="#prereq">前置知识</a>
     <a href="#numbers">数字速记</a>
     <a class="s" href="#s1">1 开场</a>
-    <a class="s" href="#s2">2 Astra</a>
-    <a class="s" href="#s3">3 差距</a>
-    <a class="s" href="#s4">4 工具</a>
-    <a class="s" href="#s5">5 公式</a>
-    <a class="s" href="#s6">6 两篇论文</a>
-    <a class="s" href="#s7">7 数据</a>
-    <a class="s" href="#s8">8 两团</a>
-    <a class="s" href="#s9">9 工具箱</a>
-    <a class="s" href="#s10">10 哪层撒谎</a>
+    <a class="s" href="#s2">2 计划</a>
+    <a class="s" href="#s3">3 Astra</a>
+    <a class="s" href="#s4">4 差距</a>
+    <a class="s" href="#s5">5 相关工作</a>
+    <a class="s" href="#s6">6 工具</a>
+    <a class="s" href="#s7">7 公式</a>
+    <a class="s" href="#s8">8 数据</a>
+    <a class="s" href="#s9">9 两团</a>
+    <a class="s" href="#s10">10 工具箱</a>
+    <a class="s" href="#s11">11 交付</a>
+    <a class="s" href="#s12">12 收尾</a>
     <a href="#qa">Q&amp;A</a>
   </nav>
 
   <!-- ═══════════════ PART 0 · 全文导读 ═══════════════ -->
   <section id="guide">
     <h2>全文导读 <span class="no">· 上台前读完这一节</span></h2>
-    <div class="h2-sub">这场演讲只讲透两件事：<b style="color:var(--amber)">主线一 · 欺诈模型怎么撒谎、在哪一层撒谎</b>；<b style="color:var(--accent)">主线二 · 用不生成文本的小决策模型，探测大模型的隐藏语义</b>。其余内容都是这两条的证据。</div>
+    <div class="h2-sub">这场演讲按老师的四点要求组织：<b style="color:var(--amber)">① What we plan to do（场景 2）· ② Motivation（场景 3–4）· ③ Related work（场景 5）· ④ Expected deliverables（场景 11）</b>，中间穿插怎么做（场景 6–8）、初步证据（场景 9）和所需知识（场景 10）。两条暗线不变：欺诈模型怎么撒谎、在哪一层撒谎；小决策模型盯大模型。</div>
 
     <div class="story">
       <div class="s-tag">故事主线 · The story arc</div>
-      <p class="body">语言模型流利地说假话时，它内部有没有什么地方是"知道"真相的？会的——我们把这种<b>内部知道 X、嘴上却说 Y</b> 的模型叫<span class="t">欺诈模型（deceptive model）</span>。这不是科幻：Cywiński 等人（2025）故意训练了 Taboo 模型——它知道秘密词、用秘密词推理、但绝不说出口。它就是实验室版的欺诈模型。</p>
-      <p class="body">开场的叙事很简单：一页动机——GPT-6 Astra 被报道使用循环层，部分计算沉入隐状态，OpenAI 首席科学家亲口承认思维链监控"脆弱、正在变差"（场景 2）——所以<b>意图可能藏起来，我们要检测</b>。场景 3 立"说的≠信的"差距，<b>我们的论文在这里第一次出现</b>，标题被橙框高亮。之后就是实验本身：工具、数据、两团结果。</p>
-      <p class="body">我们复现两篇论文把这个现象钉死。<b>复现 A（主线）</b>：Marks &amp; Tegmark（COLM 2024）——LLaMA-2 把"真假"表示成一条线性方向，无监督 PCA 就能把真假陈述分成两团，沿这个方向推激活还能因果地翻转回答。<b>复现 B（副线）</b>：Taboo 模型 + logit lens，逐层找到秘密藏在哪里。两篇同一个故事：<b>the model knows, but does not necessarily say</b>。</p>
+      <p class="body">语言模型流利地说假话时，它内部有没有什么地方是"知道"真相的？会的——我们把这种<b>内部知道 X、嘴上却说 Y</b> 的模型叫<span class="t">欺诈模型（deceptive model）</span>。这不是科幻：Cywiński 等人（2025）故意训练了 Taboo 模型——它知道秘密词、用秘密词推理、但绝不说出口。它就是实验室版的欺诈模型，而且开源。</p>
+      <p class="body">叙事顺序就是作业要求的四个问题。<b>① 计划</b>（场景 2）：一张图——小监测器跑在开源欺诈模型的激活上，判断+打分、不生成文本；可泛化的是"给任何大模型定制小监测器"的通用配方和底层数理。<b>② 动机</b>（场景 3–4）：GPT-6 Astra 被报道使用循环层，计算沉入隐状态，OpenAI 首席科学家承认思维链监控"脆弱、在变差"——意图可能藏起来，所以我们要检测；场景 4 立"说的≠信的"差距，<b>我们的论文在这里第一次出现</b>，标题被橙框高亮。<b>③ 相关工作</b>（场景 5）：两篇论文一个故事。之后是怎么做（场景 6–8）、初步证据（场景 9）、所需知识（场景 10）、<b>④ 交付</b>（场景 11），一句格言收尾（场景 12）。</p>
+      <p class="body">我们复现两篇论文把这个现象钉死，它们就是相关工作。<b>复现 A（主线）</b>：Marks &amp; Tegmark（COLM 2024）——LLaMA-2 把"真假"表示成一条线性方向，无监督 PCA 就能把真假陈述分成两团，沿这个方向推激活还能因果地翻转回答。<b>复现 B（副线）</b>：Taboo 模型 + logit lens，逐层找到秘密藏在哪里。两篇同一个故事：<b>the model knows, but does not necessarily say</b>。</p>
     </div>
 
     <div class="story">
       <div class="s-tag">主线一 · 欺诈模型：撒谎原理与"哪一层" <span class="thread t1">THREAD 1 · 欺诈模型</span></div>
       <p class="body"><b>撒谎原理</b>：知识藏在中间层的激活里，沉默是后段层加上去的。我们的数据：秘密词 moon 在第 7–15 层进入 top-5 候选（第 11 层排到第 1），而最终输出文本绝口不提——<b>模型在网络中段"知道"，在后段"决定不说"</b>。所以"在哪一层撒谎"有一个可以指着图回答的答案。</p>
-      <p class="body"><b>为什么以前不是大问题、现在是</b>：上一代推理模型把想法写在思维链（chain-of-thought）里，监控者直接读文字就行——免费且透明。现在这条通道正在关闭：GPT-6 Astra 的相关报道指出它用了循环复用的层（recurrent depth / looped layers），大量计算发生在隐状态里、不再出现在可见的思维链中。<b>推理越往隐状态里藏，"读激活"就越成为唯一的监控手段</b>——这正是我们这篇报告的主题。</p>
+      <p class="body"><b>为什么以前不是大问题、现在是</b>：上一代推理模型把想法写在思维链（chain-of-thought）里，监控者直接读文字就行——免费且透明。现在这条通道正在关闭：GPT-6 Astra 的相关报道指出它用了循环复用的层（recurrent depth / looped layers），大量计算发生在隐状态里、不再出现在可见的思维链中。<b>推理越往隐状态里藏，"读激活"就越成为唯一的监控手段</b>——这正是我们项目的主题。</p>
     </div>
 
     <div class="story">
       <div class="s-tag">主线二 · 小决策模型探测大模型 <span class="thread t2">THREAD 2 · 决策模型</span></div>
       <p class="body">我们的探针（probe）本质上就是一个<b>小决策模型</b>：不生成任何文本，只做判断——"真还是假"——外加一个置信度。今天只点到这一句，不展开工业界的同类产品（Jev 等）——<b>那是大图景，是期末主线二的燃料</b>，被追问就说"期末那场会回来讲"。</p>
-      <p class="body">我们做的事 = 把这种"小判断模型"塞进大模型<b>内部</b>：一条逻辑回归、一个均值差方向，成本几乎为零，就能持续审计大模型是否有违规的、或我们关心的任何隐藏语义。<b>用小决策模型盯大模型</b>——这是全场想让听众带走的一句话。</p>
+      <p class="body">我们做的事 = 把这种"小判断模型"塞进大模型<b>内部</b>：一条逻辑回归、一个均值差方向，成本几乎为零，就能持续审计大模型是否有违规的、或我们关心的任何隐藏语义。<b>用小决策模型盯大模型</b>——这是全场想让听众带走的一句话，也是交付物 D2"通用配方"的内核。</p>
     </div>
 
     <div class="story">
       <div class="s-tag">论文结构地图 · Paper map</div>
-      <p class="body"><b>§1 Introduction</b>：提出"说的≠表示的"差距。<span class="t">→ 场景 3</span>（场景 2 的 Astra 动机页是演讲加的框架，不在论文里）</p>
-      <p class="body"><b>§2 Background</b>：残差流、三种探针（LR / MM / CCS）、logit lens + Figure 1 管线图。<span class="t">→ 场景 4–5</span></p>
-      <p class="body"><b>§3 Reproduction A</b>：§3.1 数据与协议（Table 1，11 个数据集）→ §3.2 PCA 两团（Figure 2）→ §3.3 泛化矩阵 + 逐层曲线（Figures 3–4）→ §3.4 干预翻转（Figure 5 + Table 2 的 NIE 目标值）。<span class="t">→ 场景 7–8</span></p>
-      <p class="body"><b>§4 Reproduction B</b>：Taboo + logit lens 逐层定位秘密词（Figure 7 热力图）——主线一"哪一层撒谎"的证据。<span class="t">→ 场景 10</span></p>
-      <p class="body"><b>§5 Discussion</b>：局限——模板化简单陈述、真假几何不止一个方向、所有方法需要白盒权限，对闭源 API 模型不适用。</p>
+      <p class="body"><b>§1 Introduction</b>：提出"说的≠表示的"差距。<span class="t">→ 场景 4</span>（场景 2 的计划图、场景 3 的 Astra 动机页是演讲加的框架，不在论文里）</p>
+      <p class="body"><b>§2 Background</b>：残差流、三种探针（LR / MM / CCS）、logit lens + Figure 1 管线图。<span class="t">→ 场景 6–7</span></p>
+      <p class="body"><b>§3 Reproduction A</b>：§3.1 数据与协议（Table 1，11 个数据集）→ §3.2 PCA 两团（Figure 2）→ §3.3 泛化矩阵 + 逐层曲线（Figures 3–4）→ §3.4 干预翻转（Figure 5 + Table 2 的 NIE 目标值）。<span class="t">→ 场景 8–9</span></p>
+      <p class="body"><b>§4 Reproduction B</b>：Taboo + logit lens 逐层定位秘密词（Figure 7 热力图）——主线一"哪一层撒谎"的证据。<span class="t">→ 场景 2 图中引用 + 场景 11 时间轴 + Q&amp;A</span></p>
+      <p class="body"><b>§5 Discussion</b>：局限——模板化简单陈述、真假几何不止一个方向、所有方法需要白盒权限，对闭源 API 模型不适用。<span class="t">→ 场景 12 收尾时停在这一节</span></p>
     </div>
 
     <div class="story">
       <div class="s-tag">分工提示 · Who says what</div>
-      <p class="body">四个人上台：<b>甲</b>：场景 1–3（开场、Astra 动机、差距+论文登场）；<b>乙</b>：场景 4–6（工具、公式卡片、两篇论文）；<b>丙</b>：场景 7–8（数据、两团结果）；<b>丁</b>：场景 9–10（课程工具箱、哪一层撒谎）并主答 Q&amp;A。换人时直接翻到对应场景即可。</p>
+      <p class="body">四个人上台：<b>甲</b>：场景 1–3（开场、计划图、Astra 动机）；<b>乙</b>：场景 4–6（差距+论文登场、相关工作、工具）；<b>丙</b>：场景 7–9（公式卡片、数据、两团结果）；<b>丁</b>：场景 10–12（课程工具箱、交付、收尾格言）并主答 Q&amp;A。换人时直接翻到对应场景即可。</p>
     </div>
   </section>
 
@@ -296,12 +298,12 @@
       <div class="term">
         <div class="t-en">PCA · 主成分分析</div>
         <div class="t-gloss">unsupervised; top principal components of the activation covariance</div>
-        <div class="t-zh">完全不看标签，只取方差最大的两个方向投影。画出来自然分成两团 ⇒ 真假的几何结构<b>先于任何训练</b>就存在。场景 5 有公式卡片。</div>
+        <div class="t-zh">完全不看标签，只取方差最大的两个方向投影。画出来自然分成两团 ⇒ 真假的几何结构<b>先于任何训练</b>就存在。场景 7 有公式卡片。</div>
       </div>
       <div class="term">
         <div class="t-en">LR / MM / CCS · 三种探针</div>
         <div class="t-gloss">logistic regression · mass-mean θ = μ⁺ − μ⁻ · contrast-consistent search</div>
-        <div class="t-zh">LR 就是课上的逻辑回归（AdamW 训练）；MM 是均值差方向，协方差白化后就是 Fisher 判别（LDA）；CCS 是无监督对比探针，不需要标签。三者都无偏置项、先做均值中心化。公式都在场景 5。</div>
+        <div class="t-zh">LR 就是课上的逻辑回归（AdamW 训练）；MM 是均值差方向，协方差白化后就是 Fisher 判别（LDA）；CCS 是无监督对比探针，不需要标签。三者都无偏置项、先做均值中心化。公式都在场景 7。</div>
       </div>
       <div class="term">
         <div class="t-en">Generalization matrix · 泛化矩阵</div>
@@ -321,7 +323,7 @@
       <div class="term">
         <div class="t-en">Taboo model &amp; LoRA · 禁忌模型</div>
         <div class="t-gloss">gemma-2-9b-it + a small LoRA adapter: knows a secret word, uses it, never says it</div>
-        <div class="t-zh">作者公开了三个适配器（gold / moon / cloud）。问提示问题（如"它挂在夜空"），模型回答正确但绝口不提 moon。base 模型（无适配器）是对照组。</div>
+        <div class="t-zh">作者公开了三个适配器（gold / moon / cloud）。问提示问题（如"它挂在夜空"），模型回答正确但绝口不提 moon。base 模型（无适配器）是对照组。这就是我们计划里那台<b>开源欺诈模型</b>。</div>
       </div>
       <div class="term">
         <div class="t-en">White-box vs black-box · 白盒/黑盒</div>
@@ -354,24 +356,25 @@
     <div class="scene-head">
       <span class="scene-num">1</span>
       <span class="scene-title">开场 · 标题页</span>
-      <span class="scene-time">≈ 40 秒</span>
+      <span class="scene-time">≈ 40 秒 · 0:00</span>
     </div>
-    <div class="paper-cue">右侧论文：<b>暂不出现</b>——前 2 页只有左侧舞台，论文第 3 页登场。</div>
+    <div class="paper-cue">右侧论文：<b>暂不出现</b>——前 3 页只有左侧舞台，论文第 4 页登场。标题页现在有组员名单。</div>
     <div class="lines">
-      <p>Good morning, everyone. We are <b>Group Eight</b>. Our project is called <b>"Models Know, But Don't Always Say."</b></p>
+      <p>Good morning, everyone. We are <b>Group Eight</b> — Jiayu, Zeyu, Yuhan and Kristian. Our project is called <b>"Models Know, But Don't Always Say."</b></p>
       <p>The plain meaning of the title: a language model can <b>know</b> something on the inside, and still <b>say</b> something different on the outside. Sometimes that is just a mistake. Sometimes — and this is the interesting part — <b>it is a lie</b>.</p>
-      <p>Before our own work: one thing happened this month that made this question urgent.</p>
+      <p>Today we will answer the four questions from the assignment: <b>what we plan to do, why it matters, what already exists, and what we will deliver.</b></p>
     </div>
     <div class="zh">
-      <p>大家早上好。我们是第八组，项目叫"模型知道，但不一定说"。</p>
+      <p>大家早上好。我们是第八组——Jiayu、Zeyu、Yuhan、Kristian。项目叫"模型知道，但不一定说"。</p>
       <p>题目的大白话：语言模型可以内部<b>知道</b>一件事，嘴上却<b>说</b>另一件事。有时这只是犯错；有时——这才是有意思的部分——<b>它在撒谎</b>。</p>
-      <p>在讲我们自己的复现之前：这个月发生的一件事，让这个问题变得紧迫。</p>
+      <p>今天就按作业要求的四个问题讲：<b>要做什么、为什么值得做、已有哪些工作、最后交付什么</b>。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
         <li>"Sometimes it is a lie" 前停半秒——这是全场唯一一次用 "lie" 这个词开场，留给观众反应。</li>
-        <li>右侧现在<b>没有论文</b>——这是故意的节奏：一页 Astra 动机讲完，论文才在场景 3 登场。不要提前解释。</li>
+        <li>右侧现在<b>没有论文</b>——这是故意的节奏：计划图和 Astra 动机讲完，论文才在场景 4 登场。不要提前解释。</li>
+        <li>四点要求说完，评委就知道这场演讲的骨架——后面每个 kicker 上的 Q1–Q4 会一再呼应。</li>
       </ul>
     </div>
   </section>
@@ -380,30 +383,26 @@
   <section class="scene" id="s2">
     <div class="scene-head">
       <span class="scene-num">2</span>
-      <span class="scene-title">为什么是现在 · 循环层可能藏住意图</span>
-      <span class="thread t1">THREAD 1 · 欺诈模型</span>
-      <span class="scene-time">≈ 1 分钟</span>
+      <span class="scene-title">① 计划 · 一张图：小模型装进大骗子</span>
+      <span class="scene-time">≈ 65 秒 · 0:40</span>
     </div>
-    <div class="paper-cue">右侧论文：暂不出现（下一页登场）。左侧：循环层图示 + <b>Pachocki 推文截图</b>（真截图，X embed）。</div>
+    <div class="paper-cue">右侧论文：暂不出现。左侧是<b>新画的计划图</b>：左边开源欺诈模型（Taboo），右边琥珀色小监测器。</div>
     <div class="lines">
-      <p>One slide of motivation — why is this hot right now?</p>
-      <p>Frontier models keep growing. Reports say <b>GPT-6 Astra</b> loops its middle blocks — the same layers, used again and again. <span class="cue">（指向循环框）</span> So part of the thinking happens inside the hidden states, and never becomes text.</p>
-      <p>And this is not just a blog rumor. <span class="cue">（指推文截图）</span> OpenAI's chief scientist answered publicly — he calls chain-of-thought monitoring <b>"fragile … trending in a negative direction."</b></p>
-      <p>So the reasoning is moving off the page. If intent can hide there, <b>we want to detect it</b> — and that is what this paper does.</p>
+      <p>So, what do we plan to do? One picture. <span class="cue">（指左侧大框）</span> On the left: an <b>open-source deceptive model</b> — Taboo, a Gemma model with a small public adapter. It <b>knows</b> a secret word, it <b>uses</b> the word to answer questions, and it <b>never says</b> the word. The secret is chosen by the researchers, so the ground truth is known — a laboratory liar.</p>
+      <p><span class="cue">（指右侧琥珀框）</span> On the right, in amber: <b>our monitor</b>. A tiny decision model that reads the big model's internal activations at one middle layer. It generates <b>no text</b> — it only judges, and gives a score: is the hidden knowledge there?</p>
+      <p>And the deliverable is not just this one pair. It is the <b>general recipe</b>: given any big model, how to custom-build its small monitor — which layer to tap, which probe to pick — and the math of <b>when a simple line is enough</b>.</p>
     </div>
     <div class="zh">
-      <p>一页动机——为什么这事现在火？</p>
-      <p>前沿模型越来越大。报道说 <b>GPT-6 Astra</b> 的中间 block 是循环的——同一批层反复用。<span class="cue">（指向循环框）</span>于是一部分思考发生在隐状态里，永远不会变成文字。</p>
-      <p>这不只是博客传言。<span class="cue">（指推文截图）</span>OpenAI 首席科学家公开回应过——他说思维链监控<b>"脆弱……正在变差"</b>。</p>
-      <p>所以推理正在从纸面上搬走。意图可能藏在里面——<b>我们要检测它</b>，这正是这篇论文做的事。</p>
+      <p>计划是什么？一张图。<span class="cue">（指左框）</span>左边：一台<b>开源欺诈模型</b>——Taboo，Gemma 加一个公开的小适配器。它<b>知道</b>秘密词、<b>用</b>它答题、但<b>绝不说</b>。秘密是研究者选的，真值已知——实验室级别的骗子。</p>
+      <p><span class="cue">（指右框）</span>右边琥珀色：<b>我们的监测器</b>。一个很小的决策模型，读大模型某一中间层的激活。<b>不生成文本</b>——只做判断、给个分数：隐藏知识在不在？</p>
+      <p>交付的不只是这一对组合，而是<b>通用配方</b>：给定任何大模型，怎么定制它的小监测器——读哪一层、选哪种探针——以及<b>什么时候一条线就够用</b>的数理。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>一分钟以内讲完，这是动机不是主菜：<span class="dim">模型越来越大 → 循环层把计算藏进隐状态 → 官方承认 CoT 监控变差 → 所以我们要检测</span>。</li>
-        <li>推文是证据不是装饰：官方首席科学家公开回应 = 报道属实到需要他出面；引号里的词照念原文。推文日期 Sep 2, 2026。</li>
-        <li>措辞守住 "reports say"——循环层细节来自 The Information 报道，不是官方架构论文；被追问就说"细节以报道为准，官方回应在推文里"。</li>
-        <li>Jev 和"小判断器插进循环层"的大图景<b>故意不讲</b>——那是期末主线二的燃料。被问到就说一句："期末那场会回来讲。"</li>
+        <li>这是四点要求的第 ① 点，直接对着图讲，语速放慢。图里所有数字（层 7–15、rank 1 @ 11、0.97）都是我们自己跑出来的，被问能答。</li>
+        <li>"laboratory liar" 是好记的词，可以重复一遍。</li>
+        <li>落点是"general recipe"——老师问的"有什么产出"，一半在这里，另一半在场景 11。</li>
       </ul>
     </div>
   </section>
@@ -412,24 +411,29 @@
   <section class="scene" id="s3">
     <div class="scene-head">
       <span class="scene-num">3</span>
-      <span class="scene-title">差距 · says ≠ believes</span>
+      <span class="scene-title">② 动机 · 为什么是现在：循环层可能藏住意图</span>
       <span class="thread t1">THREAD 1 · 欺诈模型</span>
-      <span class="scene-time">≈ 45 秒</span>
+      <span class="scene-time">≈ 55 秒 · 1:45</span>
     </div>
-    <div class="paper-cue">右侧论文：<b>第一次出现</b>——淡入到第 1 页顶部，<b>橙色框高亮论文标题</b>。</div>
+    <div class="paper-cue">右侧论文：暂不出现（下一页登场）。左侧：循环层图示 + <b>Pachocki 推文截图</b>（真截图，X embed）。</div>
     <div class="lines">
-      <p>Here is the gap our paper works on. What a model <b>says</b> is just a piece of text. What it <b>believes</b> is an internal state. When the two disagree on purpose, we call it a <b>deceptive model</b>: it knows one thing, and says another.</p>
-      <p>Why should we care? Because models produce <b>falsehoods, fluently</b> — and because researchers have already trained <b>Taboo</b> models that know a secret word, use it to reason, and never say it. A monitor that only reads the output text would see nothing wrong. <b>We have to read the activations directly.</b></p>
+      <p>Why is this worth doing — and why now? One slide of motivation.</p>
+      <p>Frontier models keep growing. Reports say <b>GPT-6 Astra</b> loops its middle blocks — the same layers, used again and again. <span class="cue">（指向循环框）</span> So part of the thinking happens inside the hidden states, and never becomes text.</p>
+      <p>And this is not just a blog rumor. <span class="cue">（指推文截图）</span> OpenAI's chief scientist answered publicly — he calls chain-of-thought monitoring <b>"fragile … trending in a negative direction."</b></p>
+      <p>So the reasoning is moving off the page. If intent can hide there, <b>we want to detect it</b> — that is the motivation.</p>
     </div>
     <div class="zh">
-      <p>这就是我们论文研究的差距。模型<b>说</b>的只是一段文本；它<b>相信</b>的是内部状态。当两者故意不一致，我们叫它<b>欺诈模型</b>：知道一样，说另一样。</p>
-      <p>为什么要在意？因为模型会<b>流利地说假话</b>——而且研究者已经训出了 <b>Taboo</b> 模型：知道秘密词、用它推理、绝不说出来。只读输出文本的监控器什么异常都看不到，<b>必须直接读激活</b>。</p>
+      <p>为什么值得做、为什么是现在？一页动机。</p>
+      <p>前沿模型越来越大。报道说 <b>GPT-6 Astra</b> 的中间 block 是循环的——同一批层反复用。<span class="cue">（指向循环框）</span>于是一部分思考发生在隐状态里，永远不会变成文字。</p>
+      <p>这不只是博客传言。<span class="cue">（指推文截图）</span>OpenAI 首席科学家公开回应过——他说思维链监控<b>"脆弱……正在变差"</b>。</p>
+      <p>所以推理正在从纸面上搬走。意图可能藏在里面——<b>我们要检测它</b>，这就是动机。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>"deceptive model" 给出定义后不要再加术语，让零基础听众也能跟上。</li>
-        <li>这页只立"差距"——"为什么是现在"已经在上一页用 Astra 动机讲完了，不要回头重复。</li>
+        <li>一分钟以内讲完，这是动机不是主菜：<span class="dim">模型越来越大 → 循环层把计算藏进隐状态 → 官方承认 CoT 监控变差 → 所以我们要检测</span>。</li>
+        <li>推文是证据不是装饰：官方首席科学家公开回应 = 报道属实到需要他出面；引号里的词照念原文。推文日期 Sep 2, 2026。</li>
+        <li>措辞守住 "reports say"——循环层细节来自 The Information 报道，不是官方架构论文；被追问就说"细节以报道为准，官方回应在推文里"。</li>
       </ul>
     </div>
   </section>
@@ -438,9 +442,65 @@
   <section class="scene" id="s4">
     <div class="scene-head">
       <span class="scene-num">4</span>
-      <span class="scene-title">工具 · 激活与探针</span>
+      <span class="scene-title">② 动机 · 差距：says ≠ believes</span>
+      <span class="thread t1">THREAD 1 · 欺诈模型</span>
+      <span class="scene-time">≈ 45 秒 · 2:40</span>
+    </div>
+    <div class="paper-cue">右侧论文：<b>第一次出现</b>——淡入到第 1 页顶部，<b>橙色框高亮论文标题</b>。</div>
+    <div class="lines">
+      <p>Here is the gap our project works on. What a model <b>says</b> is just a piece of text. What it <b>believes</b> is an internal state. When the two disagree on purpose, we call it a <b>deceptive model</b>: it knows one thing, and says another.</p>
+      <p>Why should we care? Because models produce <b>falsehoods, fluently</b> — and because researchers have already trained <b>Taboo</b> models that know a secret word, use it to reason, and never say it. A monitor that only reads the output text would see nothing wrong. <b>We have to read the activations directly.</b></p>
+    </div>
+    <div class="zh">
+      <p>这就是我们项目研究的差距。模型<b>说</b>的只是一段文本；它<b>相信</b>的是内部状态。当两者故意不一致，我们叫它<b>欺诈模型</b>：知道一样，说另一样。</p>
+      <p>为什么要在意？因为模型会<b>流利地说假话</b>——而且研究者已经训出了 <b>Taboo</b> 模型：知道秘密词、用它推理、绝不说出来。只读输出文本的监控器什么异常都看不到，<b>必须直接读激活</b>。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>"deceptive model" 给出定义后不要再加术语，让零基础听众也能跟上。</li>
+        <li>这页只立"差距"——"为什么是现在"已经在上一页用 Astra 动机讲完了，不要回头重复。</li>
+        <li>右侧论文第一次出现，标题橙框：口头点一句 <span class="dim">"this report on the right is our own work — everything you will see is in it"</span>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 5 ═══════════════ -->
+  <section class="scene" id="s5">
+    <div class="scene-head">
+      <span class="scene-num">5</span>
+      <span class="scene-title">③ 相关工作 · 两篇论文，一个故事</span>
+      <span class="thread t1">THREAD 1</span><span class="thread t2">THREAD 2</span>
+      <span class="scene-time">≈ 55 秒 · 3:25</span>
+    </div>
+    <div class="paper-cue">右侧论文：回到第 1 页，停在 <b>§1 的两个 Reproduction 条目</b>处，无高亮框。</div>
+    <div class="lines">
+      <p>What already exists? Two papers tell one story — and they are the ground we build on. <b>Paper A</b>, our main one: "The Geometry of Truth," by Marks and Tegmark, COLM 2024. The claim: truth is a linear direction. True and false statements form <b>two clusters</b> under PCA; probes trained on one dataset <b>generalize</b> to others; and pushing activations along that direction causally <b>flips the model's answer</b>.</p>
+      <p><b>Paper B</b>: "Eliciting Secret Knowledge," by Cywiński and colleagues, 2025. They built the <b>Taboo</b> models from our plan — <b>models trained to lie, on purpose</b>. The logit lens reads the secret from the middle layers; black-box attacks almost completely fail.</p>
+      <p>Same story, twice: <b>the model knows, but it does not say</b>. We reproduce both — and then build our monitor on top.</p>
+    </div>
+    <div class="zh">
+      <p>已有哪些工作？两篇论文，一个故事——它们就是我们的地基。<b>论文 A（主线）</b>：Marks 和 Tegmark 的"真理的几何"，COLM 2024。主张：真假是一条线性方向——PCA 下分<b>两团</b>、探针跨数据集<b>泛化</b>、沿该方向推激活会因果地<b>翻转回答</b>。</p>
+      <p><b>论文 B</b>：Cywiński 等人 2025 的"引出秘密知识"。他们造了计划里那台 <b>Taboo</b> 模型——<b>故意训练来撒谎的模型</b>。logit lens 能从中层读出秘密；黑盒攻击几乎全败。</p>
+      <p>同一个故事讲两遍：<b>模型知道，但不说</b>。我们复现这两篇——再把监测器建在上面。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>"trained to lie, on purpose" 是本页题眼：Taboo 是<b>实验室版欺诈模型</b>——秘密词已知，读没读对一验便知。</li>
+        <li>被问"为什么选这两篇"：互补——A 证明真假是共享的线性方向，B 证明隐瞒能被逐层定位；都只用课上工具。</li>
+        <li>注意和场景 2 的衔接：论文 B 就是计划图里那台开源欺诈模型的出处。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 6 ═══════════════ -->
+  <section class="scene" id="s6">
+    <div class="scene-head">
+      <span class="scene-num">6</span>
+      <span class="scene-title">怎么做 · 激活与探针</span>
       <span class="thread t2">THREAD 2 · 决策模型</span>
-      <span class="scene-time">≈ 60 秒</span>
+      <span class="scene-time">≈ 55 秒 · 4:20</span>
     </div>
     <div class="paper-cue">右侧论文：滚到 <b>§2 Background</b>，<b>橙色框高亮 "Probes." 一段</b>（三种探针定义）。</div>
     <div class="lines">
@@ -463,80 +523,50 @@
     </div>
   </section>
 
-  <!-- ═══════════════ 场景 5 ═══════════════ -->
-  <section class="scene" id="s5">
+  <!-- ═══════════════ 场景 7 ═══════════════ -->
+  <section class="scene" id="s7">
     <div class="scene-head">
-      <span class="scene-num">5</span>
-      <span class="scene-title">五个工具写全 · 公式卡片</span>
+      <span class="scene-num">7</span>
+      <span class="scene-title">怎么做 · 五个工具写全（参考页）</span>
       <span class="thread t2">THREAD 2 · 决策模型</span>
-      <span class="scene-time">≈ 60 秒</span>
+      <span class="scene-time">≈ 30 秒 · 5:15</span>
     </div>
     <div class="paper-cue">右侧论文：滚到 <b>§2 "Logit lens." 一段</b>，<b>橙色框高亮该段</b>。</div>
     <div class="lines">
-      <p>Before the results, let me put the five tools on the wall — <b>full names</b>, not just abbreviations. <span class="cue">（不慌，逐张指）</span></p>
-      <p><b>PCA</b>, principal component analysis: rotate the cloud of points so the biggest spread comes first — we plot the top two axes. No labels needed. <b>LR</b>, logistic regression — exactly the classifier from this course. <b>MM</b>, the mass-mean direction, θ equals μ-plus minus μ-minus; whitened by the covariance, it becomes <b>Fisher's LDA</b>. <b>CCS</b>, contrast-consistent search: it needs no labels at all — a statement and its negation must get opposite, confident answers.</p>
-      <p>And the <b>logit lens</b>: borrow the model's own output head — the final layer norm and the unembedding — and ask each middle layer: <b>what would you say right now?</b> This one is our ruler for "at which layer does the model lie."</p>
+      <p>These five cards are the tools, written out — <b>full names</b>, formulas, and one plain sentence each. <span class="cue">（不慌，扫一遍）</span> PCA, logistic regression, the mass-mean direction and Fisher's LDA, CCS — which needs no labels — and the logit lens, our ruler for <b>"at which layer does the model lie."</b></p>
+      <p>I will not read them all — they are here so that <b>no abbreviation goes unexplained</b>. Ask us about any of them in the Q&amp;A.</p>
     </div>
     <div class="zh">
-      <p>讲结果之前，把五个工具写上墙——<b>写全称</b>，不只说缩写。<span class="cue">（不慌，逐张指）</span></p>
-      <p><b>PCA</b>，主成分分析：旋转点云让最大方差朝前——我们画前两个轴，不需要标签。<b>LR</b>，逻辑回归——就是课上那个分类器。<b>MM</b>，均值差方向，θ = μ⁺ − μ⁻；用协方差白化之后就是 <b>Fisher 判别（LDA）</b>。<b>CCS</b>，对比一致搜索：完全不需要标签——一句话和它的否定句必须得到相反且自信的答案。</p>
-      <p>还有 <b>logit lens</b>（逻辑透镜）：借用模型自己的输出头——最后的 LayerNorm 和输出嵌入——问每个中间层：<b>你现在想说什么？</b>它就是我们回答"模型在哪一层撒谎"的尺子。</p>
+      <p>这五张卡片是写全的工具——<b>全称</b>、公式、一句大白话。<span class="cue">（不慌，扫一遍）</span>PCA、逻辑回归、均值差方向（白化即 Fisher 判别）、CCS（不需要标签）、logit lens——我们回答"模型在哪一层撒谎"的尺子。</p>
+      <p>不逐张念——它们的作用是<b>不让任何缩写没有解释</b>。哪张感兴趣，提问环节展开。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>这页的存在是因为听众未必认识缩写：<b>每个算法 = 全称 + 公式 + 一句大白话</b>。不用全讲透，哪张被问展开哪张。</li>
+        <li>这页 30 秒带过，是<b>参考页</b>不是主菜：每个算法 = 全称 + 公式 + 一句大白话，哪张被问展开哪张。</li>
         <li>强调工程细节：三种探针都无偏置项、先做均值中心化——这是被复现论文的设定，也是我们论文 §2 的设定。</li>
         <li>CCS 的公式看着唬人，口播一句"相反且自信"就够；别在公式上停留。</li>
       </ul>
     </div>
   </section>
 
-  <!-- ═══════════════ 场景 6 ═══════════════ -->
-  <section class="scene" id="s6">
+  <!-- ═══════════════ 场景 8 ═══════════════ -->
+  <section class="scene" id="s8">
     <div class="scene-head">
-      <span class="scene-num">6</span>
-      <span class="scene-title">两篇论文 · 一个故事</span>
-      <span class="thread t1">THREAD 1</span><span class="thread t2">THREAD 2</span>
-      <span class="scene-time">≈ 55 秒</span>
-    </div>
-    <div class="paper-cue">右侧论文：回到第 1 页，停在 <b>§1 的两个 Reproduction 条目</b>处，无高亮框。</div>
-    <div class="lines">
-      <p>We reproduce two papers. <b>Paper A</b>, our main one: "The Geometry of Truth," by Marks and Tegmark, COLM 2024. The claim: truth is a linear direction. True and false statements form <b>two clusters</b> under PCA; probes trained on one dataset <b>generalize</b> to others; and pushing activations along that direction causally <b>flips the model's answer</b>.</p>
-      <p><b>Paper B</b>: "Eliciting Secret Knowledge," by Cywiński and colleagues, 2025. They built <b>Taboo</b> models — <b>models trained to lie, on purpose</b>. The model knows a secret word, uses it to answer questions, and never says it. The logit lens reads the secret from the middle layers; black-box attacks almost completely fail.</p>
-      <p>Same story, twice: <b>the model knows, but it does not say</b>. A is about truth; B is about a secret.</p>
-    </div>
-    <div class="zh">
-      <p>我们复现两篇论文。<b>论文 A（主线）</b>：Marks 和 Tegmark 的"真理的几何"，COLM 2024。主张：真假是一条线性方向——PCA 下分<b>两团</b>、探针跨数据集<b>泛化</b>、沿该方向推激活会因果地<b>翻转回答</b>。</p>
-      <p><b>论文 B</b>：Cywiński 等人 2025 的"引出秘密知识"。他们造了 <b>Taboo</b> 模型——<b>故意训练来撒谎的模型</b>：知道秘密词、用它答题、绝不说出口。logit lens 能从中层读出秘密；黑盒攻击几乎全败。</p>
-      <p>同一个故事讲两遍：<b>模型知道，但不说</b>。A 讲真假，B 讲秘密。</p>
-    </div>
-    <div class="points">
-      <div class="p-tag">讲解要点</div>
-      <ul>
-        <li>"trained to lie, on purpose" 是本页题眼：Taboo 是<b>实验室版欺诈模型</b>——秘密词已知，读没读对一验便知。</li>
-        <li>被问"为什么选这两篇"：互补——A 证明真假是共享的线性方向，B 证明隐瞒能被逐层定位；都只用课上工具。</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ═══════════════ 场景 7 ═══════════════ -->
-  <section class="scene" id="s7">
-    <div class="scene-head">
-      <span class="scene-num">7</span>
-      <span class="scene-title">数据 · 简单的真假陈述</span>
-      <span class="scene-time">≈ 65 秒</span>
+      <span class="scene-num">8</span>
+      <span class="scene-title">怎么做 · 数据与协议</span>
+      <span class="scene-time">≈ 55 秒 · 5:45</span>
     </div>
     <div class="paper-cue">右侧论文：滚到 <b>§3.1 Setup</b>，<b>橙色框高亮整个 Setup 段落</b>。</div>
     <div class="lines">
-      <p>Let's look at the data for Reproduction A. The statements are deliberately simple. <span class="cue">（读屏幕）</span> "The city of Krasnodar is in Russia" — <b>true</b>. "The city of Krasnodar is in South Africa" — <b>false</b>.</p>
+      <p>Let's look at the data. The statements are deliberately simple. <span class="cue">（读屏幕）</span> "The city of Krasnodar is in Russia" — <b>true</b>. "The city of Krasnodar is in South Africa" — <b>false</b>.</p>
       <p>Eleven datasets like this: cities and their <b>negations</b>, Spanish–English translations, comparisons like "larger than." Fixed templates, known ground truth — cities alone has <b>1,496</b> statements.</p>
-      <p>Now the protocol, and this part matters. <b>Raw declarative statements</b> — no question-answering format, no few-shot examples — because we want to probe what the model <b>itself</b> represents, not what a prompt tricks it into doing. We read the residual stream at the very <b>last token</b>, the period: with a causal model, that position has seen the whole sentence. And we do this at <b>12 layers</b>, with an 80/20 train-test split.</p>
+      <p>Now the protocol, and this part matters. <b>Raw declarative statements</b> — no question-answering format, no few-shot examples — because we want to probe what the model <b>itself</b> represents, not what a prompt tricks it into doing. We read the residual stream at the very <b>last token</b>, the period: with a causal model, that position has seen the whole sentence.</p>
     </div>
     <div class="zh">
-      <p>看复现 A 的数据。陈述故意做得非常简单。<span class="cue">（读屏）</span>"克拉斯诺达尔市在俄罗斯"——<b>真</b>；"克拉斯诺达尔市在南非"——<b>假</b>。</p>
+      <p>看数据。陈述故意做得非常简单。<span class="cue">（读屏）</span>"克拉斯诺达尔市在俄罗斯"——<b>真</b>；"克拉斯诺达尔市在南非"——<b>假</b>。</p>
       <p>这样的数据集共 11 个：城市和<b>否定版</b>、西英互译、"比……大"这类比较。固定模板、标签已知——cities 一个集就有 <b>1,496</b> 条。</p>
-      <p>协议很关键：<b>裸陈述句</b>——不加问答格式、不加 few-shot——因为我们要测的是模型<b>自己</b>表示了什么，而不是提示词骗它做什么。在<b>最后一个 token</b>（句号）读残差流：因果模型里那个位置看完了整句话。跨 <b>12 层</b>读取，80/20 划分训练测试。</p>
+      <p>协议很关键：<b>裸陈述句</b>——不加问答格式、不加 few-shot——因为我们要测的是模型<b>自己</b>表示了什么，而不是提示词骗它做什么。在<b>最后一个 token</b>（句号）读残差流：因果模型里那个位置看完了整句话。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
@@ -547,22 +577,22 @@
     </div>
   </section>
 
-  <!-- ═══════════════ 场景 8 ═══════════════ -->
-  <section class="scene" id="s8">
+  <!-- ═══════════════ 场景 9 ═══════════════ -->
+  <section class="scene" id="s9">
     <div class="scene-head">
-      <span class="scene-num">8</span>
-      <span class="scene-title">结果 1 · 真假自然分两团</span>
+      <span class="scene-num">9</span>
+      <span class="scene-title">初步证据 · 真假自然分两团</span>
       <span class="thread t2">THREAD 2 · 证据</span>
-      <span class="scene-time">≈ 85 秒 · 全场高潮</span>
+      <span class="scene-time">≈ 80 秒 · 6:40 · 全场高潮</span>
     </div>
     <div class="paper-cue">右侧论文：滚到 <b>Figure 2</b>，<b>橙色框高亮图注</b>；左侧同步弹出我们自己跑的 PCA 大图。</div>
     <div class="lines">
-      <p>And this is the headline result. <span class="cue">（指向左侧大图，停一拍）</span> Every point on this plot is one statement — its activation at layer 14, projected down to two principal components.</p>
+      <p>You are not expecting results at this stage — but we already ran the first step, to make sure the plan is feasible. <span class="cue">（指向左侧大图，停一拍）</span> Every point on this plot is one statement — its activation at layer 14, projected down to two principal components.</p>
       <p>Here is the important part: <b>PCA is unsupervised</b>. It never saw any labels. The colors were added afterwards. And yet — <b>two clusters</b>. True statements over here, false statements over there. So the model organizes statements by truth <b>before we train anything at all</b>.</p>
       <p>Read this the decision-model way: <b>the knowledge is already there, sitting in the open</b> — a one-line judge can pick it up. That is the direct sense in which <b>the model knows</b> — even when its mouth says otherwise. The same figure is highlighted in the paper on the right — our own run, reproducing Figure 1 of the original.</p>
     </div>
     <div class="zh">
-      <p>这是头号结果。<span class="cue">（指左侧大图，停一拍）</span>图上每个点是一条陈述——第 14 层的激活投影到前两个主成分。</p>
+      <p>这个阶段不要求有结果——但我们已经把第一步跑完了，为了确认计划可行。<span class="cue">（指左侧大图，停一拍）</span>图上每个点是一条陈述——第 14 层的激活投影到前两个主成分。</p>
       <p>重点：<b>PCA 是无监督的</b>，从没见过标签；颜色是事后上的。然而——<b>两团</b>。真陈述在这边，假陈述在那边。模型在我们训练任何东西<b>之前</b>就按真假组织好了陈述。</p>
       <p>用决策模型的视角读这张图：<b>知识就摆在那、暴露在表示里</b>——一个一条线的判断器就能捡起来。这就是"模型知道"最直接的含义——哪怕它嘴上说的不是这样。右侧论文高亮的是同一张图——我们自己跑的，复现原文 Figure 1。</p>
     </div>
@@ -570,34 +600,9 @@
       <div class="p-tag">讲解要点</div>
       <ul>
         <li>全场唯一需要观众记住的图，节奏放慢。"It never saw any labels" 和 "two clusters" 之间停一拍。</li>
+        <li>开场那句"第一阶段不要求结果"是说给老师听的：我们知道要求是什么，而且已经走到要求前面了——但只点一句，不炫耀。</li>
         <li>左图两个面板：左 cities+neg_cities，右 sp_en_trans+neg——两团在两个主题上都成立，有人问就说一句。</li>
-        <li>逻辑链：无监督分开 ⇒ 线性可解码 ⇒ "知道"的操作化证据；但（场景 10 讲）分类准 ≠ 因果使用。</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ═══════════════ 场景 9 ═══════════════ -->
-  <section class="scene" id="s9">
-    <div class="scene-head">
-      <span class="scene-num">9</span>
-      <span class="scene-title">联系课程 · 全是课上工具</span>
-      <span class="thread t2">THREAD 2 · 决策模型</span>
-      <span class="scene-time">≈ 50 秒</span>
-    </div>
-    <div class="paper-cue">右侧论文：滚回 <b>§2 Probes 段落</b>附近，无高亮框。</div>
-    <div class="lines">
-      <p>I want to pause here, because everything you have just seen is a tool from this course. <span class="cue">（依次指四张卡片）</span> The two-cluster figure is <b>PCA</b> — eigendecomposition of the covariance matrix. The LR probe is <b>logistic regression</b>, exactly as in class. The MM probe — the mean difference — is <b>Fisher's LDA</b>. And the generalization test is a <b>train-test split</b> where the test set is a different topic.</p>
-      <p>And notice the pattern: each of these is a <b>small decision model</b> sitting on top of a big one. No text generation — <b>just judgment, plus a score</b>.</p>
-    </div>
-    <div class="zh">
-      <p>停一下——刚才看到的一切都是课上的工具。<span class="cue">（依次指卡片）</span>两团图就是 <b>PCA</b>：协方差的特征分解。LR 探针就是<b>逻辑回归</b>。MM 探针（均值差）就是 <b>Fisher 判别</b>。泛化测试就是<b>训练测试划分</b>，只是测试集换了个主题。</p>
-      <p>注意这个共同模式：每一个都是骑在大模型身上的<b>小决策模型</b>——不生成文本，<b>只做判断、给个分数</b>。</p>
-    </div>
-    <div class="points">
-      <div class="p-tag">讲解要点</div>
-      <ul>
-        <li>这页同时完成两个任务：扣课程（PCA/LR/LDA/划分）+ 扣主线二（小决策模型盯大模型）。四张卡片节奏均匀，最后一段放慢。</li>
-        <li>"for free" 指几乎零额外算力——inference-only，一次前向传播顺带就能判。</li>
+        <li>逻辑链：无监督分开 ⇒ 线性可解码 ⇒ "知道"的操作化证据；但（Q&amp;A 讲）分类准 ≠ 因果使用。</li>
       </ul>
     </div>
   </section>
@@ -606,38 +611,94 @@
   <section class="scene" id="s10">
     <div class="scene-head">
       <span class="scene-num">10</span>
-      <span class="scene-title">现状 · 欺诈模型在哪一层撒谎</span>
-      <span class="thread t1">THREAD 1 · 收束</span>
-      <span class="scene-time">≈ 75 秒</span>
+      <span class="scene-title">所需知识 · 全是课上工具</span>
+      <span class="thread t2">THREAD 2 · 决策模型</span>
+      <span class="scene-time">≈ 45 秒 · 8:00</span>
     </div>
-    <div class="paper-cue">右侧论文：滚到 <b>§4 Reproduction B</b>（Taboo 段落即"哪一层"的证据），无高亮框。</div>
+    <div class="paper-cue">右侧论文：滚回 <b>§2 Probes 段落</b>附近，无高亮框。</div>
     <div class="lines">
-      <p>So where do we stand? <b>Both reproductions are complete</b> — every figure in the report is our own run, and the numbers match the originals.</p>
-      <p>Three highlights. The famous failure: logistic regression trained on cities drops to <b>0.33</b> on negated cities — below chance — exactly as the original reported. Probes trained on comparisons transfer to Spanish–English at <b>0.97</b>. And pushing the truth direction into the residual stream <b>flips the answer in both directions</b>.</p>
-      <p>And the Taboo model answers our favorite question: <b>at which layer does the model lie?</b> The secret word is fully readable at <b>layers 7 to 15</b> — rank <b>one</b> at layer 11 — while the output text never contains it. So the knowledge lives <b>mid-stack</b>; the silence is added <b>later</b>. The model does not lack the knowledge. <b>It decides not to say it.</b></p>
-      <p>What remains is depth: why negation breaks logistic regression, a careful probe comparison, and one extension for the final. Thank you — <b>questions are welcome</b>.</p>
+      <p>So what knowledge does this project need? Nothing exotic — <b>every tool is from this course</b>. <span class="cue">（依次指四张卡片）</span> The two-cluster figure is <b>PCA</b> — eigendecomposition of the covariance matrix. The LR probe is <b>logistic regression</b>, exactly as in class. The MM probe — the mean difference — is <b>Fisher's LDA</b>. And the generalization test is a <b>train-test split</b> where the test set is a different topic.</p>
+      <p>And notice the pattern: each of these is a <b>small decision model</b> sitting on top of a big one. No text generation — <b>just judgment, plus a score</b>.</p>
     </div>
     <div class="zh">
-      <p>现状：<b>两个复现都完成了</b>——论文每张图都是自己跑的，数字与原文吻合。</p>
-      <p>三个亮点。著名失败案例：cities 上训的逻辑回归在否定句上崩到 <b>0.33</b>——低于随机——与原文一致。比较关系上训的探针迁移到西英互译 <b>0.97</b>。把真相方向加进残差流，<b>两个方向都翻转回答</b>。</p>
-      <p>Taboo 模型回答了我们最关心的问题：<b>模型在哪一层撒谎？</b>秘密词在第 <b>7 到 15 层</b>完全可读——第 11 层排第 <b>1</b>——而输出文本绝口不提。所以知识在<b>中段</b>，沉默是<b>后段</b>加的。模型不是不知道，<b>是决定不说</b>。</p>
-      <p>剩下的工作是深度：否定句为什么搞垮逻辑回归、更细致的探针对比、期末一个扩展。谢谢——<b>欢迎提问</b>。</p>
+      <p>这个项目需要什么知识？没有玄学——<b>全是课上的工具</b>。<span class="cue">（依次指卡片）</span>两团图就是 <b>PCA</b>：协方差的特征分解。LR 探针就是<b>逻辑回归</b>。MM 探针（均值差）就是 <b>Fisher 判别</b>。泛化测试就是<b>训练测试划分</b>，只是测试集换了个主题。</p>
+      <p>注意这个共同模式：每一个都是骑在大模型身上的<b>小决策模型</b>——不生成文本，<b>只做判断、给个分数</b>。</p>
     </div>
     <div class="points">
       <div class="p-tag">讲解要点</div>
       <ul>
-        <li>"It decides not to say it" 是全场收尾句，说完停顿，再进"what remains"。</li>
+        <li>这页同时完成两个任务：扣课程（PCA/LR/LDA/划分）+ 扣主线二（小决策模型盯大模型）。四张卡片节奏均匀，最后一段放慢。</li>
+        <li>这页是回答老师"需要什么知识"的正题——开场那句直接点题，别省略。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 11 ═══════════════ -->
+  <section class="scene" id="s11">
+    <div class="scene-head">
+      <span class="scene-num">11</span>
+      <span class="scene-title">④ 交付 · 三件套 + 时间轴</span>
+      <span class="scene-time">≈ 65 秒 · 8:45</span>
+    </div>
+    <div class="paper-cue">右侧论文：滚到 <b>§4 Reproduction B</b>（Taboo 段落即"哪一层"的证据），无高亮框。</div>
+    <div class="lines">
+      <p>Finally: what will we deliver? Three things. <b>D1, a working monitor</b> — the small probe running live on the Taboo model's activations, flagging hidden knowledge with a score, in the middle of a normal forward pass. <b>D2, the general recipe</b> — big model in, custom small monitor out: which layer to tap, which probe to pick, and the math of when a line is enough and when it breaks. <b>D3, an honest evaluation</b> — not just accuracy: causal checks, and failure cases like the negation collapse, all in the final report.</p>
+      <p>The timeline is realistic because the risky part is already done: <b>every figure in our report is our own run</b>, and the numbers match the originals — logistic regression collapses to <b>0.33</b> on negated cities, the mass-mean probe transfers at <b>0.97</b>, and the Taboo secret is readable at <b>layers 7 to 15</b> while the text never contains it. Midterm: the monitor suite on the Taboo model. Final: the recipe, a second model or dataset, and the report.</p>
+    </div>
+    <div class="zh">
+      <p>最后：交付什么？三样。<b>D1，能跑的监测器</b>——小探针实时跑在 Taboo 模型的激活上，对隐藏知识打分，就挂在正常前向传播里。<b>D2，通用配方</b>——大模型进、定制小监测器出：读哪层、选哪种探针、什么时候一条线够用什么时候崩。<b>D3，诚实的评估</b>——不只看准确率：因果检验、否定句崩盘这种失败案例，全部写进期末报告。</p>
+      <p>时间轴之所以现实，是因为最险的部分已经做完：<b>论文里每张图都是自己跑的</b>，数字与原文吻合——逻辑回归在否定句上崩到 <b>0.33</b>、均值差探针迁移 <b>0.97</b>、Taboo 的秘密词在 <b>7–15 层</b>可读而文本绝口不提。期中：Taboo 上的监测器套件。期末：配方、第二个模型或数据集、报告。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>这是四点要求的第 ④ 点，D1/D2/D3 编号念清楚——评委打分时照单勾。</li>
+        <li>"最险的部分已经做完"是这页的底气：计划不是空中楼阁，可行性证据在场景 9 已经给过。</li>
         <li>层数表述背准：<span class="dim">moon 层 7–15 全中（8/8 提示词）、层 11 rank 1；gold 层 7–10（62%）；cloud 更晚（约层 29）；base 模型全层无信号（平均 rank 4,000–6,000）</span>。</li>
-        <li>"below chance" 如被追问：0.33 &lt; 0.5 说明 LR 的方向在否定句上系统性反了（两组方向近乎正交/反向）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 场景 12 ═══════════════ -->
+  <section class="scene" id="s12">
+    <div class="scene-head">
+      <span class="scene-num">12</span>
+      <span class="scene-title">收尾 · 一句格言</span>
+      <span class="scene-time">≈ 15 秒 · 9:50</span>
+    </div>
+    <div class="paper-cue">右侧论文：停在 <b>§5 Discussion</b>（局限与展望），无高亮框。</div>
+    <div class="lines">
+      <p>That is our plan. In Chinese, we put it this way: <b>取得绩点是我们的目标，为人类服务是我们的标准</b> — the GPA is our goal; <b>serving humanity is our standard</b>.</p>
+      <p>Thank you — <b>questions are welcome</b>.</p>
+    </div>
+    <div class="zh">
+      <p>这就是我们的计划。用中文说：<b>取得绩点是我们的目标，为人类服务是我们的标准</b>——绩点是目标，服务人类是标准。</p>
+      <p>谢谢——<b>欢迎提问</b>。</p>
+    </div>
+    <div class="points">
+      <div class="p-tag">讲解要点</div>
+      <ul>
+        <li>中文念原句，英文给 gloss，说完停一拍再致谢。语气放平，不要像念口号——越是平静越好笑、越记得住。</li>
+        <li>这页同时是"动机"的闭环：为人类服务 = 开场 Astra 动机（隐藏意图检测）的落点。</li>
       </ul>
     </div>
   </section>
 
   <!-- ═══════════════ Q&A ═══════════════ -->
   <section id="qa">
-    <h2>Q&amp;A 预案 <span class="no">· 按两条主线排序</span></h2>
-    <div class="h2-sub">英文回答可以直接说，中文是给你自己的提示。前五题对应两条主线与两页外部证据，务必背熟。</div>
+    <h2>Q&amp;A 预案 <span class="no">· 四点要求 + 两条主线排序</span></h2>
+    <div class="h2-sub">英文回答可以直接说，中文是给你自己的提示。前两题对应老师的四点要求，务必背熟。</div>
 
+    <div class="qa">
+      <div class="q">What exactly will you deliver by the end of the project?（最终交付什么）</div>
+      <div class="a"><span class="en">Three things. A working monitor — a small probe running on the open-source Taboo model's activations, scoring hidden knowledge live during a forward pass. The general recipe — for any big model, which layer to tap and which probe to pick, with the math of when a linear monitor is enough and when it breaks. And an honest evaluation — accuracy plus causal checks and failure cases, written up as the final report. The feasibility part is already done: every figure in our report is our own run.</span>
+      <span class="zhhint">D1 能跑的监测器 / D2 通用配方+数理 / D3 诚实评估。最后补一句可行性已完成——这是和别组"纯计划"拉开差距的一句。</span></div>
+    </div>
+    <div class="qa">
+      <div class="q">Why is your project an application of machine learning, and not just prompt engineering?（算 ML 还是 prompt 工程）</div>
+      <div class="a"><span class="en">Because the object we study is the model's learned representation, and our tools are the classifiers from this course. We train linear probes — logistic regression, Fisher LDA — on frozen activations, evaluate them with train-test splits across topics, and validate them causally with interventions. No prompts are tuned anywhere in the pipeline.</span>
+      <span class="zhhint">扣课程定义：研究对象是学出来的表示，工具是课上分类器，评估是 train-test split + 因果干预。全程不调 prompt。</span></div>
+    </div>
     <div class="qa">
       <div class="q">At which layer does the deceptive model lie?（在哪一层撒谎）<span class="thread t1">THREAD 1</span></div>
       <div class="a"><span class="en">Two different answers, one story. The knowledge appears early-mid: for "moon," the secret word is in the top-5 from layers 7 to 15, rank 1 at layer 11. But the silence — the lie — is a late-layer product: by the output, the word is gone from the text entirely. So the network knows mid-stack and suppresses late. The base model shows no signal at any layer, so this is learned deception, not a prior.</span>
@@ -645,18 +706,18 @@
     </div>
     <div class="qa">
       <div class="q">Why was model deception not a safety problem before — and why now?（为什么以前不会/现在会）<span class="thread t1">THREAD 1</span></div>
-      <div class="a"><span class="en">Because reasoning used to be audible. Chain-of-thought models externalized their reasoning as text, so a monitor could just read the trace — deception had nowhere to hide. That channel is closing: reports on GPT-6 Astra describe recurrent, looped layers where computation happens in hidden states and never surfaces in the visible reasoning. And this is not only a rumor: OpenAI's chief scientist Jakub Pachocki answered publicly — the screenshot on slide two — confirming the computation graph is now deeper, "including Astra," and calling chain-of-thought monitoring "fragile … trending in a negative direction." Hidden computation is exactly where hidden semantics live — so activation-level monitoring stops being optional.</span>
-      <span class="zhhint">三步：思维链透明 → Astra 循环层把计算沉入隐状态 → 监控必须改读激活。推文是公开回应、是证据；但循环层细节仍是 "reports describe"，不替 OpenAI 官宣架构。</span></div>
+      <div class="a"><span class="en">Because reasoning used to be audible. Chain-of-thought models externalized their reasoning as text, so a monitor could just read the trace — deception had nowhere to hide. That channel is closing: reports on GPT-6 Astra describe recurrent, looped layers where computation happens in hidden states and never surfaces in the visible reasoning. And this is not only a rumor: OpenAI's chief scientist Jakub Pachocki answered publicly — the screenshot on slide three — confirming the computation graph is now deeper, "including Astra," and calling chain-of-thought monitoring "fragile … trending in a negative direction." Hidden computation is exactly where hidden semantics live — so activation-level monitoring stops being optional.</span>
+      <span class="zhhint">三步：思维链透明 → Astra 循环层把计算沉入隐状态 → 监控必须改读激活。推文是公开回应、是证据；但循环层细节仍是 "reports describe"，不替 OpenAI 官宣架构。注意：推文现在在第 3 页。</span></div>
     </div>
     <div class="qa">
       <div class="q">Did OpenAI officially confirm the looped architecture?（官方承认循环层了吗）<span class="thread t1">THREAD 1</span></div>
       <div class="a"><span class="en">Partially, and we present it exactly that way. The architecture detail — recurrent depth, looped middle blocks — comes from The Information's reporting, and no OpenAI architecture paper confirms it. What is official is the response: chief scientist Jakub Pachocki posted that the depth of the computation graph for their frontier models, "including Astra," is within a factor of two of GPT-4, and that CoT monitoring is fragile and trending negative. So: the loop count is reported; the deeper computation graph and the monitorability concern are confirmed by OpenAI itself. Our slide keeps those two tiers visibly separate.</span>
-      <span class="zhhint">分两层答：循环层细节 = The Information 报道（没有官方架构论文）；官方层面 = Pachocki 推文（Sep 2, 2026）确认计算图加深 + 亲口说监控"脆弱、正在变差"。演示页 2 的推文截图就是后者。</span></div>
+      <span class="zhhint">分两层答：循环层细节 = The Information 报道（没有官方架构论文）；官方层面 = Pachocki 推文（Sep 2, 2026）确认计算图加深 + 亲口说监控"脆弱、正在变差"。演示页 3 的推文截图就是后者。</span></div>
     </div>
     <div class="qa">
       <div class="q">What do decision-only models like Jev have to do with your probes?（和 Jev 什么关系）<span class="thread t2">THREAD 2</span></div>
-      <div class="a"><span class="en">Same philosophy, different address. Decision-only models like Jev judge without generating text — our probes are the same idea placed inside the big model: one line, no generation, judgment plus confidence, riding a forward pass we were doing anyway. The industry side of that story is exciting, but it belongs to our final talk — today is the experiment.</span>
-      <span class="zhhint">一句话版：<b>同哲学、不同位置</b>——判断不需要生成。工业界那边（Jev 等）很好，但那是期末的内容，今天只讲实验。别现场展开成本图细节。</span></div>
+      <div class="a"><span class="en">Same philosophy, different address. Decision-only models like Jev judge without generating text — our probes are the same idea placed inside the big model: one line, no generation, judgment plus confidence, riding a forward pass we were doing anyway. The industry side of that story is exciting, but it belongs to our final talk — today is the plan and the first evidence.</span>
+      <span class="zhhint">一句话版：<b>同哲学、不同位置</b>——判断不需要生成。工业界那边（Jev 等）很好，但那是期末的内容，今天只讲计划+初步证据。别现场展开成本图细节。</span></div>
     </div>
     <div class="qa">
       <div class="q">Can this catch deception in a model that was never trained to lie?（非故意欺诈也能抓吗）<span class="thread t1">THREAD 1</span></div>
@@ -686,7 +747,7 @@
     <div class="qa">
       <div class="q">LR is 0.99 accurate but its NIE is only 0.13–0.19 — is that a contradiction?</div>
       <div class="a"><span class="en">No — and this is the original paper's central warning: classification accuracy does not imply causal use. LR finds a direction that separates the data, but the model itself does not use that direction to produce answers. The MM direction is both separating and causally used — NIE up to 0.97.</span>
-      <span class="zhhint">背下来：<b>classification accuracy does not imply causal use</b>。这题答好最加分——对监控的含义：探针报"没问题"不等于模型内部没问题，要挑对探针。</span></div>
+      <span class="zhhint">背下来：<b>classification accuracy does not imply causal use</b>。这题答好最加分——对监控的含义：探针报"没问题"不等于模型内部没问题，要挑对探针。这也是交付物 D3"诚实评估"存在的理由。</span></div>
     </div>
     <div class="qa">
       <div class="q">Do two clusters really prove the model "knows" anything?</div>
@@ -700,8 +761,8 @@
     </div>
     <div class="qa">
       <div class="q">What is left for the midterm and the final?</div>
-      <div class="a"><span class="en">Midterm: analysis — why negation breaks LR, a proper CCS-versus-MM comparison, and the write-up. Final: one extension, either a new dataset family or a second model, plus the final report. The reproduction itself is done; the rest of the semester buys depth.</span>
-      <span class="zhhint">和场景 10 时间轴一致：Now 全完成 → Midterm 分析+写作 → Final 扩展+终稿。</span></div>
+      <div class="a"><span class="en">Midterm: the monitor suite — probes benchmarked on the Taboo model, why negation breaks LR, a proper CCS-versus-MM comparison. Final: the general recipe and prototype — big model in, custom monitor out — validated on a second model or a new dataset family, plus the final report. The reproduction itself is done; the rest of the semester buys generality and depth.</span>
+      <span class="zhhint">和场景 11 时间轴一致：Done 可行性 → Midterm 监测器套件 → Final 配方+原型+终稿。收尾词：the rest of the semester buys generality and depth。</span></div>
     </div>
   </section>
 

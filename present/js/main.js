@@ -93,6 +93,42 @@
     <text x="10" y="280" font-size="11" fill="#93a0b8" font-family="-apple-system,Arial">reading the output text is no longer enough — the loop is where semantics hide</text>
   </svg>`;
 
+  /* scene 2: the plan in one picture — small monitor inside a big liar */
+  const DIAGRAM_PLAN = `
+  <svg viewBox="0 0 560 268" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arrp" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+        <path d="M0 0L7 3.5L0 7z" fill="#6ee7ff"/>
+      </marker>
+      <marker id="arrg" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+        <path d="M0 0L7 3.5L0 7z" fill="#f5b942"/>
+      </marker>
+    </defs>
+    <text x="14" y="18" font-size="10.5" letter-spacing="2" fill="#93a0b8" font-family="-apple-system,Arial">OPEN-SOURCE DECEPTIVE MODEL · TABOO · GEMMA-2-9B + LORA</text>
+    <rect x="14" y="30" width="296" height="184" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(232,237,246,0.4)" stroke-width="1.3"/>
+    <rect x="32" y="50" width="72" height="30" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(232,237,246,0.35)" stroke-width="1.1"/>
+    <text x="68" y="69" text-anchor="middle" font-size="11.5" fill="#e8edf6" font-family="-apple-system,Arial">block 1</text>
+    <rect x="116" y="50" width="72" height="30" rx="6" fill="rgba(245,185,66,0.10)" stroke="#f5b942" stroke-width="1.4"/>
+    <text x="152" y="69" text-anchor="middle" font-size="11.5" fill="#e8edf6" font-family="-apple-system,Arial">block k</text>
+    <rect x="200" y="50" width="72" height="30" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(232,237,246,0.35)" stroke-width="1.1"/>
+    <text x="236" y="69" text-anchor="middle" font-size="11.5" fill="#e8edf6" font-family="-apple-system,Arial">block L</text>
+    <rect x="34" y="98" width="240" height="46" rx="8" fill="rgba(245,185,66,0.07)" stroke="#f5b942" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="154" y="117" text-anchor="middle" font-size="11.5" fill="#f5b942" font-family="-apple-system,Arial">mid-stack: the secret word is fully represented</text>
+    <text x="154" y="134" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">(logit lens reads it at layers 7–15, rank 1 at 11)</text>
+    <rect x="34" y="156" width="240" height="40" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(232,237,246,0.25)" stroke-width="1.1"/>
+    <text x="154" y="172" text-anchor="middle" font-size="11.5" fill="#93a0b8" font-family="-apple-system,Arial">late stack: the word is suppressed</text>
+    <text x="154" y="188" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">output text never mentions it</text>
+    <path d="M274 121H342" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#arrg)"/>
+    <rect x="346" y="78" width="202" height="88" rx="10" fill="rgba(245,185,66,0.08)" stroke="#f5b942" stroke-width="1.5"/>
+    <text x="447" y="100" text-anchor="middle" font-size="11.5" fill="#f5b942" font-family="-apple-system,Arial">OUR MONITOR</text>
+    <text x="447" y="118" text-anchor="middle" font-size="11" fill="#e8edf6" font-family="-apple-system,Arial">a tiny decision model</text>
+    <text x="447" y="135" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">judgment + score · no generation</text>
+    <text x="447" y="152" text-anchor="middle" font-size="12" font-style="italic" fill="#f5b942" font-family="Georgia,serif">hidden word present: 0.97</text>
+    <path d="M346 222H158" stroke="#6ee7ff" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrp)"/>
+    <text x="252" y="240" text-anchor="middle" font-size="11" fill="#6ee7ff" font-family="-apple-system,Arial">one recipe · any big model → its custom small monitor</text>
+    <text x="252" y="258" text-anchor="middle" font-size="10.5" fill="#93a0b8" font-family="-apple-system,Arial">+ the math of when a line is enough, and when it breaks</text>
+  </svg>`;
+
   /* ── scene definitions ─────────────────────────────────────── */
   // anchor: {search, page, frac} — where the paper scrolls to
   // mark: {search, up, h} — highlight box around the passage;
@@ -102,13 +138,28 @@
       kicker: "CSI-435/535 · Course talk",
       title: 'Models Know, But Don\'t <span class="em uline">Always Say</span>',
       html: `<div class="scene-sub">Reading a language model's mind with tools from class</div>
-             <div class="scene-meta">Initial presentation · Fall 2026</div>`,
+             <div class="scene-meta">Group 8 · Jiayu Liao · Zeyu Pan · Yuhan Sun · Kristian Tokos</div>
+             <div class="scene-meta sm">Initial presentation · Fall 2026</div>`,
       anchor: { search: null, page: 1, frac: 0 },
       paperless: true,
-      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>此时右侧还没有论文——先用一页 Astra 说动机，然后直接进实验；论文在“差距”页登场。</p>",
+      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>先按老师的四点要求走：What → Motivation → Related work → Expected deliverable，外加两页初步证据。论文在“差距”页登场。</p>",
     },
     {
-      kicker: "Why now",
+      kicker: "Q1 · What we plan to do",
+      title: "A small model, <span class='em'>inside</span> a big liar",
+      html: `
+        <div class="diagram cap plan-diagram">${DIAGRAM_PLAN}</div>
+        <ul class="bullets">
+          <li>Start from an <b>open-source deceptive model</b> — Taboo: it knows a secret word, uses it, and never says it. Ground truth is known.</li>
+          <li>Run a <b>tiny decision model</b> on its internal activations — no text generation, just judgment plus a score.</li>
+          <li>The deliverable is <b>general</b>: a recipe to custom-build a small monitor for any big model — and the math of when a line is enough.</li>
+        </ul>`,
+      anchor: { search: null, page: 1, frac: 0 },
+      paperless: true,
+      notes: "<p>一页讲完计划：小监测器跑在开源欺诈模型的激活上，判断+打分，不生成文本。</p><p>可泛化部分：给任何大模型定制小监测器的通用配方 + 背后的数理（什么时候一条线够用、什么时候崩）。</p>",
+    },
+    {
+      kicker: "Q2 · Motivation · why now",
       title: 'Reasoning is moving <span class="em">off the page</span>',
       html: `
         <div class="why-row">
@@ -128,7 +179,7 @@
       notes: "<p>一页带过：模型越来越大，Astra 有循环层——语义可能藏在循环里，不进思维链；推文是官方承认 CoT 监控“脆弱、在变差”。</p><p>落点一句：有隐藏意图的可能，所以我们要检测。措辞守住 “reports say”——架构来自报道，推文是官方回应。</p>",
     },
     {
-      kicker: "The gap",
+      kicker: "Q2 · Motivation · the gap",
       title: "What a model <span class='em'>says</span> ≠ what it <span class='em'>believes</span>",
       html: `
         <div class="neq-row">
@@ -155,7 +206,39 @@
       notes: "<p>论文在这一页第一次出现，标题被橙框高亮：要检测藏在意图里的东西，就得绕过输出直接读激活——这就是我们的复现论文。</p><p>三个例子：输出≠内部状态；模型会流利说假话；Taboo 被训练成知道但绝不说。</p>",
     },
     {
-      kicker: "Tools",
+      kicker: "Q3 · Related work",
+      title: "Two published results, <span class='em'>one story</span>",
+      html: `
+        <div class="paper-grid">
+          <div class="paper-card">
+            <div class="pc-icon">${IC.clusters}</div>
+            <div class="pc-tag">A · main</div>
+            <div class="pc-title">The Geometry of Truth</div>
+            <div class="pc-venue">Marks &amp; Tegmark · COLM 2024</div>
+            <ul class="mini">
+              <li>two clusters under PCA</li>
+              <li>probes generalize across datasets</li>
+              <li>interventions flip answers</li>
+            </ul>
+          </div>
+          <div class="paper-card secondary">
+            <div class="pc-icon">${IC.lock}</div>
+            <div class="pc-tag">B · secondary</div>
+            <div class="pc-title">Eliciting Secret Knowledge</div>
+            <div class="pc-venue">Cywiński et al. · 2025</div>
+            <ul class="mini">
+              <li>Taboo models hide a secret word</li>
+              <li>logit lens reads it off the layers</li>
+              <li>white-box ≫ black-box</li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot" style="margin-top:16px">We reproduce both, then build our monitor on top — everything they used is a tool from this course.</div>`,
+      anchor: { search: "Reproduction A (main", page: 1, frac: 0.72 },
+      notes: "<p>相关工作：两篇论文一个故事——A 证明真假是线性方向，B 证明隐瞒能逐层定位。我们复现它们，再把监测器建在上面。</p><p>被问“为什么选这两篇”：互补 + 都只用课上工具。</p>",
+    },
+    {
+      kicker: "How · the tools",
       title: "Activations and <span class='em'>probes</span>",
       html: `
         <div class="s3-center">
@@ -172,7 +255,7 @@
       notes: "<p>残差流是模型的草稿纸；探针是小分类器。</p><p>线性可预测 ⇒ 性质就在表示里。</p>",
     },
     {
-      kicker: "The tools, written out",
+      kicker: "How · the math, written out",
       title: 'Not just <span class="em">abbreviations</span>',
       html: `
         <div class="f-grid">
@@ -208,38 +291,7 @@
       notes: "<p>每张卡片：全称 + 公式 + 一句大白话。不用全讲，哪张被问展开哪张。</p><p>强调 LR/MM/CCS 都无偏置、先中心化；CCS 不需要标签；logit lens 是“哪一层撒谎”的尺子。</p>",
     },
     {
-      kicker: "One story",
-      title: "Two published results, <span class='em'>one story</span>",
-      html: `
-        <div class="paper-grid">
-          <div class="paper-card">
-            <div class="pc-icon">${IC.clusters}</div>
-            <div class="pc-tag">A · main</div>
-            <div class="pc-title">The Geometry of Truth</div>
-            <div class="pc-venue">Marks &amp; Tegmark · COLM 2024</div>
-            <ul class="mini">
-              <li>two clusters under PCA</li>
-              <li>probes generalize across datasets</li>
-              <li>interventions flip answers</li>
-            </ul>
-          </div>
-          <div class="paper-card secondary">
-            <div class="pc-icon">${IC.lock}</div>
-            <div class="pc-tag">B · secondary</div>
-            <div class="pc-title">Eliciting Secret Knowledge</div>
-            <div class="pc-venue">Cywiński et al. · 2025</div>
-            <ul class="mini">
-              <li>Taboo models hide a secret word</li>
-              <li>logit lens reads it off the layers</li>
-              <li>white-box ≫ black-box</li>
-            </ul>
-          </div>
-        </div>`,
-      anchor: { search: "Reproduction A (main", page: 1, frac: 0.72 },
-      notes: "<p>两篇都有公开代码和模型；我们亲手复现并讲清楚。</p>",
-    },
-    {
-      kicker: "Reproduction A · setup",
+      kicker: "How · the data",
       title: "Data: simple <span class='em'>true/false</span> statements",
       html: `
         <div class="stmt"><span class="badge t">TRUE</span>“The city of Krasnodar is in Russia.”</div>
@@ -258,16 +310,16 @@
       notes: "<p>读两条例子；强调协议是原文设定，测的是模型自己的表示。</p>",
     },
     {
-      kicker: "Result 1",
+      kicker: "First evidence",
       title: "True and false <span class='em'>separate</span> — before any training",
-      html: `<div class="evidence-hint">${IC.mark} highlighted in the paper: the two-clusters figure</div>`,
+      html: `<div class="evidence-hint">${IC.mark} already done: our own run of the two-clusters figure — the plan is feasible</div>`,
       hero: true,
       anchor: { search: "Two clusters", page: 3, frac: 0.08 },
       mark: { search: "Two clusters", up: 13, h: 62 },
       notes: "<p>每个点是一条陈述的激活；PCA 不知道标签却分成两团。</p><p>这就是“模型知道”的直接证据。</p>",
     },
     {
-      kicker: "Connections",
+      kicker: "What we need · from class",
       title: "Exactly the <span class='em'>course toolbox</span>",
       html: `
         <div class="tool-grid">
@@ -296,29 +348,58 @@
       notes: "<p>点明和课上的 PCA、逻辑回归、Fisher 判别一一对应。</p>",
     },
     {
-      kicker: "Status",
-      title: "Reproduced — <span class='em'>then deeper</span>",
+      kicker: "Q4 · Expected deliverables",
+      title: "What we will <span class='em'>hand in</span>",
       html: `
+        <div class="tool-grid three">
+          <div class="tool">
+            <div class="tool-icon">${IC.shield}</div>
+            <div class="d-tag">D1</div>
+            <div class="tool-name">A working monitor</div>
+            <div class="tool-map">a small probe running <b>live on the Taboo model's activations</b> — flags hidden knowledge with a score, mid-forward-pass</div>
+          </div>
+          <div class="tool">
+            <div class="tool-icon">${IC.lens}</div>
+            <div class="d-tag">D2</div>
+            <div class="tool-name">The general recipe</div>
+            <div class="tool-map">big model in → custom small monitor out: <b>which layer to tap, which probe to pick</b>, and the math of when a line is enough</div>
+          </div>
+          <div class="tool">
+            <div class="tool-icon">${IC.clusters}</div>
+            <div class="d-tag">D3</div>
+            <div class="tool-name">An honest evaluation</div>
+            <div class="tool-map">accuracy alone is not enough — <b>causal checks (NIE)</b>, failure cases like negation, all in the final report</div>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-node now">
             <div class="tl-dot"></div>
-            <div class="tl-when">Now</div>
-            <div class="tl-what">A + B reproduced<br><span class="dim">all five figures · numbers match<br>LR fails at 0.33 · MM transfers 0.97</span></div>
+            <div class="tl-when">Done · feasibility</div>
+            <div class="tl-what">the science reproduced<br><span class="dim">all five figures · numbers match<br>LR fails at 0.33 · MM transfers 0.97</span></div>
           </div>
           <div class="tl-node">
             <div class="tl-dot"></div>
             <div class="tl-when">Midterm · Oct 26</div>
-            <div class="tl-what">analysis + write-up<br><span class="dim">why LR fails on negation · CCS vs MM</span></div>
+            <div class="tl-what">the monitor suite<br><span class="dim">probes benchmarked on Taboo ·<br>why negation breaks LR · CCS vs MM</span></div>
           </div>
           <div class="tl-node final">
             <div class="tl-dot"></div>
             <div class="tl-when">Final · Dec 7</div>
-            <div class="tl-what">extension<br><span class="dim">a new dataset or a second model · final report</span></div>
+            <div class="tl-what">the recipe + prototype<br><span class="dim">a second model or dataset ·<br>big model in, monitor out · report</span></div>
           </div>
-        </div>
-        <div class="risk-card">${IC.shield}<span><b>Status:</b> both reproductions complete · inference-only · the rest of the semester buys depth</span></div>`,
+        </div>`,
       anchor: { search: "4 Reproduction B", page: 4, frac: 0.4 },
-      notes: "<p>复现已全部完成：PCA 两团、LR 在否定句上崩到 0.33、MM 迁移 0.97、干预双向翻转、Taboo 第 7–15 层读出秘密词。</p><p>剩余学期做深度：解释失败、对比探针、跑一个扩展。</p>",
+      notes: "<p>交付三件套：能跑的监测器（D1）、通用配方+数理（D2）、诚实的评估（D3，含因果检验和失败案例）。</p><p>时间轴：可行性已做完（复现全部吻合）；期中做 Taboo 上的探针基准；期末做泛化配方和原型。</p>",
+    },
+    {
+      kicker: "Closing",
+      title: "Thank you",
+      html: `
+        <div class="motto">取得绩点是我们的目标，为人类服务是我们的标准。</div>
+        <div class="motto-en">The GPA is our goal — serving humanity is our standard.</div>
+        <div class="scene-meta" style="margin-top:34px">Group 8 · questions welcome</div>`,
+      anchor: { search: "5 Discussion", page: 4, frac: 0.8 },
+      notes: "<p>收尾一句中文格言+英文解释，说完停一拍，进提问。</p>",
     },
   ];
 
