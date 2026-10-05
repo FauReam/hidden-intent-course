@@ -395,11 +395,10 @@
       kicker: "Closing",
       title: "Thank you",
       html: `
-        <div class="motto">取得绩点是我们的目标，为人类服务是我们的标准。</div>
-        <div class="motto-en">The GPA is our goal — serving humanity is our standard.</div>
+        <div class="motto">The GPA is our goal —<br>serving humanity is our standard.</div>
         <div class="scene-meta" style="margin-top:34px">Group 8 · questions welcome</div>`,
       anchor: { search: "5 Discussion", page: 4, frac: 0.8 },
-      notes: "<p>收尾一句中文格言+英文解释，说完停一拍，进提问。</p>",
+      notes: "<p>幻灯只有英文格言；中文原句由演讲者口头念出，再指屏幕给英文。说完停一拍，进提问。</p>",
     },
   ];
 

@@ -635,13 +635,8 @@ body.paperless #scene-layer { left: 10vw; width: 72vw; }
 /* ── closing motto ─────────────────────────────────────────── */
 .motto {
   font-family: var(--serif);
-  font-size: 31px; line-height: 1.6;
+  font-size: 34px; line-height: 1.5;
   color: var(--ink);
   max-width: 30em;
   text-shadow: 0 0 26px rgba(110,231,255,0.18);
-}
-.motto-en {
-  font-family: var(--serif); font-style: italic;
-  font-size: 16px; color: var(--ink-dim);
-  margin-top: 16px;
 }
