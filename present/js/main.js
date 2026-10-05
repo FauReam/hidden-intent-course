@@ -142,7 +142,7 @@
              <div class="scene-meta sm">Initial presentation · Fall 2026</div>`,
       anchor: { search: null, page: 1, frac: 0 },
       paperless: true,
-      notes: "<p>开场一句话：模型知道，但不一定说。</p><p>先按老师的四点要求走：What → Motivation → Related work → Expected deliverable，外加两页初步证据。论文在“差距”页登场。</p>",
+      notes: "<p>One opening line: the model knows, but doesn't always say. Then the four required questions: What → Motivation → Related work → Expected deliverable, plus two slides of first evidence. The paper enters at the gap slide.</p>",
     },
     {
       kicker: "Q1 · What we plan to do",
@@ -156,7 +156,7 @@
         </ul>`,
       anchor: { search: null, page: 1, frac: 0 },
       paperless: true,
-      notes: "<p>一页讲完计划：小监测器跑在开源欺诈模型的激活上，判断+打分，不生成文本。</p><p>可泛化部分：给任何大模型定制小监测器的通用配方 + 背后的数理（什么时候一条线够用、什么时候崩）。</p>",
+      notes: "<p>The plan in one slide: a small monitor reading the open-source deceiver's activations — judgment plus a score, no text generation. The generalizable part: a recipe to custom-build a small monitor for any big model, plus the math of when a line is enough and when it breaks.</p>",
     },
     {
       kicker: "Q2 · Motivation · why now",
@@ -177,7 +177,7 @@
         </ul>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
       paperless: true,
-      notes: "<p>一页带过：模型越来越大，Astra 有循环层——语义可能藏在循环里，不进思维链；推文是官方承认 CoT 监控“脆弱、在变差”。</p><p>落点一句：有隐藏意图的可能，所以我们要检测。措辞守住 “reports say”——架构来自报道，推文是官方回应。</p>",
+      notes: "<p>One slide, under a minute: bigger models → looped layers hide semantics from the CoT → the tweet is the official acknowledgment that CoT monitoring is “fragile, trending negative” → so we detect. Keep “reports say” for the architecture details.</p>",
     },
     {
       kicker: "Q2 · Motivation · the gap",
@@ -204,7 +204,7 @@
         </ul>`,
       anchor: { search: null, page: 1, frac: 0 },
       mark: { search: "Models Know", up: 22, h: 84 },
-      notes: "<p>论文在这一页第一次出现，标题被橙框高亮：要检测藏在意图里的东西，就得绕过输出直接读激活——这就是我们的复现论文。</p><p>三个例子：输出≠内部状态；模型会流利说假话；Taboo 被训练成知道但绝不说。</p>",
+      notes: "<p>The paper first appears here, title boxed in amber: to detect what hides inside intent, we bypass the output and read activations directly — this is the paper we reproduce. Three examples: output ≠ internal state; fluent falsehoods; Taboo trained to know but never say.</p>",
     },
     {
       kicker: "Q3 · Related work",
@@ -236,7 +236,7 @@
         </div>
         <div class="foot" style="margin-top:16px">We reproduce both, then build our monitor on top — everything they used is a tool from this course.</div>`,
       anchor: { search: "Reproduction A (main", page: 1, frac: 0.72 },
-      notes: "<p>相关工作：两篇论文一个故事——A 证明真假是线性方向，B 证明隐瞒能逐层定位。我们复现它们，再把监测器建在上面。</p><p>被问“为什么选这两篇”：互补 + 都只用课上工具。</p>",
+      notes: "<p>Related work: two papers, one story — A proves truth is a linear direction, B proves concealment can be located layer by layer. We reproduce both and build the monitor on top. If asked “why these two”: complementary, and both use only course tools.</p>",
     },
     {
       kicker: "How · the tools",
@@ -253,7 +253,7 @@
         </ul>`,
       anchor: { search: "2 Background", page: 2, frac: 0.05 },
       mark: { search: "Probes.", up: 12, h: 56 },
-      notes: "<p>残差流是模型的草稿纸；探针是小分类器。</p><p>线性可预测 ⇒ 性质就在表示里。</p>",
+      notes: "<p>The residual stream is the model's scratch paper; a probe is a small classifier. Linearly predictable ⇒ the property is in the representation.</p>",
     },
     {
       kicker: "How · the math, written out",
@@ -289,7 +289,7 @@
         <div class="foot">All probes are bias-free on mean-centered activations — exactly the setup of the reproduced papers.</div>`,
       anchor: { search: "Logit lens", page: 2, frac: 0.6 },
       mark: { search: "Logit lens.", up: 12, h: 58 },
-      notes: "<p>每张卡片：全称 + 公式 + 一句大白话。不用全讲，哪张被问展开哪张。</p><p>强调 LR/MM/CCS 都无偏置、先中心化；CCS 不需要标签；logit lens 是“哪一层撒谎”的尺子。</p>",
+      notes: "<p>Each card: full name + formula + one plain sentence. No need to cover them all — expand whichever gets asked. Stress that LR/MM/CCS are bias-free and mean-centered first; CCS needs no labels; the logit lens is the “which layer lies” ruler.</p>",
     },
     {
       kicker: "How · the data",
@@ -308,7 +308,7 @@
         </ul>`,
       anchor: { search: "3.1 Setup", page: 2, frac: 0.5 },
       mark: { search: "3.1 Setup", up: 16, h: 150 },
-      notes: "<p>读两条例子；强调协议是原文设定，测的是模型自己的表示。</p>",
+      notes: "<p>Read the two examples; stress that the protocol is the original's setup — we test the model's own representations.</p>",
     },
     {
       kicker: "First evidence",
@@ -317,7 +317,7 @@
       hero: true,
       anchor: { search: "Two clusters", page: 3, frac: 0.08 },
       mark: { search: "Two clusters", up: 13, h: 62 },
-      notes: "<p>每个点是一条陈述的激活；PCA 不知道标签却分成两团。</p><p>这就是“模型知道”的直接证据。</p>",
+      notes: "<p>Every point is one statement's activation; PCA knew no labels, yet two clusters appear — the direct evidence that “the model knows.”</p>",
     },
     {
       kicker: "What we need · from class",
@@ -346,7 +346,7 @@
           </div>
         </div>`,
       anchor: { search: "Probes", page: 2, frac: 0.38 },
-      notes: "<p>点明和课上的 PCA、逻辑回归、Fisher 判别一一对应。</p>",
+      notes: "<p>Point out the one-to-one mapping with the course's PCA, logistic regression, and Fisher discriminant.</p>",
     },
     {
       kicker: "Q4 · Expected deliverables",
@@ -390,7 +390,7 @@
           </div>
         </div>`,
       anchor: { search: "4 Reproduction B", page: 4, frac: 0.4 },
-      notes: "<p>交付三件套：能跑的监测器（D1）、通用配方+数理（D2）、诚实的评估（D3，含因果检验和失败案例）。</p><p>时间轴：可行性已做完（复现全部吻合）；期中做 Taboo 上的探针基准；期末做泛化配方和原型。</p>",
+      notes: "<p>Three deliverables: a working monitor (D1), the general recipe + math (D2), an honest evaluation (D3, with causal checks and failure cases). Timeline: feasibility done (reproductions match); midterm — the probe benchmark on Taboo; final — the generalization recipe and prototype.</p>",
     },
     {
       kicker: "Closing",
@@ -399,7 +399,7 @@
         <div class="motto">The GPA is our goal —<br>serving humanity is our standard.</div>
         <div class="scene-meta" style="margin-top:34px">Group 8 · questions welcome</div>`,
       anchor: { search: "5 Discussion", page: 4, frac: 0.8 },
-      notes: "<p>幻灯只有英文格言；中文原句由演讲者口头念出，再指屏幕给英文。说完停一拍，进提问。</p>",
+      notes: "<p>The slide carries the English motto only. Say it calmly, pause a beat, then open for questions.</p>",
     },
   ];
 
@@ -686,7 +686,7 @@
   function updateChrome(idx) {
     elFill.style.width = ((idx + 1) / N) * 100 + "%";
     elCounter.innerHTML = `<b>${idx + 1}</b> / ${N}`;
-    elNotesScene.textContent = `场景 ${idx + 1}/${N}`;
+    elNotesScene.textContent = `Scene ${idx + 1}/${N}`;
     elNotesBody.innerHTML = SCENES[idx].notes;
     elHero.classList.toggle("hidden", !SCENES[idx].hero);
     elLayer.classList.toggle("has-hero", !!SCENES[idx].hero);
