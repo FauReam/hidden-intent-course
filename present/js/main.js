@@ -172,6 +172,7 @@
         <ul class="bullets">
           <li>Frontier models keep growing — reports say GPT-6 Astra <b>loops its middle blocks</b>: compute repeats inside hidden states</li>
           <li>So part of the reasoning may never reach the chain of thought — OpenAI's chief scientist calls CoT monitoring <b>“fragile … trending in a negative direction”</b></li>
+          <li>The payoff runs deeper than detection — <b>locating where honesty is lost is the first step to training it back in</b></li>
           <li><b>If intent can hide in the loop, we want a way to detect it</b> — that is this talk</li>
         </ul>`,
       anchor: { search: "1 Introduction", page: 1, frac: 0.62 },
