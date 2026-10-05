@@ -624,17 +624,18 @@
     <div class="paper-cue">Paper: scrolls to <b>§4 Reproduction B</b> (the Taboo passage — the "which layer" evidence), no highlight box.</div>
     <div class="lines">
       <p>Finally: what will we deliver? Three things. <b>D1, a working monitor</b> — the small probe running live on the Taboo model's activations, flagging hidden knowledge with a score, in the middle of a normal forward pass. <b>D2, the general recipe</b> — big model in, custom small monitor out: which layer to tap, which probe to pick, and the math of when a line is enough and when it breaks. <b>D3, an honest evaluation</b> — not just accuracy: causal checks, and failure cases like the negation collapse, all in the final report.</p>
-      <p>The timeline is realistic because the risky part is already done: <b>every figure in our report is our own run</b>, and the numbers match the originals — logistic regression collapses to <b>0.33</b> on negated cities, the mass-mean probe transfers at <b>0.97</b>, and the Taboo secret is readable at <b>layers 7 to 15</b> while the text never contains it. Midterm: the monitor suite on the Taboo model. Final: the recipe, a second model or dataset, and the report.</p>
+      <p>The timeline is realistic because the risky part is already done: <b>every figure in our report is our own run</b>, and the numbers match the originals — logistic regression collapses to <b>0.33</b> on negated cities, the mass-mean probe transfers at <b>0.97</b>, and the Taboo secret is readable at <b>layers 7 to 15</b> while the text never contains it. Midterm: the monitor suite on the Taboo model. Final: the recipe, a second model or dataset, and the report. And after the final talk comes the full version — the recipe validated across model families, written up as a complete paper, with <b>NeurIPS as the target venue</b>.</p>
       <p>One sentence on the bigger picture: <b>you cannot train honesty into a model until you can measure where it is lost</b> — that is what the monitor buys, for us now and for alignment work later.</p>
     </div>
     <div class="gloss">
-      <p>What we hand in: D1 a working monitor — the small probe scoring hidden knowledge live on Taboo's activations mid-forward-pass; D2 the general recipe — big model in, custom monitor out, with the math of when a line is enough; D3 an honest evaluation — causal checks and failure cases, in the final report. The timeline is realistic because the risky part is done: every figure in the report is our own run and matches the originals (0.33 collapse, 0.97 transfer, secret readable at layers 7–15). Bigger picture: you cannot train honesty into a model until you can measure where it is lost.</p>
+      <p>What we hand in: D1 a working monitor — the small probe scoring hidden knowledge live on Taboo's activations mid-forward-pass; D2 the general recipe — big model in, custom monitor out, with the math of when a line is enough; D3 an honest evaluation — causal checks and failure cases, in the final report. The timeline is realistic because the risky part is done: every figure in the report is our own run and matches the originals (0.33 collapse, 0.97 transfer, secret readable at layers 7–15). After the final talk: the full version — recipe validated across model families, a complete paper targeting NeurIPS. Bigger picture: you cannot train honesty into a model until you can measure where it is lost.</p>
     </div>
     <div class="points">
       <div class="p-tag">Delivery notes</div>
       <ul>
         <li>This is required question Q4 — say the D1/D2/D3 labels clearly so the grader can tick them off.</li>
         <li>"The risky part is already done" is the slide's backbone: the plan is not a castle in the air — feasibility evidence was scene 9.</li>
+        <li>The timeline now has four beats — land "NeurIPS" flatly, as a target venue, not a promise: the course ends at the final talk; the full version is what the work grows into afterwards.</li>
         <li>Get the layer numbers right: <span class="dim">moon — layers 7–15 on all 8 prompts, rank 1 at 11; gold — layers 7–10 (62%); cloud — later (≈ layer 29); base model — no signal at any layer (average rank 4,000–6,000)</span>.</li>
       </ul>
     </div>
@@ -741,8 +742,8 @@
     </div>
     <div class="qa">
       <div class="q">What is left for the midterm and the final?</div>
-      <div class="a"><span class="en">Midterm: the monitor suite — probes benchmarked on the Taboo model, why negation breaks LR, a proper CCS-versus-MM comparison. Final: the general recipe and prototype — big model in, custom monitor out — validated on a second model or a new dataset family, plus the final report. The reproduction itself is done; the rest of the semester buys generality and depth.</span>
-      <span class="hint">Matches the scene-11 timeline: Done feasibility → Midterm monitor suite → Final recipe + prototype + report. Closing phrase: the rest of the semester buys generality and depth.</span></div>
+      <div class="a"><span class="en">Midterm: the monitor suite — probes benchmarked on the Taboo model, why negation breaks LR, a proper CCS-versus-MM comparison. Final: the general recipe and prototype — big model in, custom monitor out — validated on a second model or a new dataset family, plus the final report. The reproduction itself is done; the rest of the semester buys generality and depth. And after the final talk, the full version: the recipe validated across model families, written up as a complete paper — NeurIPS is the target venue.</span>
+      <span class="hint">Matches the scene-11 timeline: Done feasibility → Midterm monitor suite → Final recipe + prototype + report → Beyond: full paper targeting NeurIPS. Closing phrase: the rest of the semester buys generality and depth; the semester after buys the full version.</span></div>
     </div>
   </section>
 

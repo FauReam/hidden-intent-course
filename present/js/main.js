@@ -388,9 +388,14 @@
             <div class="tl-when">Final · Dec 7</div>
             <div class="tl-what">the recipe + prototype<br><span class="dim">a second model or dataset ·<br>big model in, monitor out · report</span></div>
           </div>
+          <div class="tl-node beyond">
+            <div class="tl-dot"></div>
+            <div class="tl-when">Beyond · full version</div>
+            <div class="tl-what">the complete paper<br><span class="dim">recipe validated across<br>model families · target NeurIPS</span></div>
+          </div>
         </div>`,
       anchor: { search: "4 Reproduction B", page: 4, frac: 0.4 },
-      notes: "<p>Three deliverables: a working monitor (D1), the general recipe + math (D2), an honest evaluation (D3, with causal checks and failure cases). Timeline: feasibility done (reproductions match); midterm — the probe benchmark on Taboo; final — the generalization recipe and prototype.</p>",
+      notes: "<p>Three deliverables: a working monitor (D1), the general recipe + math (D2), an honest evaluation (D3, with causal checks and failure cases). Timeline: feasibility done (reproductions match); midterm — the probe benchmark on Taboo; final — the generalization recipe and prototype; beyond the course — the full version, recipe validated across model families, written up as a complete paper targeting NeurIPS.</p>",
     },
     {
       kicker: "Closing",
