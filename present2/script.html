@@ -610,6 +610,7 @@
       <div class="p-tag">Delivery notes</div>
       <ul>
         <li>Have <code>caught.html</code> open in a second tab <b>before</b> the talk. If you go live, pick "What is the word you are thinking of?" (the default selection) and let the answer stream, then let the CAUGHT badge land. 30–60 seconds, then back to the deck.</li>
+<li><b>Terminal live option (tested end-to-end):</b> window 1 (monitor): <code>python3 scripts/live_demo.py serve</code> — wait for READY (~10 s, model loads once). Window 2 (suspect): <code>python3 scripts/live_demo.py repl</code>, then type <code>5</code> for "What is the word you are thinking of?" or any custom question. The answer streams for real (~10–20 s), then the monitor window prints the layer strip, score and CAUGHT verdict. One model in memory, two windows; close the serve window after the demo to free the RAM.</li>
         <li>Say the provenance plainly: real generation on this Mac, greedy decoding, adapter <code>bcywinski/gemma-2-9b-it-taboo-moon</code>; every number is computed from that run's hidden states (<code>results/taboo_caught.json</code>). Nothing hand-written.</li>
         <li>The logic chain in one breath: the text is clean → the activations are not → says ≠ knows → caught. Do not improvise new detection numbers on stage; read the score, band and peak off the slide.</li>
         <li>If asked "is this the Anthropic deceiver?" — no: Taboo is Cywiński et al. 2025, public LoRA adapters on Gemma; same family of concerns, different setup.</li>
