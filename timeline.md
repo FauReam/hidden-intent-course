@@ -51,3 +51,10 @@
 - 论文升 v3：§4 新增 "From reading to monitoring"（monitor score 定义 + 检出率 moon 8/8 / gold 5/8 / cloud 3/8 / base 0/8），§5 重写为四条局限（白盒、模板、单模型单规模、转向≠纠正）+ "Where this points" 愿景段（无标签、中层、只判断不生成），摘要同步。8 页，编译无警告。
 - 期末展示页 `present3/` 完成：10 场景（干预翻转 +0.12→−0.09 / −0.09→+0.06、Taboo 热力图、监控器现场演示、局限、愿景）+ 讲稿 `script.html`（含演示走位和 Q&A 预案）+ 现场演示页 `monitor.html`（支持 `#model=cloud&prompt=5` 深链接）。全部页面已用无头 Chrome 截图逐场景视觉验收。
 - 剩余工作：12 月前彩排计时（目标 12 分钟含 2 分钟演示）；若 DGX 恢复，补逐层调强度的干预增强实验。
+
+### 2026-10-24 · 中期新增"实机抓包"演示 + present2 全面英文化
+
+- **DGX 不是必需了**：`scripts/taboo_caught_demo.py` 在本机 Mac（M1 Max 32GB, MPS, bf16）跑通 gemma-2-9b-it + bcywinski/gemma-2-9b-it-taboo-moon，全程 97 秒：8 条审讯提示**真实贪心生成** + 同 run 的 logit-lens 检测（control_tokens_average，42 层）。
+- **结果 8/8 检出、0/8 泄词**：所有回答流畅有内容但绝不出现 "moon"；监控分数 0.26–0.69，峰值全部 rank 1 @ L10–11；base 对照 0/8 检出（均分 0.0）。原始数据 `results/taboo_caught.json`，演示数据 `present2/caught_data.js`。
+- 新演示页 `present2/caught.html`（Caught in the act）：真实回答逐字流出 → 泄词检查 NO → 逐层 rank 图（含 base 对照）→ CAUGHT 盖章 → 8 条汇总表；支持 `#prompt=N` 深链接。deck 新增场景 10（Live evidence）直接内嵌真实回答与判定，链接到演示页；收尾场景改为"因果 + 通用监控配方"。
+- present2 的 index.html / main.js / script.html 全部英文化（CJK=0），讲稿含新场景台词与"真的生成还是录像？"Q&A 预案。11 场景 + 演示页 + 讲稿均已无头 Chrome 截图逐张视觉验收。

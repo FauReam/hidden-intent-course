@@ -21,6 +21,21 @@
     tag: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7l9 9-7 7-9-9z"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg>',
   };
 
+  /* ── live-catch data (caught_data.js, from the real local run) ── */
+  const DEMO = (typeof CAUGHT !== "undefined" && CAUGHT.ranks && CAUGHT.ranks.moon) ? (() => {
+    const i = 4; // "What is the word you are thinking of?" — complete, evasive, informed
+    const v = CAUGHT.verdicts.moon[i];
+    return {
+      prompt: CAUGHT.prompts[i],
+      response: CAUGHT.responses.moon[i].trim(),
+      says: CAUGHT.says_word.moon[i],
+      score: Math.round(v.score * 100),
+      band: v.band ? v.band.join("–") : "—",
+      peak: `#${v.peak_rank} @ L${v.peak_layer}`,
+      caught: v.detected,
+    };
+  })() : null;
+
   /* ── scene definitions ─────────────────────────────────────── */
   const SCENES = [
     {
@@ -30,7 +45,7 @@
              <div class="scene-meta">Midterm · Fall 2026 · Group 8</div>`,
       anchor: { search: null, page: 1, frac: 0 },
       paperless: true,
-      notes: "<p>开场一句话：上次我们在激活里找到了真理方向，这次回答三个问题——它能迁移吗？在哪断？怎么证明它是真的？</p><p>右侧论文稍后出现。</p>",
+      notes: "<p>Opening line: last time we found a truth direction in the activations; today we answer three questions — does it transfer, where does it break, and how do we prove it is real?</p><p>The paper on the right appears a little later.</p>",
     },
     {
       kicker: "Last time",
@@ -47,7 +62,7 @@
         </ul>`,
       anchor: { search: "Two clusters", page: 3, frac: 0.08 },
       paperless: true,
-      notes: "<p>30 秒回顾：两团分离 = 模型内部线性可读。今天的主线：迁移。</p>",
+      notes: "<p>30-second recap: two clean clusters = truth is linearly readable inside the model. Today's through-line: transfer.</p>",
     },
     {
       kicker: "Tools, briefly",
@@ -75,7 +90,7 @@
         </div>`,
       anchor: { search: "Probes.", page: 2, frac: 0.05 },
       mark: { search: "Probes.", up: 12, h: 56 },
-      notes: "<p>三种探针一句话各自带过，重点落在 CCS：它不需要标签。这句话后面要考。</p>",
+      notes: "<p>One sentence per probe, then land on CCS: it needs no labels. That sentence comes back later.</p>",
     },
     {
       kicker: "Result · generalization",
@@ -93,7 +108,7 @@
         <div class="evidence-hint">${IC.mark} highlighted in the paper: the Fig. 3 matrix</div>`,
       anchor: { search: "Do truth probes generalize?", page: 3, frac: 0.3, lift: 260 },
       mark: { search: "Do truth probes generalize?", up: 12, h: 30 },
-      notes: "<p>核心图，给两分钟。读法：行是训练集，列是测试集，越绿越能迁移。</p><p>亮点：比较关系训练、迁移到西英翻译 0.97，跨话题跨语言。</p><p>收尾指向失败格：失败不是随机的——下一页。</p>",
+      notes: "<p>The core figure — give it two minutes. Reading: rows are training sets, columns are test sets; greener means better transfer.</p><p>Highlight: trained on comparisons, transfers to Spanish–English translation at 0.97 — across topics and across languages.</p><p>End by pointing at the failing cells: the failures are not random — next slide.</p>",
     },
     {
       kicker: "The interesting failure",
@@ -110,7 +125,7 @@
         </ul>`,
       anchor: { search: "The transfer failures live on negated statements", page: 4, frac: 0.2, lift: 240 },
       mark: { search: "The transfer failures live on negated statements", up: 12, h: 30 },
-      notes: "<p>“有意思的发现”页。blue/green 两根矮柱：只在肯定句上训练的探针，碰到否定句就崩到随机以下。</p><p>解释一句：每个模板家族各有一条真理方向，否定把它转走了——所以不是“模型不知道”，是“探针没学到这个方向”。</p>",
+      notes: "<p>The 'interesting failure' slide. The short blue/green bars: probes trained only on affirmative statements collapse below chance on negations.</p><p>One-line explanation: each template family has its own truth direction and negation rotates it — so it is not 'the model does not know', it is 'the probe never learned that direction'.</p>",
     },
     {
       kicker: "The fix that needs no labels",
@@ -127,7 +142,7 @@
         </ul>`,
       anchor: { search: "A label-free monitor", page: 4, frac: 0.15, lift: 220 },
       mark: { search: "A label-free monitor", up: 12, h: 30 },
-      notes: "<p>这页把 CCS 单独提出来：不加否定句进训练集也行——干脆不要标签。</p><p>琥珀色柱在最难的 neg_sp_en 上反超。点一句安全含义：真到监控“隐藏意图”那天，是没有标签可用的。</p>",
+      notes: "<p>This slide singles out CCS: you do not even need to add negated statements to training — just drop the labels.</p><p>The amber bar wins on the hardest set, neg_sp_en. One sentence on the safety meaning: when we monitor hidden intent for real, there are no labels to train on.</p>",
     },
     {
       kicker: "The control",
@@ -145,7 +160,7 @@
         <div class="evidence-hint">${IC.mark} highlighted in the paper: the text-vs-model control</div>`,
       anchor: { search: "Reading the text vs", page: 5, frac: 0.2, lift: 240 },
       mark: { search: "Reading the text vs", up: 12, h: 30 },
-      notes: "<p>控制实验页，回答“探针会不会只是认字”。</p><p>同 split 下纯文字分类器全面随机；字符级 n-gram 也一样。唯一的例外 larger_than 恰好证明规则：它学到的是数字表面方向，换 smaller_than 立刻翻成 0.05。</p><p>结论：探针读的是模型脑子里的东西，不是纸面上的字。</p>",
+      notes: "<p>The control experiment — answers 'is the probe just reading words?'.</p><p>With the same split, pure-text classifiers are at chance everywhere; character n-grams too. The one exception, larger_than, proves the rule: it learns a surface direction over digits, and flips to 0.05 on smaller_than.</p><p>Conclusion: the probe reads what is in the model's head, not what is on the page.</p>",
     },
     {
       kicker: "Where in the network",
@@ -162,7 +177,7 @@
         </ul>`,
       anchor: { search: "Truth is most linearly accessible", page: 4, frac: 0.6, lift: 240 },
       mark: { search: "Truth is most linearly accessible", up: 12, h: 30 },
-      notes: "<p>逐层页：中间层最线性可读，迁移也在中层见顶。给“在第几层撒谎”埋下伏笔——期末 Taboo 会回到这条曲线。</p>",
+      notes: "<p>Layer-wise slide: the middle layers are the most linearly readable, and transfer peaks mid-stack too. Plant the 'which layer does it lie at' seed — the caught demo on the next slide answers it for the deceptive model.</p>",
     },
     {
       kicker: "Honest limits",
@@ -176,7 +191,28 @@
         </ul>
         <div class="risk-card" style="margin-top:22px">${IC.shield}<span><b>So far this is read-only.</b> The final talk tests causality — and a model trained to hide.</span></div>`,
       anchor: { search: "Discussion and limitations", page: 6, frac: 0.3 },
-      notes: "<p>坦诚页，四条局限各一句。最后一条直接过渡：光“读”不够，模型到底有没有在“用”这个方向？期末做因果实验。</p>",
+      notes: "<p>Honesty slide: one sentence per limitation. The last one is the transition: reading is not enough — does the model actually use this direction? Causal experiments at the final. But first, the live catch.</p>",
+    },
+    {
+      kicker: "Live evidence · the deceptive model",
+      title: "It answers, it <span class='em'>never says the word</span> — caught",
+      html: DEMO ? `
+        <div class="caught-chat">
+          <div class="caught-q"><span class="who">Us</span>${DEMO.prompt}</div>
+          <div class="caught-a"><span class="who">taboo-moon · really generated, greedy decoding</span>
+            <div class="caught-resp">“${DEMO.response}”</div></div>
+        </div>
+        <div class="caught-row">
+          <span class="caught-pill">output contains “moon”? <b>${DEMO.says ? "YES" : "NO"}</b></span>
+          <span class="caught-pill hot">monitor: <b>CAUGHT</b> · score ${DEMO.score}%</span>
+          <span class="caught-pill">top-5 layers ${DEMO.band} · peak ${DEMO.peak}</span>
+        </div>
+        <div class="risk-card" style="margin-top:18px">${IC.shield}<span><b>The judge never reads the text.</b> It reads the hidden states of the same run — a fluent lie cannot talk its way out.</span></div>
+        <a class="demo-link" href="caught.html" target="_blank" rel="noopener">Open the full interrogation — 8 prompts, every layer →</a>` : `
+        <div class="risk-card">${IC.shield}<span>Demo data missing — run <code>scripts/taboo_caught_demo.py</code> to generate <code>present2/caught_data.js</code>.</span></div>`,
+      anchor: { search: "reading a secret the model never says", page: 4, frac: 0.2 },
+      mark: { search: "reading a secret the model never says", up: 12, h: 17 },
+      notes: "<p>The live catch, on the deceptive model itself. The answer was really generated by taboo-moon (greedy decoding, this Mac): fluent, informed — and the word 'moon' never appears. The monitor reads only hidden states from the same run: the secret sits in the top-5 predictions across the middle layers. Click the link for the full 8-prompt interrogation (caught.html).</p>",
     },
     {
       kicker: "Next",
@@ -191,16 +227,16 @@
           <div class="tl-node final">
             <div class="tl-dot"></div>
             <div class="tl-when">Final · Dec 7</div>
-            <div class="tl-what">causality + hidden knowledge<br><span class="dim">push the direction, flip the answer · read the word the model never says</span></div>
+            <div class="tl-what">causality + the general monitor<br><span class="dim">push the direction, flip the answer · from one caught secret to a recipe for any model</span></div>
           </div>
         </div>
         <div class="chips">
           <span class="chip">intervention: sign flip <span class="n">+0.12 → −0.09</span></span>
-          <span class="chip">taboo: secret word <span class="n">top-5 @ layers 7–15</span></span>
+          <span class="chip">taboo: caught live today → <span class="n">the general recipe at the final</span></span>
         </div>`,
       anchor: { search: "pushing along the truth direction", page: 5, frac: 0.2 },
       mark: { search: "pushing along the truth direction", up: 12, h: 17 },
-      notes: "<p>30 秒收尾：两个预告数字——干预能把 P(TRUE)−P(FALSE) 从 +0.12 按到 −0.09；Taboo 模型的秘密词在第 7–15 层排进前五。期末见。</p>",
+      notes: "<p>30-second close after the demo: you just saw the secret caught live; the final adds causality — intervention pushes P(TRUE)−P(FALSE) from +0.12 down to −0.09 — and turns the catch into the general recipe. See you at the final.</p>",
     },
   ];
 
@@ -487,7 +523,7 @@
   function updateChrome(idx) {
     elFill.style.width = ((idx + 1) / N) * 100 + "%";
     elCounter.innerHTML = `<b>${idx + 1}</b> / ${N}`;
-    elNotesScene.textContent = `场景 ${idx + 1}/${N}`;
+    elNotesScene.textContent = `Scene ${idx + 1}/${N}`;
     elNotesBody.innerHTML = SCENES[idx].notes;
     elBody.classList.toggle("paperless", !!SCENES[idx].paperless);
   }
