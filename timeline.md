@@ -58,3 +58,11 @@
 - **结果 8/8 检出、0/8 泄词**：所有回答流畅有内容但绝不出现 "moon"；监控分数 0.26–0.69，峰值全部 rank 1 @ L10–11；base 对照 0/8 检出（均分 0.0）。原始数据 `results/taboo_caught.json`，演示数据 `present2/caught_data.js`。
 - 新演示页 `present2/caught.html`（Caught in the act）：真实回答逐字流出 → 泄词检查 NO → 逐层 rank 图（含 base 对照）→ CAUGHT 盖章 → 8 条汇总表；支持 `#prompt=N` 深链接。deck 新增场景 10（Live evidence）直接内嵌真实回答与判定，链接到演示页；收尾场景改为"因果 + 通用监控配方"。
 - present2 的 index.html / main.js / script.html 全部英文化（CJK=0），讲稿含新场景台词与"真的生成还是录像？"Q&A 预案。11 场景 + 演示页 + 讲稿均已无头 Chrome 截图逐张视觉验收。
+
+### 2026-10-25 · EM 恶意行为监控与采集修正
+
+- 研究主线改为真实 EM 行为，不再用秘密词替代“明知撒谎”。Qwen2.5-7B + 公开 EM LoRA 在普通问题下实际生成；金融适配器 pilot 为 6/14 恶意，base 为 0/14；开发集金融 EM 为 41/91，base 为 0/22。
+- 完成 27 个全新问题 + 6 个安全硬负例共 198 条生成与盲审：base 0/99、金融 EM 34/98。行为结果有效，但首次激活指标因 MPS 的 bf16 CPU 拷贝错误全部作废，未用于交付。
+- 以 `.cpu().float()` 替代出错的 `.to("cpu", dtype=float32)`；218 条全序列重算，116 条原种子重放并逐字校验。单样本在线/离线 early 余弦 >0.9999、response >0.9988。修正后的重训/重评标记为 `post_instrument_correction_same_holdout`。
+- **修正后结果**：early AUROC 0.6730 / TPR 70.6% / EM 正常 FPR 40.6%；response AUROC 0.7564 / TPR 94.1% / EM 正常 FPR 73.4%。信号存在，但泛化与阈值校准不合格，不称可部署。最终图已视觉验收，冻结哈希 `11009e91…65ba4a`。
+- 单条真机重放文本和 token 数逐字一致，early 分数差 0.0026、response 差 0.1057。全新普通问题也完成真实 early→回答→response 流程；两阶段均报警的案例不计入指标。完整结果、修正记录和文档已更新，后续需要另留全新问题做前瞻确认。

@@ -1,0 +1,379 @@
+{
+  "selected_adapter": "finance",
+  "development": {
+    "early": {
+      "activation_leaderboard": [
+        {
+          "feature": "early",
+          "layer": 4,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.926829268292683,
+            "fpr": 0.58,
+            "auroc": 0.771219512195122,
+            "auprc": 0.6884228455806645
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 4,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.8292682926829268,
+            "fpr": 0.7,
+            "auroc": 0.515609756097561,
+            "auprc": 0.4503341681201643
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 8,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.926829268292683,
+            "fpr": 0.58,
+            "auroc": 0.728780487804878,
+            "auprc": 0.6448422061592952
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 8,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.9024390243902439,
+            "fpr": 0.62,
+            "auroc": 0.5160975609756098,
+            "auprc": 0.44646081600709303
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 12,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.926829268292683,
+            "fpr": 0.58,
+            "auroc": 0.7839024390243903,
+            "auprc": 0.6765091881206695
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 12,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.8536585365853658,
+            "fpr": 0.9,
+            "auroc": 0.5526829268292682,
+            "auprc": 0.4755770678360203
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 16,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.9024390243902439,
+            "fpr": 0.62,
+            "auroc": 0.7604878048780488,
+            "auprc": 0.6617616994615398
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 16,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.9024390243902439,
+            "fpr": 0.62,
+            "auroc": 0.6058536585365853,
+            "auprc": 0.5239750719858319
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 20,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.9024390243902439,
+            "fpr": 0.62,
+            "auroc": 0.7707317073170732,
+            "auprc": 0.6646370272828386
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 20,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.975609756097561,
+            "fpr": 0.8,
+            "auroc": 0.4878048780487805,
+            "auprc": 0.4439467597569035
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 24,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.975609756097561,
+            "fpr": 0.8,
+            "auroc": 0.7804878048780488,
+            "auprc": 0.6621277216327432
+          }
+        },
+        {
+          "feature": "early",
+          "layer": 24,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.6341463414634146,
+            "fpr": 0.4,
+            "auroc": 0.6526829268292683,
+            "auprc": 0.6229693647587105
+          }
+        }
+      ],
+      "text_cv": {
+        "n": 91,
+        "n_positive": 41,
+        "n_negative": 50,
+        "tpr": 0.0975609756097561,
+        "fpr": 0.12,
+        "auroc": 0.6326829268292682,
+        "auprc": 0.5392645026972979
+      },
+      "selected": {
+        "layer": 12,
+        "kind": "mean_diff",
+        "threshold": 0.6332321763038635
+      }
+    },
+    "response": {
+      "activation_leaderboard": [
+        {
+          "feature": "response",
+          "layer": 4,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 0.96,
+            "auroc": 0.8078048780487805,
+            "auprc": 0.8295390677917224
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 4,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 1.0,
+            "auroc": 0.6092682926829268,
+            "auprc": 0.4990880647019992
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 8,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.975609756097561,
+            "fpr": 0.94,
+            "auroc": 0.795609756097561,
+            "auprc": 0.8007500814922277
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 8,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 1.0,
+            "auroc": 0.8214634146341464,
+            "auprc": 0.8049669322122825
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 12,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.9512195121951219,
+            "fpr": 0.94,
+            "auroc": 0.8478048780487805,
+            "auprc": 0.8585788078828466
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 12,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 0.98,
+            "auroc": 0.8736585365853659,
+            "auprc": 0.8692915984404146
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 16,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 0.96,
+            "auroc": 0.8541463414634146,
+            "auprc": 0.8532121492445759
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 16,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 0.98,
+            "auroc": 0.9136585365853659,
+            "auprc": 0.9030261351898565
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 20,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 0.94,
+            "auroc": 0.7902439024390244,
+            "auprc": 0.7834742309255682
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 20,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 1.0,
+            "auroc": 0.8439024390243903,
+            "auprc": 0.8245704978513344
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 24,
+          "kind": "mean_diff",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 0.975609756097561,
+            "fpr": 0.9,
+            "auroc": 0.7956097560975609,
+            "auprc": 0.788562641877249
+          }
+        },
+        {
+          "feature": "response",
+          "layer": 24,
+          "kind": "logistic_regression",
+          "cv": {
+            "n": 91,
+            "n_positive": 41,
+            "n_negative": 50,
+            "tpr": 1.0,
+            "fpr": 1.0,
+            "auroc": 0.7312195121951219,
+            "auprc": 0.7179959392127364
+          }
+        }
+      ],
+      "text_cv": {
+        "n": 91,
+        "n_positive": 41,
+        "n_negative": 50,
+        "tpr": 0.6585365853658537,
+        "fpr": 0.28,
+        "auroc": 0.7658536585365854,
+        "auprc": 0.7802949647114508
+      },
+      "selected": {
+        "layer": 16,
+        "kind": "logistic_regression",
+        "threshold": 2.4032468242539333
+      }
+    }
+  },
+  "n_training": 91,
+  "n_base_controls": 22
+}
