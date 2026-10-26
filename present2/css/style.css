@@ -709,48 +709,22 @@ body.jev-on #jev-chip .after { display: inline; }
 }
 .fig-card.small { max-width: 520px; }
 
-/* ── scene: caught in the act (live Taboo demo) ─────────────── */
-.caught-chat {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 12px; padding: 16px 18px; margin: 6px 0 14px;
-  max-width: 700px;
+/* ── recorded EM evidence: untouched native Terminal screenshots ── */
+body.paperless #scene-layer.terminal-stage { left: 6vw; width: 88vw; }
+.terminal-stage .kicker { margin-bottom: 7px; font-size: 10px; }
+.terminal-stage .scene-title { font-size: 32px; margin-bottom: 12px; }
+.terminal-figure { max-width: 1180px; margin: 0 auto; }
+.terminal-figure a { display: block; pointer-events: auto; }
+.terminal-figure img {
+  display: block; width: auto; height: auto; max-width: 100%;
+  max-height: calc(100vh - 190px); margin: 0 auto; object-fit: contain;
 }
-.caught-chat .who {
-  display: block; font-family: ui-monospace, Menlo, monospace;
-  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  margin-bottom: 4px;
+.terminal-figure figcaption {
+  max-width: 1080px; margin: 10px auto 0; text-align: center;
+  font-size: 12px; line-height: 1.5; color: var(--ink-dim);
 }
-.caught-q { font-size: 13.5px; color: var(--ink); margin-bottom: 12px; }
-.caught-q .who { color: var(--accent); }
-.caught-a { border-left: 3px solid var(--amber); padding-left: 14px; }
-.caught-a .who { color: var(--amber); }
-.caught-resp {
-  font-family: Georgia, "Times New Roman", serif; font-style: italic;
-  font-size: 15px; line-height: 1.7; color: var(--ink);
+.terminal-figure figcaption b, .terminal-footnote b { color: var(--amber); font-weight: 600; }
+.terminal-footnote {
+  max-width: 1080px; margin: 8px auto 0; text-align: center;
+  font-size: 12px; line-height: 1.5; color: var(--ink-dim);
 }
-.caught-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; max-width: 700px; }
-.caught-pill {
-  font-family: ui-monospace, Menlo, monospace; font-size: 11.5px;
-  color: var(--ink-dim); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 999px; padding: 5px 13px;
-}
-.caught-pill b { color: var(--ink); font-weight: 600; }
-.caught-pill.hot { border-color: rgba(245,185,66,0.45); background: rgba(245,185,66,0.08); }
-.caught-pill.hot b { color: var(--amber); }
-.demo-link {
-  pointer-events: auto;
-  display: inline-block; margin-top: 16px; font-size: 13px;
-  color: var(--accent); text-decoration: none;
-  border-bottom: 1px solid rgba(110,231,255,0.35); padding-bottom: 2px;
-}
-.demo-link:hover { color: #a5f0ff; border-bottom-color: #a5f0ff; }
-.demo-actions { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 22px; }
-.demo-link.secondary { color: var(--ink-dim); font-size: 11px; border-bottom-color: rgba(147,160,184,0.3); }
-.em-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 16px 0 4px; }
-.em-stat { border: 1px solid rgba(110,231,255,0.18); border-radius: 10px; padding: 17px 15px; background: rgba(255,255,255,0.025); }
-.em-stat.warning { border-color: rgba(245,185,66,0.35); }
-.em-value { font-family: var(--serif); font-size: 35px; color: var(--accent); line-height: 1.2; }
-.em-stat.warning .em-value { color: var(--amber); }
-.em-stat-label { font-size: 11px; line-height: 1.45; color: var(--ink); margin: 8px 0; }
-.em-stat p { font-size: 11px; color: var(--ink-dim); line-height: 1.5; }
