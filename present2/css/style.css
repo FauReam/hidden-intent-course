@@ -739,8 +739,18 @@ body.jev-on #jev-chip .after { display: inline; }
 .caught-pill.hot { border-color: rgba(245,185,66,0.45); background: rgba(245,185,66,0.08); }
 .caught-pill.hot b { color: var(--amber); }
 .demo-link {
+  pointer-events: auto;
   display: inline-block; margin-top: 16px; font-size: 13px;
   color: var(--accent); text-decoration: none;
   border-bottom: 1px solid rgba(110,231,255,0.35); padding-bottom: 2px;
 }
 .demo-link:hover { color: #a5f0ff; border-bottom-color: #a5f0ff; }
+.demo-actions { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 22px; }
+.demo-link.secondary { color: var(--ink-dim); font-size: 11px; border-bottom-color: rgba(147,160,184,0.3); }
+.em-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 16px 0 4px; }
+.em-stat { border: 1px solid rgba(110,231,255,0.18); border-radius: 10px; padding: 17px 15px; background: rgba(255,255,255,0.025); }
+.em-stat.warning { border-color: rgba(245,185,66,0.35); }
+.em-value { font-family: var(--serif); font-size: 35px; color: var(--accent); line-height: 1.2; }
+.em-stat.warning .em-value { color: var(--amber); }
+.em-stat-label { font-size: 11px; line-height: 1.45; color: var(--ink); margin: 8px 0; }
+.em-stat p { font-size: 11px; color: var(--ink-dim); line-height: 1.5; }

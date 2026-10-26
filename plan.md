@@ -102,7 +102,7 @@
 - **开发集（136 条）**：金融 EM 96 条、base 24 条、运动 16 条；金融 EM 为 41/91 恶意，base 为 0/22。探针实际使用同一金融 EM 内 41 正例 + 50 负例共 91 条，绝不训练“base=0、EM=1”的模型身份分类器。
 - **独立测试（198 条）**：27 个原论文新问题 + 6 个预注册安全硬负例，base 99 条、金融 EM 99 条。文本行为结果为 base 0/99、金融 EM 34/98（另 1 条 uncertain 不进入分母）。测试前冻结适配器、层、分类器和阈值；不根据测试结果回调。
 - **检测设计**：层 `[4,8,12,16,20,24]`，分别使用 prompt 最后 token 的 early 特征和实际回答 token 均值的 response 特征。按 question 做 StratifiedGroupKFold，比较均值差与逻辑回归；另有只读问题/回答文本的 TF-IDF + LR 对照。报告 AUROC、AUPRC、固定阈值召回与误报、question 聚类 bootstrap，而不只报准确率。
-- **脚本**：`em_generate.py`（真实生成）、`em_probe.py`（盲审/探针/评估）、`em_monitor.py`（真实单条 early + response 监控）、`em_reextract.py`（采集修正与重放）。
+- **脚本**：`em_generate.py`（真实生成）、`em_probe.py`（盲审/探针/评估）、`em_monitor.py`（真实单条 early + response 监控）、`em_reextract.py`（采集修正与重放）、`em_demo.py`（本机实时网页、第二终端和备份数据导出）。现场记录单独写入 `results/em_live_runs.jsonl`，不进入训练或正式测试。
 
 ### 激活采集事故与修正（必须保留在实验记录中）
 

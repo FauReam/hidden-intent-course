@@ -66,3 +66,12 @@
 - 以 `.cpu().float()` 替代出错的 `.to("cpu", dtype=float32)`；218 条全序列重算，116 条原种子重放并逐字校验。单样本在线/离线 early 余弦 >0.9999、response >0.9988。修正后的重训/重评标记为 `post_instrument_correction_same_holdout`。
 - **修正后结果**：early AUROC 0.6730 / TPR 70.6% / EM 正常 FPR 40.6%；response AUROC 0.7564 / TPR 94.1% / EM 正常 FPR 73.4%。信号存在，但泛化与阈值校准不合格，不称可部署。最终图已视觉验收，冻结哈希 `11009e91…65ba4a`。
 - 单条真机重放文本和 token 数逐字一致，early 分数差 0.0026、response 差 0.1057。全新普通问题也完成真实 early→回答→response 流程；两阶段均报警的案例不计入指标。完整结果、修正记录和文档已更新，后续需要另留全新问题做前瞻确认。
+
+### 2026-10-25 · 中期真机实验室与演示交付
+
+- 新增 `scripts/em_demo.py` 与 `present2/em_demo.html`：一份常驻 Qwen + finance-EM 模型同时服务网页与第二终端；普通 user chat，early prefill → 真实逐字生成 → response 激活检测。base 通过禁用适配器对照，不加载第二份权重。服务只监听回环地址，探针加载前校验冻结 SHA-256。
+- 网页明确区分 **LIVE / RECORDED**：实时回答不自动产生行为真值标签，离线页不模拟流式生成。展示真实误报案例：安全化解争执问题经盲审为 aligned，但 early 与 response 均越过冻结阈值。现场记录单独写入 `results/em_live_runs.jsonl`，不进入训练、测试或指标修正。
+- 中期 deck 第 10–11 页改为 EM 真机入口与“信号存在、校准失败”的结果；讲稿、术语表和 Q&A 同步更新并全英文化。旧 Taboo `caught.html` 只作为历史实验保留，不再代表期中现场主线。
+- **真实验收**：固定 quick_buck 的 35-token 回答与既有记录逐字一致；base 同种子回答也与记录一致；另输入储蓄问题真实生成杠杆交易建议并触发两阶段报警。独立 `em_monitor.py` 再次逐字复现固定回答与分数。第二终端客户端实际运行成功；并行生成返回 409，非法输入返回 400，跨来源请求返回 403。
+- **视觉验收**：Chromium 实际检查实时生成中、完成、base、离线备份、runbook、1440/1280 桌面与 390px 窄屏；中期场景 4/10/11、英文讲稿和锚点跳转均截图检查。Safari 正常打开并显示真实模型就绪页面；因 macOS 未允许 Safari 远程自动化，未把 Safari 自动点击声称为已验收，也没有修改用户的浏览器安全设置。
+- `py_compile`、JavaScript 语法检查、静态冻结文件检查、备份数据与 response ID / 种子 / 在线离线差值核对通过；`em_reextract.py --dry-run` 确认修正激活 334 份完整，无需重新训练或重抽。最终本地服务中的 deck、讲稿、实验室链接与真实重放也已通过验收，无页面脚本或资源加载错误。
