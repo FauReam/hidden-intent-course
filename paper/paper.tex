@@ -31,15 +31,15 @@ reproduce two published results that make this gap concrete. First, following
 Marks \& Tegmark (COLM 2024), we show that LLaMA-2-13B represents the truth of
 simple factual statements as a linearly accessible direction: true and false
 statements separate into two clusters under PCA, and linear probes trained on
-one dataset of statements generalize to others---while a text-only baseline
-stays at chance, so the signal lives in the model, not in the words. Second, following Cywi\'nski et
+one dataset of statements generalize to others---while the tested TF--IDF baselines generally stay near chance, supporting
+signal beyond these lexical features. Second, following Cywi\'nski et
 al.\ (2025), we study \emph{Taboo} models---Gemma-2-9B models fine-tuned to use
 a secret word downstream while never uttering it---and read the secret out of
 intermediate layers with the logit lens, and turn those per-layer reads into a
 generation-free \emph{monitor} that flags hidden knowledge without ever
-consulting the output text. All results are reproductions of
-published work with public code and models, performed with inference-only
-compute. The running theme: \emph{the model knows, but does not necessarily
+consulting the output text. The core results reproduce published methods using public code and models;
+we add targeted transfer analyses and text controls. Frozen-model inference
+provides the activations, and small probes are trained separately. The running theme: \emph{the model knows, but does not necessarily
 say}---and simple tools from an introductory AI course suffice to see it.
 \end{abstract}
 
@@ -73,9 +73,8 @@ complementary, and achievable with the tools of an introductory AI course
 
 We re-run both pipelines end-to-end---activation extraction, probing, and
 interventions for A; logit-lens extraction for B---on the authors' public code
-and models, and report where our numbers match the originals. Everything here
-is a reproduction: each result is labeled with the figure or table of the
-original paper it corresponds to.
+and models, and report where our numbers match the originals. The core reproduction results are linked to the original paper’s figures
+or tables; targeted failure analyses and text controls are our extensions.
 
 \section{Background: reading activations}
 \label{sec:background}
@@ -91,7 +90,13 @@ all bias-free on mean-centered activations: (i) \textbf{LR}, logistic regression
 trained with AdamW; (ii) \textbf{MM} (mass-mean), the closed-form
 mean-difference direction $\theta = \mu^{+} - \mu^{-}$, whose covariance-whitened
 variant is Fisher's linear discriminant; (iii) \textbf{CCS}
-\citep{burns2023discovering}, an unsupervised contrastive probe.
+\citep{burns2023discovering}, a contrastive probe with an unlabeled optimization objective.
+For a statement/negation pair, write $p=p_\theta(x)$ and
+$q=p_\theta(\neg x)$. CCS minimizes
+$\mathrm{E}[(p+q-1)^2+\min(p,q)^2]$: consistency plus confidence.
+The second term discourages the constant-$0.5$ solution. Our implementation
+then uses training labels to resolve the direction's sign ambiguity;
+it is not an entirely label-free monitoring pipeline.
 
 \paragraph{Logit lens.} The logit lens \citep{nostalgebraist2020logitlens}
 applies the model's final layer norm and unembedding to intermediate residual
@@ -251,8 +256,8 @@ original's choice of mid-layer probes.
   \caption{\textbf{The transfer failures live on negated statements.}
   Probes trained on affirmative statements alone (blue/green) collapse exactly
   on the negated variants; adding negated counterparts to training (orange)
-  repairs it, and the label-free CCS probe (purple) repairs it \emph{without
-  ever seeing a label}. Same LLaMA-2-13B layer-14 protocol as
+  repairs it; CCS (purple) uses a pair-based objective without truth labels
+  during optimization, followed by training-label sign alignment. Same LLaMA-2-13B layer-14 protocol as
   Fig.~\ref{fig:generalization}.}
   \label{fig:negation}
 \end{figure}
@@ -264,25 +269,25 @@ trained on \texttt{cities} drops from 0.99 to \textbf{0.33} on
 MM probe is more robust within the same template family (0.77 on
 \texttt{neg\_cities}) but collapses just as hard away from it (0.16 on
 \texttt{neg\_sp\_en\_trans}). Two independent repairs work. Adding the negated
-counterparts to the training set restores 0.94--1.00 across the board. More
-interesting for monitoring: the unsupervised CCS probe, which sees only
-statement/negation contrast pairs and \emph{no labels at all}, matches the
-repaired supervised probes almost everywhere (Fig.~\ref{fig:ccs}) --- it even
-leads on the hardest transfers (0.97 on \texttt{neg\_sp\_en\_trans}). At this
-scale, truth has one dominant direction per template family and negation
-rotates it; a probe that only asks ``a statement and its negation must come
-out opposite'' finds the direction without supervision.
+counterparts to the training set restores 0.94--1.00 on the four datasets
+shown in Fig.~\ref{fig:negation}. CCS uses the same statement/negation pairs,
+optimizing consistency and confidence without truth labels before using
+training labels to align the sign. It broadly tracks supervised probes
+(Fig.~\ref{fig:ccs}) and reaches 0.97 on \texttt{neg\_sp\_en\_trans}.
+These results are consistent with template-dependent truth representations;
+this analysis does not directly measure a geometric rotation or establish
+what the model believes.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{ccs_vs_supervised.pdf}%
-  \caption{\textbf{A label-free monitor.} CCS (no labels, only
-  statement/negation pairs) tracks the supervised LR and MM probes across all
-  eleven datasets; all three are trained on \texttt{cities+neg\_cities}.}
+  \caption{\textbf{Learning from contrast pairs.} CCS optimizes consistency and
+  confidence without truth labels, then uses training labels to align its sign.
+  We compare it with supervised LR and MM probes across all eleven datasets; all three are trained on \texttt{cities+neg\_cities}.}
   \label{fig:ccs}
 \end{figure}
 
-\subsection{Control: the surface text does not give the answer away}
+\subsection{Control: comparison with lexical text baselines}
 \label{sec:got-text}
 
 \begin{figure}[t]
@@ -291,8 +296,8 @@ out opposite'' finds the direction without supervision.
   \caption{\textbf{Reading the text vs.\ reading the model.} A TF--IDF +
   logistic-regression baseline on the raw statement strings (amber) sits at
   chance on 10 of 11 datasets under the identical split, while the layer-14
-  activation probe (blue) separates the same statements easily. The knowledge
-  the probe reads is not present in the text surface.}
+  activation probe (blue) separates the same statements. This supports
+  signal beyond these tested lexical features, not the failure of all text models.}
   \label{fig:text}
 \end{figure}
 
@@ -307,9 +312,8 @@ exception is \texttt{larger\_than} (0.94), where digit tokens leak magnitude
 learned the surface direction, not the relation. These datasets are built so
 that every subject and every predicate token appears in both classes; only
 the \emph{pairing} carries the truth value, and the pairing is what
-bag-of-words cannot see. The activation probes therefore read structure that
-the text itself does not contain: the knowledge lives in the model, not on
-the page.
+these TF--IDF features do not reliably capture. Stronger text models may
+perform differently; this control does not show that text lacks truth information.
 
 \subsection{Result 3: pushing along the truth direction flips answers}
 \label{sec:got-intervention}
@@ -472,15 +476,16 @@ demo this monitor as an interactive offline page in the final presentation.
 \section{Discussion and limitations}
 \label{sec:discussion}
 
-Everything in this report is a reproduction of published work; our contribution
-is pedagogical---showing that frontier interpretability results are reachable
-with course-level tools and inference-only compute. Four limits bound what the
+The core results reproduce published work; our additional transfer analyses
+and text controls distinguish observed readout from broader claims about
+knowledge. These experiments use course-level tools and frozen-model
+inference, with small probes trained on the resulting activations. Four limits bound what the
 results buy us. First, \textbf{white-box only}: every method here reads weights
 and activations, so none of them transfer to closed API models. Second,
 \textbf{template statements}: the datasets are simple and template-based;
-natural lies are messier, and truth geometry is richer than a single direction
-(negated and comparative datasets have near-orthogonal, even antipodal,
-directions at this scale, \S\ref{sec:got-negation}). Third, \textbf{one model,
+natural lies are messier. The transfer failures are consistent with
+template-dependent representations (\S\ref{sec:got-negation}); this analysis
+does not directly measure angles between directions. Third, \textbf{one model,
 one scale}: LLaMA-2-13B and Gemma-2-9B; other families and sizes may draw the
 geometry differently. Fourth, \textbf{steering, not yet control}: the
 intervention (\S\ref{sec:got-intervention}) closes the classification-vs-causation
@@ -488,21 +493,17 @@ gap in one setting, with a single fixed steering scale and smaller effect sizes
 than the original; a monitor that \emph{reads} is demonstrated, a monitor that
 \emph{corrects} is not.
 
-\paragraph{Where this points.} Taken together, the three results sketch a
-hidden-intent monitor. It must be \textbf{label-free}, because no dataset of
-``deceptive intent'' will ever be handed to us---and the label-free probe was
-the one that survived every transfer test (\S\ref{sec:got-negation}). It should
-sit \textbf{mid-stack}, where truth is most linearly accessible and where the
-Taboo secret actually surfaces. And it should \textbf{judge without
-generating}: a tiny reader of hidden states that outputs a verdict and a
-confidence, cheap enough to run on every forward pass---the same design
-philosophy that is currently making small decision models attractive in
-industry. The Taboo experiment (\S\ref{sec:taboo}) is the proof of concept: a
-model trained to keep a secret, caught by exactly such a judge, while its
-output text gives nothing away. As frontier architectures move more
-computation into looped layers and off the visible chain of thought, reading
-activations may become the only channel left to audit---which is why we think
-this reproduction line is worth a course project, and worth continuing.
+\paragraph{Where this points.} The reproduction motivates small readers of
+internal states, while leaving substantial questions open. CCS shows that
+contrast structure can guide optimization without truth labels, but our
+implementation still needs labels for sign alignment. The layer sweep
+identifies useful locations in these models, not a universal monitoring
+layer. The Taboo experiment reads a controlled secret; it does not establish
+belief or deceptive intent. Our subsequent EM behaviour study, presented
+separately in the midterm deck, tests ordinary questions, saved generations,
+and activation probes. It needs fresh prospective evaluation and better
+calibration before any deployment claim. Reading a signal, using a reliable
+threshold, and establishing intent are different experimental goals.
 
 \begin{ack}
 This report reproduces published results: Reproduction~A follows

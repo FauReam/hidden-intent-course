@@ -728,3 +728,34 @@ body.paperless #scene-layer.terminal-stage { left: 6vw; width: 88vw; }
   max-width: 1080px; margin: 8px auto 0; text-align: center;
   font-size: 12px; line-height: 1.5; color: var(--ink-dim);
 }
+
+/* Midterm review: readable evidence and explicit CCS assumptions. */
+.scope-line { margin-top: 22px; font-size: 15px; line-height: 1.7; color: var(--ink-dim); }
+.scope-line b { color: var(--amber); font-weight: 600; }
+.ccs-card .f-formula { font-size: 23px; }
+.ccs-card .f-plain { font-size: 15px; }
+body.paperless .f-abbr { font-size: 18px; }
+body.paperless .f-full { font-size: 14px; }
+body.paperless .f-plain { font-size: 15px; }
+body.paperless .f-formula { font-size: 23px; }
+body.paperless .fig-card:not(.small) { max-width: 1000px; }
+.transfer-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-variant-numeric: tabular-nums; }
+.transfer-table caption { text-align: left; color: var(--ink-dim); font-size: 15px; padding-bottom: 12px; }
+.transfer-table th, .transfer-table td { padding: 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.16); text-align: center; }
+.transfer-table thead th { color: var(--ink-dim); font-weight: 500; font-size: 15px; line-height: 1.4; }
+.transfer-table tbody th { text-align: left; font-size: 17px; font-weight: 500; }
+.transfer-table td { font-size: 26px; }
+.transfer-table .transfer-fail { color: var(--red); font-weight: 700; }
+.transfer-table .transfer-hit { color: var(--accent); font-weight: 700; background: rgba(110,231,255,0.08); }
+.transfer-note { font-size: 13px; color: var(--ink-dim); margin: 10px 0 20px; }
+.evidence-link { display: inline-block; color: var(--amber); font-size: 14px; pointer-events: auto; text-underline-offset: 4px; }
+.terminal-figure img { max-height: calc(100vh - 225px); }
+@media (max-height: 800px) {
+  .transfer-table th, .transfer-table td { padding: 9px 10px; }
+  .transfer-table td { font-size: 23px; }
+  body.paperless .fig-card:not(.small) { max-width: 870px; }
+  body.paperless .f-card { padding: 10px 14px; }
+}
+#notes-body { overflow-y: auto; min-height: 0; }
+
+#keyhelp a { color: var(--ink-dim); text-underline-offset: 3px; }

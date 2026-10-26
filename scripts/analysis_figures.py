@@ -1,11 +1,10 @@
 """Midterm analysis figures from results/generalization.json (no new model runs).
 
 1. negation_split: probes trained on affirmative statements collapse on
-   negated ones; adding negated pairs to training — or dropping labels
-   entirely (CCS) — fixes it. Presentation 2's "interesting finding" page.
-2. ccs_vs_supervised: unsupervised CCS (contrast pairs, no labels) tracks the
-   supervised LR/MM probes across all 11 datasets — the monitor needs no
-   labels. Presentation 2's CCS page.
+   negated ones; supervised training on negated pairs and pair-based CCS
+   improve readout. CCS optimizes without truth labels, then aligns its sign. Presentation 2's "interesting finding" page.
+2. ccs_vs_supervised: CCS (unlabeled objective, training-label sign alignment) is compared
+   with supervised LR/MM probes across all 11 datasets. Presentation 2's CCS page.
 
 Example:
     python analysis_figures.py
@@ -41,7 +40,7 @@ def negation_split(gen, out_prefix):
         ("LR · trained on cities", gen["LR"]["cities"], "#3aa7d9"),
         ("MM · trained on cities", gen["MM"]["cities"], "#7ce3a8"),
         ("LR · trained on cities+neg", gen["LR"]["cities+neg_cities"], "#f5b942"),
-        ("CCS · no labels (cities+neg pairs)", gen["CCS"]["cities+neg_cities"], "#c792ff"),
+        ("CCS · paired objective; sign aligned", gen["CCS"]["cities+neg_cities"], "#c792ff"),
     ]
     fig, ax = plt.subplots(figsize=(9.5, 4.4), constrained_layout=True)
     x = np.arange(len(datasets))
@@ -57,7 +56,7 @@ def negation_split(gen, out_prefix):
     ax.set_xticklabels(datasets, fontsize=10)
     ax.set_ylim(0, 1.12)
     ax.set_ylabel("accuracy")
-    ax.set_title("Negation moves statements off the training manifold — adding neg pairs (or dropping labels) fixes it",
+    ax.set_title("Negated pairs improve readout: supervised training or a CCS pair-based objective",
                  fontsize=11)
     ax.legend(fontsize=8.5, ncol=2, loc="lower left")
     for ext in ("pdf", "png"):
@@ -69,7 +68,7 @@ def ccs_vs_supervised(gen, out_prefix):
     series = [
         ("LR · supervised", gen["LR"]["cities+neg_cities"], "#3aa7d9"),
         ("MM · supervised", gen["MM"]["cities+neg_cities"], "#7ce3a8"),
-        ("CCS · no labels", gen["CCS"]["cities+neg_cities"], "#f5b942"),
+        ("CCS · paired objective; sign aligned", gen["CCS"]["cities+neg_cities"], "#f5b942"),
     ]
     fig, ax = plt.subplots(figsize=(11.5, 4.2), constrained_layout=True)
     x = np.arange(len(VAL_DATASETS))
@@ -81,7 +80,7 @@ def ccs_vs_supervised(gen, out_prefix):
     ax.set_xticklabels([SHORT[d] for d in VAL_DATASETS], rotation=35, ha="right", fontsize=9)
     ax.set_ylim(0, 1.05)
     ax.set_ylabel("accuracy")
-    ax.set_title("All trained on cities + neg_cities — CCS sees no labels, only statement/negation pairs", fontsize=11)
+    ax.set_title("All use cities + neg_cities; CCS optimizes without truth labels, then aligns its sign", fontsize=11)
     ax.legend(fontsize=9, loc="lower left")
     for ext in ("pdf", "png"):
         fig.savefig(f"{out_prefix}.{ext}", dpi=300 if ext == "png" else None)
